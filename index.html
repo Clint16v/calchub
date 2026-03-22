@@ -24,9 +24,56 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9DFMJRSQBZ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9DFMJRSQBZ');</script>  
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CalcHub","url":"https://calchub.dpdns.org","description":"Free online calculators for math, finance, health, conversions and more","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <style>
 :root{--bg:#0c0c10;--surface:#15151c;--surface2:#1e1e28;--border:#2a2a38;--accent:#b8ff57;--accent2:#57c8ff;--text:#f0f0ea;--muted:#7a7a90;--danger:#ff5757;--radius:12px;--font-head:'Syne',sans-serif;--font-body:'Instrument Sans',sans-serif;}
+/* LIGHT MODE */
+body.light{--bg:#f4f4f0;--surface:#ffffff;--surface2:#f0f0ea;--border:#ddddd5;--text:#1a1a22;--muted:#6b6b80;--danger:#d93636;}
+body.light nav{background:rgba(244,244,240,0.97);}
+body.light .form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6b80' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");}
+body.light .hero-eyebrow{border-color:rgba(100,130,30,0.35);}
+body.light .hero h1 em{color:#5a8a00;}
+body.light .calc-btn{background:#5a8a00;color:#fff;}
+body.light .hero-search button{background:#5a8a00;color:#fff;}
+body.light .result-value{color:#5a8a00;}
+body.light .blog-card-cat{color:#5a8a00;}
+body.light .article-cat-badge{background:rgba(90,138,0,0.08);border-color:rgba(90,138,0,0.2);}
+body.light .article-cta button{background:#5a8a00;color:#fff;}
+body.light footer{background:var(--bg);}
+/* THEME TOGGLE */
+.theme-toggle{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:16px;display:flex;align-items:center;transition:border-color 0.2s;flex-shrink:0;}
+.theme-toggle:hover{border-color:var(--accent);}
+/* COPY BUTTON */
+.copy-results-btn{margin-top:14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:border-color 0.2s,color 0.2s;display:inline-flex;align-items:center;gap:6px;}
+.copy-results-btn:hover{border-color:var(--accent);color:var(--text);}
+/* EMBED MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.modal-overlay.hidden{display:none;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:540px;width:100%;position:relative;}
+.modal-box h3{font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:6px;}
+.modal-box p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.modal-code{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:monospace;font-size:12px;color:var(--text);word-break:break-all;line-height:1.6;margin-bottom:14px;user-select:all;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px;}
+.modal-close:hover{background:var(--surface2);}
+.modal-copy-btn{background:var(--accent);color:#0c0c10;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--font-head);}
+body.light .modal-copy-btn{background:#5a8a00;color:#fff;}
+/* CALC ACTION BAR */
+.calc-action-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+.calc-action-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:border-color 0.2s,color 0.2s;}
+.calc-action-btn:hover{border-color:var(--accent);color:var(--text);}
+/* FAQ on calc pages */
+.calc-faq{margin-top:40px;}
+.calc-faq-title{font-family:var(--font-head);font-weight:700;font-size:1.1rem;margin-bottom:16px;letter-spacing:-0.3px;}
+.calc-faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.calc-faq-q{padding:14px 16px;font-weight:600;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.15s;}
+.calc-faq-q:hover{background:var(--surface2);}
+.calc-faq-q .faq-arrow{font-size:12px;color:var(--muted);transition:transform 0.2s;}
+.calc-faq-q.open .faq-arrow{transform:rotate(180deg);}
+.calc-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;}
+.calc-faq-a.open{padding:0 16px 14px;max-height:300px;}
+.calc-faq-a p{font-size:13px;color:var(--muted);line-height:1.7;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;min-height:100vh;}
@@ -255,9 +302,20 @@ footer{border-top:1px solid var(--border);padding:48px 24px 32px;}
     <span class="nav-link" onclick="navigate('contact')">Contact</span>
     <span class="nav-link" onclick="navigate('about')">About</span>
   </div>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">🌙</button>
 </nav>
 <div id="search-dropdown" class="search-dropdown" role="listbox"></div>
 <div id="app" role="main"></div>
+<!-- EMBED MODAL -->
+<div class="modal-overlay hidden" id="embed-modal" onclick="closeEmbedModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('embed-modal').classList.add('hidden')">✕</button>
+    <h3>📋 Embed this Calculator</h3>
+    <p>Copy the code below and paste it into any webpage to embed this calculator for free.</p>
+    <div class="modal-code" id="embed-code"></div>
+    <button class="modal-copy-btn" onclick="copyEmbedCode()">Copy Embed Code</button>
+  </div>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -996,6 +1054,11 @@ function renderCalculator(calcId){
         <div class="calc-results" id="calc-results"></div>
       </div>
     </div>
+    <div class="calc-action-bar">
+      <button class="calc-action-btn" onclick="showEmbedModal('${calc.id}')">🔗 Embed this calculator</button>
+      <button class="calc-action-btn" onclick="shareCalc('${calc.name}')">📤 Share</button>
+    </div>
+    ${renderFAQ('${calc.id}')}
     ${related.length?`
     <div style="margin-top:48px">
       <div class="section-header"><div class="section-title">More in <span>${cat.name}</span></div><span class="see-all" onclick="navigate('cat','${cat.id}')">See all →</span></div>
@@ -1028,7 +1091,8 @@ function runCalc(calcId){
   el.classList.add('show');
   if(result&&result.error){el.innerHTML=`<div class="error-msg">⚠️ ${result.error}</div>`;return;}
   const items=Array.isArray(result)?result:[];
-  el.innerHTML=`<div class="results-title">Results</div><div class="result-grid">${items.map(r=>`<div class="result-item"><div class="result-label">${r.label}</div><div class="result-value">${r.value}</div></div>`).join('')}</div>`;
+  const resultText=items.map(r=>`${r.label}: ${r.value}`).join('\n');
+  el.innerHTML=`<div class="results-title">Results</div><div class="result-grid">${items.map(r=>`<div class="result-item"><div class="result-label">${r.label}</div><div class="result-value">${r.value}</div></div>`).join('')}</div><button class="copy-results-btn" onclick="copyResults(this)" data-text="${resultText.replace(/"/g,'&quot;')}">📋 Copy Results</button>`;
 }
 
 // ═══════════════════════════════════════════
@@ -1472,6 +1536,273 @@ function submitContact(){
     document.getElementById('contact-subject').value='';
     document.getElementById('contact-message').value='';
   },1200);}
+
+// ═══════════════════════════════════════════
+// DARK / LIGHT MODE
+// ═══════════════════════════════════════════
+function toggleTheme(){
+  const light=document.body.classList.toggle('light');
+  localStorage.setItem('ch-theme',light?'light':'dark');
+  document.getElementById('theme-toggle').textContent=light?'☀️':'🌙';
+}
+(function(){
+  if(localStorage.getItem('ch-theme')==='light'){
+    document.body.classList.add('light');
+    const btn=document.getElementById('theme-toggle');
+    if(btn)btn.textContent='☀️';
+  }
+})();
+
+// ═══════════════════════════════════════════
+// COPY RESULTS
+// ═══════════════════════════════════════════
+function copyResults(btn){
+  const text=btn.getAttribute('data-text');
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.innerHTML='📋 Copy Results';},2000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.innerHTML='📋 Copy Results';},2000);
+  });
+}
+
+// ═══════════════════════════════════════════
+// SHARE
+// ═══════════════════════════════════════════
+function shareCalc(name){
+  const url=window.location.href;
+  if(navigator.share){navigator.share({title:name+' — CalcHub',url});}
+  else{navigator.clipboard.writeText(url).then(()=>alert('Link copied to clipboard!'));}
+}
+
+// ═══════════════════════════════════════════
+// EMBED MODAL
+// ═══════════════════════════════════════════
+function showEmbedModal(calcId){
+  const calc=getCalc(calcId);
+  if(!calc)return;
+  const url=`https://calchub.dpdns.org/#/calc/${calcId}`;
+  const code=`<iframe src="${url}" width="100%" height="520" frameborder="0" style="border-radius:12px;border:1px solid #2a2a38;" title="${calc.name} — CalcHub" loading="lazy"></iframe>\n<p style="font-size:12px;color:#888;margin-top:6px;">Powered by <a href="https://calchub.dpdns.org" target="_blank">CalcHub</a> — Free Online Calculators</p>`;
+  document.getElementById('embed-code').textContent=code;
+  document.getElementById('embed-modal').classList.remove('hidden');
+}
+function closeEmbedModal(e){
+  if(e.target.id==='embed-modal')document.getElementById('embed-modal').classList.add('hidden');
+}
+function copyEmbedCode(){
+  const code=document.getElementById('embed-code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    const btn=document.querySelector('.modal-copy-btn');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.textContent='Copy Embed Code';},2000);
+  });
+}
+
+// ═══════════════════════════════════════════
+// FAQ DATA & RENDERER
+// ═══════════════════════════════════════════
+const FAQS={
+  'bmi':[
+    {q:'What is a normal BMI for adults?',a:'For adults, a BMI between 18.5 and 24.9 is considered healthy. Below 18.5 is underweight, 25–29.9 is overweight, and 30 or above is classified as obese. These are general guidelines — BMI doesn't account for muscle mass or body composition.'},
+    {q:'Is BMI accurate for athletes and muscular people?',a:'No — BMI is notoriously inaccurate for athletes. A heavily muscled person can have a high BMI while having very low body fat. For athletes, body fat percentage is a far better health indicator.'},
+    {q:'Does BMI differ for men and women?',a:'The BMI formula is the same for both, but healthy body fat percentages differ. Women naturally carry more essential fat than men, so two people with identical BMIs can have very different metabolic health profiles.'},
+    {q:'How do I lower my BMI?',a:'BMI is reduced by losing body fat, gaining muscle relative to fat (though this can also raise BMI), or both. Sustainable approaches involve a modest calorie deficit combined with regular exercise rather than aggressive restriction.'},
+  ],
+  'tdee':[
+    {q:'What does TDEE stand for?',a:'TDEE stands for Total Daily Energy Expenditure — the total calories your body burns in a day including basal metabolic rate (BMR), physical activity, and the thermic effect of food.'},
+    {q:'How accurate is a TDEE calculator?',a:'TDEE calculators give a useful estimate, typically within 10–15% of your true expenditure. Accuracy depends on how honestly you assess your activity level. Track your actual weight change over 2–4 weeks and adjust calorie intake based on real results.'},
+    {q:'How many calories should I eat to lose 1kg per week?',a:'One kilogram of body fat contains roughly 7,700 calories. To lose 1kg per week you need a daily deficit of about 1,100 calories. For most people, 500–750 calories/day deficit (0.5–0.7kg/week) is more sustainable and preserves muscle better.'},
+    {q:'Why did my weight loss stall even though I'm eating at a deficit?',a:'As you lose weight, your TDEE decreases because you have less body mass to fuel. Recalculate your TDEE every 4–6 weeks as your weight changes. Water retention, hormone fluctuations, and measurement timing also cause temporary plateaus.'},
+  ],
+  'compound-interest':[
+    {q:'What is compound interest?',a:'Compound interest is interest calculated on both your initial principal and all accumulated interest from prior periods. Unlike simple interest (only on principal), it creates an exponential growth curve — small differences in rate or time create enormous long-term differences.'},
+    {q:'How often should interest compound for the best returns?',a:'More frequent compounding means slightly more growth. Daily compounding produces marginally more than monthly, which beats annual. The difference is real but smaller than most people expect — improving your rate is far more impactful than optimising compounding frequency.'},
+    {q:'What is the Rule of 72?',a:'Divide 72 by the annual interest rate to estimate how many years it takes to double your money. At 6%, your money doubles in roughly 12 years. At 9%, about 8 years. It's a quick mental shortcut that works well for rates between 2–20%.'},
+    {q:'How does compound interest work against me in debt?',a:'The same mechanics that build wealth in savings destroy it in debt. Credit card companies compound daily. A $5,000 balance at 20% APR, paying minimums, can take over 15 years to clear and cost more than $7,000 in interest. Paying down high-interest debt is the highest-return investment most people can make.'},
+  ],
+  'mortgage':[
+    {q:'What is included in a monthly mortgage payment?',a:'A standard mortgage payment covers principal (reducing your loan balance) and interest. Many lenders also escrow property taxes and homeowners insurance, adding these to your monthly payment. The P&I portion stays fixed; tax and insurance portions can change annually.'},
+    {q:'How much deposit do I need for a mortgage?',a:'Minimums vary by country and lender — typically 5–20% of the purchase price. In the US and UK, putting down less than 20% usually requires private mortgage insurance (PMI/LMI), adding to monthly costs. A larger deposit reduces your loan size, monthly payments, and total interest paid.'},
+    {q:'Is it better to get a 15-year or 30-year mortgage?',a:'A 15-year mortgage has significantly higher monthly payments but saves enormous amounts in total interest — often 50–60% less. A 30-year gives lower monthly payments and more flexibility. The right choice depends on your cash flow, job security, and whether the payment difference would be invested productively.'},
+    {q:'What credit score do I need for a mortgage?',a:'Requirements vary by country and lender. In the US, 620 is a common minimum for conventional loans, 580 for FHA. Better scores secure better rates — the difference between a 680 and 760 score can easily mean 0.5–1% difference in rate, worth tens of thousands over a 30-year loan.'},
+  ],
+  'percentage':[
+    {q:'How do I calculate a percentage of a number?',a:'Multiply the number by the percentage divided by 100. For "25% of 80": 80 × (25/100) = 80 × 0.25 = 20. Quick shortcut: 10% is easy (move decimal left), build other percentages from there.'},
+    {q:'How do I calculate percentage increase?',a:'Percentage increase = ((New Value − Old Value) ÷ Old Value) × 100. If a price goes from $50 to $65: ((65−50)÷50)×100 = 30% increase. Note: a 30% increase followed by a 30% decrease does NOT return to the original value.'},
+    {q:'What is the difference between percentage and percentage points?',a:'A critical distinction. If an interest rate goes from 2% to 3%, it increased by 1 percentage point but by 50% relatively. News reports often confuse these. Always check whether a change is stated in percentage points (absolute) or percent (relative).'},
+    {q:'How do I reverse a percentage to find the original number?',a:'Divide the known value by the percentage expressed as a decimal. If $15 is 20% of a number: 15 ÷ 0.20 = $75. If a discounted price of $68 is 85% of the original: 68 ÷ 0.85 = $80 original price.'},
+  ],
+  'loan-payment':[
+    {q:'How is a monthly loan payment calculated?',a:'Using the amortisation formula: M = P[r(1+r)^n]/[(1+r)^n−1], where P = principal, r = monthly interest rate (annual rate ÷ 12), n = total payments. Each payment is the same amount but the split between principal and interest changes — early payments are mostly interest.'},
+    {q:'What happens if I make extra payments on my loan?',a:'Extra payments go directly to principal, reducing the balance on which future interest is calculated. Making extra payments early in the loan has a multiplied effect — paying an extra $100/month from day one on a 30-year mortgage can save over $30,000 in interest and cut years off the term.'},
+    {q:'What is APR vs interest rate?',a:'The interest rate is the base borrowing cost. APR (Annual Percentage Rate) includes the interest rate plus all fees and charges, giving the true annual cost. Always compare APRs when shopping for loans — a lower rate with high fees can cost more than a slightly higher rate with no fees.'},
+    {q:'Can I pay off a loan early without penalties?',a:'Many loans allow early repayment, but some charge prepayment penalties — especially mortgages and car loans. Check your loan agreement before making large additional payments. The penalty is usually a percentage of the remaining balance or a fixed number of months of interest.'},
+  ],
+  'age':[
+    {q:'How does the age calculator handle leap years?',a:'The calculator accounts for leap years automatically by working with actual calendar dates. It counts the precise number of days between your birth date and the target date, then converts to years, months, and remaining days accurately.'},
+    {q:'What if I want to know my age on a future date?',a:'Use the "On Date" field to set any future date. The calculator will show how old you'll be on that specific day — useful for planning, milestone events, or retirement calculations.'},
+    {q:'Why might different age calculators give slightly different results?',a:'Different calculators handle partial months differently. Some round months up, others count only complete months. Our calculator shows complete years, complete months, and remaining days for the most precise result.'},
+  ],
+  'temperature':[
+    {q:'What is the formula to convert Celsius to Fahrenheit?',a:'Multiply by 9/5 (or 1.8) and add 32: °F = (°C × 9/5) + 32. Quick mental shortcut: double the Celsius temperature and add 30 for an approximate Fahrenheit value. It's slightly off but useful for quick estimates.'},
+    {q:'What temperature is the same in both Celsius and Fahrenheit?',a:'-40 degrees is identical in both Celsius and Fahrenheit. This is the unique crossover point where the two scales meet: -40°C = -40°F.'},
+    {q:'What is Kelvin and when is it used?',a:'Kelvin is the absolute temperature scale used in science and engineering. Zero Kelvin (absolute zero) is the coldest possible temperature — the complete absence of heat energy. Convert from Celsius: K = °C + 273.15. Water freezes at 273.15K and boils at 373.15K.'},
+    {q:'What is normal human body temperature?',a:'The long-cited 37°C (98.6°F) is an average, not a fixed normal. Individual normal body temperature ranges from about 36.1–37.2°C (97–99°F) and varies by time of day, measurement location, age, and activity level.'},
+  ],
+  'tip-calculator':[
+    {q:'How much should I tip at a restaurant?',a:'Standard tipping norms vary by country. In the US, 15–20% is standard for sit-down restaurants, 18–22% for good service. In the UK and Australia, tipping is less expected but 10–15% is appreciated. Always check whether a service charge is already included in the bill.'},
+    {q:'Should I tip on the pre-tax or post-tax amount?',a:'Tipping on the pre-tax amount is technically correct and slightly favours you. In practice, the difference is small (typically a dollar or less on most restaurant bills) and many people tip on the total for simplicity.'},
+    {q:'Is it rude not to tip for bad service?',a:'A reduced (not zero) tip communicates dissatisfaction while still acknowledging the server's effort. Many servers' wages depend significantly on tips. If service was genuinely poor, speaking to a manager is often more constructive than withholding the tip entirely.'},
+  ],
+  'salary-converter':[
+    {q:'How do I convert an annual salary to an hourly rate?',a:'Divide annual salary by the number of working hours per year. Standard calculation: annual ÷ (52 weeks × 40 hours) = 2,080 hours/year. A $60,000 salary = $60,000 ÷ 2,080 = $28.85/hour. Adjust the hours if you work part-time or more than 40 hours.'},
+    {q:'What is the difference between gross and net salary?',a:'Gross salary is your total pay before any deductions. Net salary (take-home pay) is what you receive after income tax, social security, pension contributions, and any other deductions. The gap between gross and net varies significantly by country, income level, and personal circumstances.'},
+    {q:'How do I compare job offers with different pay structures?',a:'Convert everything to the same unit — annual salary is easiest. Include the total package: base salary + bonus potential + benefits (health insurance, pension matching, equity). A $75k salary with full health insurance and 5% pension match can be worth significantly more than an $80k offer with no benefits.'},
+  ],
+  'square-footage':[
+    {q:'How do I calculate square footage for an irregular room?',a:'Divide the room into rectangles, triangles, or other regular shapes. Calculate the area of each section separately, then add them together. For L-shaped rooms, split into two rectangles; for rooms with alcoves, calculate the main rectangle then add or subtract the alcove area.'},
+    {q:'How many square feet are in a square meter?',a:'1 square meter = 10.764 square feet. To convert m² to ft², multiply by 10.764. To convert ft² to m², multiply by 0.0929. A 200 m² house is approximately 2,153 sq ft.'},
+    {q:'Do I need to subtract doorways and windows when calculating flooring?',a:'For flooring (carpet, hardwood, tile), do not subtract doorways or windows — you still need material in those transition areas. For paint, subtract window and door areas. Always add 10% for waste and cutting errors when buying any material.'},
+  ],
+  'concrete':[
+    {q:'How do I convert cubic feet to cubic yards for concrete?',a:'Divide by 27 (since 1 cubic yard = 27 cubic feet). A 10×10 slab at 4 inches thick = 10×10×0.333 = 33.3 cubic feet = 33.3÷27 = 1.23 cubic yards. Always add 10% for waste and settling.'},
+    {q:'How thick should a concrete slab be?',a:'Pedestrian paths: 3–4 inches (75–100mm). Residential driveways: 4 inches minimum (5 for heavier vehicles). Garage floors: 4–6 inches. Structural slabs: consult an engineer. Thicker slabs resist cracking better and support heavier loads.'},
+    {q:'How long does concrete take to cure?',a:'Concrete reaches about 70% of its strength in 7 days and ~99% at 28 days. You can walk on it after 24–48 hours but avoid heavy loads or vehicles for at least 7 days. Curing is affected by temperature — cold weather significantly slows the process.'},
+  ],
+  'paint':[
+    {q:'How much paint do I need for a room?',a:'Calculate total wall area (perimeter × height, minus doors and windows), divide by the coverage rate on your paint tin (typically 10–12 m² per litre), and multiply by the number of coats (usually 2). Add 10% for waste and touch-ups.'},
+    {q:'What is the difference between paint finishes?',a:'Matte/flat: no sheen, hides imperfections, not washable — good for ceilings and low-traffic areas. Eggshell/satin: slight sheen, washable — ideal for most walls. Semi-gloss/gloss: high sheen, very washable, durable — best for trim, doors, and kitchens/bathrooms.'},
+    {q:'Do I need to prime before painting?',a:'Prime when: painting new drywall or bare plaster (essential), making a dramatic colour change (saves topcoat), covering stains, or painting over a glossy surface. Skip primer when: applying same or similar colour over previously painted surfaces in good condition.'},
+  ],
+  'random-number':[
+    {q:'Are these random numbers truly random?',a:'They use JavaScript's Math.random() — a pseudorandom number generator (PRNG). It's statistically random enough for everyday use (games, decisions, sampling) but not cryptographically secure. For security applications (passwords, encryption keys), use a dedicated cryptographic random generator.'},
+    {q:'Can I generate random numbers for a lottery?',a:'Yes — set your min and max to match your lottery's range and generate the required count of numbers. Note that each number is generated independently, so duplicates are possible. The calculator doesn't currently enforce uniqueness.'},
+  ],
+  'sleep-calculator':[
+    {q:'Why are sleep cycles 90 minutes?',a:'A complete sleep cycle comprises 4–5 stages: light sleep (N1, N2), deep slow-wave sleep (N3), and REM sleep. Each full cycle takes approximately 90 minutes. Waking at the end of a cycle — rather than mid-cycle during deep sleep — leaves you feeling significantly more refreshed.'},
+    {q:'How many hours of sleep do adults need?',a:'Most adults need 7–9 hours (4–6 complete 90-minute cycles). Individual needs vary: genetics, age, health, and activity levels all affect optimal sleep duration. Consistently sleeping under 6 hours is associated with impaired cognition, metabolic dysfunction, and reduced immune response.'},
+    {q:'What is the best time to go to bed?',a:'It depends on when you need to wake up — work backwards from your alarm time in 90-minute increments plus 14 minutes to fall asleep. The calculator does this automatically. Generally, sleeping 10pm–6am aligns well with human circadian rhythms, though individual chronotypes (early bird vs night owl) vary significantly.'},
+  ],
+};
+
+function renderFAQ(calcId){
+  const faqs=FAQS[calcId];
+  if(!faqs||faqs.length===0)return'';
+  const items=faqs.map((f,i)=>`
+    <div class="calc-faq-item">
+      <div class="calc-faq-q" onclick="toggleFAQ(this)" aria-expanded="false">
+        ${f.q}<span class="faq-arrow">▼</span>
+      </div>
+      <div class="calc-faq-a"><p>${f.a}</p></div>
+    </div>`).join('');
+  return `<div class="calc-faq"><div class="calc-faq-title">❓ Frequently Asked Questions</div>${items}</div>`;
+}
+
+function toggleFAQ(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+// 10 NEW ARTICLES (appended to ARTICLES array)
+// ═══════════════════════════════════════════
+ARTICLES.push(
+{id:'sleep-cycles-guide',title:'Sleep Cycles Explained: Why 7.5 Hours Beats 8',category:'Everyday Life',catId:'everyday',date:'March 20, 2025',readTime:'4 min',excerpt:'Most people think more sleep is always better. The science says otherwise — waking at the right point in your sleep cycle matters just as much as total hours.',calcLink:'sleep-calculator',calcName:'Sleep Calculator',
+sections:[
+{h2:'The Architecture of a Night's Sleep',html:'<p>Sleep isn't a single uniform state — it's a repeating series of stages. Each complete cycle lasts approximately 90 minutes and includes light sleep (N1 and N2), deep slow-wave sleep (N3), and REM (Rapid Eye Movement) sleep. A typical night involves 4–6 full cycles.</p><p>Deep sleep dominates early cycles; REM sleep (where most dreaming and memory consolidation happens) dominates the cycles closest to waking. This is why cutting a night short by even an hour disproportionately reduces the most restorative stages.</p>'},
+{h2:'Why Waking Mid-Cycle Feels So Awful',html:'<p>Sleep inertia — that groggy, disoriented fog after waking — is dramatically worse when you're jolted awake during deep sleep (N3). Your brain struggles to rapidly shift from slow-wave activity back to full wakefulness. This can impair cognitive performance for 20–90 minutes after waking.</p><p>Waking at the end of a cycle, when you're in the lightest sleep stage, requires far less physiological effort. You surface feeling genuinely refreshed rather than dragged unwillingly back to consciousness.</p>'},
+{h2:'The Mathematics of Better Sleep',html:'<p>Add 14 minutes (average time to fall asleep) to your cycles:</p><ul><li>4 cycles: 90×4 + 14 = <strong>6 hours 14 minutes</strong></li><li>5 cycles: 90×5 + 14 = <strong>7 hours 44 minutes</strong></li><li>6 cycles: 90×6 + 14 = <strong>9 hours 14 minutes</strong></li></ul><p>For most adults, 5 cycles (7h 44min) is the sweet spot. This is why "7.5 hours" often beats "8 hours" — the extra 15 minutes can strand you mid-cycle rather than completing it cleanly.</p>'},
+{h2:'Sleep Quality vs Quantity',html:'<p>Alcohol is one of the most common sleep disruptors. It helps you fall asleep faster but fragments cycles and severely suppresses REM sleep — leaving you physically rested but mentally foggy. Even two standard drinks within 3 hours of sleep measurably reduces sleep quality.</p><p>Temperature, light, and consistency matter enormously. A cool room (16–19°C), blackout conditions, and a consistent sleep-wake schedule (even on weekends) have more impact on sleep quality than almost any supplement or sleep gadget.</p>'},
+{h2:'Practical Application',html:'<ul><li>Set your alarm to a cycle completion time, not an arbitrary "round" hour</li><li>Use a consistent bedtime within 30 minutes each night — consistency anchors your circadian rhythm</li><li>If you nap, keep it to 20 minutes (before reaching deep sleep) or a full 90 minutes</li><li>Avoid screens 45–60 minutes before sleep — blue light suppresses melatonin production by up to 50%</li></ul>'},
+]},
+
+{id:'tip-etiquette-guide',title:'Tipping Around the World: Complete Country-by-Country Guide',category:'Everyday Life',catId:'everyday',date:'March 19, 2025',readTime:'5 min',excerpt:'Tip too little and you've insulted someone. Tip in the wrong country and you've caused offence. This guide covers tipping norms for 15 countries so you always know what's expected.',calcLink:'tip-calculator',calcName:'Tip Calculator',
+sections:[
+{h2:'Why Tipping Norms Vary So Widely',html:'<p>Tipping culture is shaped by wage laws, cultural attitudes towards service, and historical conventions. In countries where tipped workers receive a lower minimum wage (particularly the US), tips are economically essential — a significant portion of total income. In countries with strong minimum wage laws and a culture of service as a respected profession, tips are supplemental or optional.</p><p>Getting it wrong in either direction creates genuine problems — under-tipping in a tip-dependent culture leaves someone meaningfully worse off; tipping in a culture that doesn't expect it can be seen as condescending.</p>'},
+{h2:'Countries Where Tipping Is Expected',html:'<p><strong>United States & Canada:</strong> 18–22% is standard at restaurants for good service. 15% signals slight dissatisfaction. Tip taxi drivers 10–15%, hotel porters $1–2 per bag, housekeeping $2–5/night. Baristas: $1 per drink. Tipping culture extends broadly.</p><p><strong>Mexico:</strong> 10–15% at restaurants, with 20% for excellent service in tourist areas. Hotels and taxis follow similar patterns. Much of the service industry is tip-dependent.</p><p><strong>Brazil:</strong> A 10% service charge is common on restaurant bills (often mandatory by law). Check whether it's already included before adding more.</p>'},
+{h2:'Countries Where Tipping Is Appreciated But Not Obligatory',html:'<p><strong>UK:</strong> 10–15% at sit-down restaurants if a service charge isn't already included (check the bill carefully). Pubs typically don't expect tips. Taxis: round up or 10%. Hotels: discretionary.</p><p><strong>Australia & New Zealand:</strong> No strong tipping culture. Service workers earn a living wage. 10% at restaurants for good service is appreciated but not expected. Rounding up taxi fares is common.</p><p><strong>South Africa:</strong> 10–15% at restaurants is standard and meaningful given wage levels. Petrol station attendants and car guards also customarily receive small tips.</p>'},
+{h2:'Countries Where Tipping Is Minimal or Unusual',html:'<p><strong>Japan:</strong> Tipping can be considered rude — an implication that the person needs charity or that their employer doesn't pay them properly. Service is considered part of the job. In some high-end establishments frequented by foreign tourists, staff have become accustomed to tips but it remains unnecessary.</p><p><strong>China & South Korea:</strong> Tipping is uncommon domestically. International hotels have adapted to tourist expectations, but for local restaurants and services, tips are not expected and can cause confusion.</p><p><strong>Most of continental Europe (France, Germany, Spain, Italy):</strong> Tipping is appreciated but modest — rounding up bills or leaving small change. 5–10% for good restaurant service. 15%+ is considered American-style over-tipping.</p>'},
+{h2:'Universal Tips on Tipping',html:'<ul><li>Always check whether a service charge is already included before adding a tip</li><li>In countries with poor wage protection, err on the side of generosity</li><li>Cash tips go directly to the individual; card tips may be pooled or partially retained depending on the establishment</li><li>A genuine "thank you" with appropriate eye contact often means as much as a few extra dollars or pounds</li></ul>'},
+]},
+
+{id:'salary-negotiation-guide',title:'How to Use Salary Calculators to Negotiate a Better Pay Rise',category:'Finance',catId:'finance',date:'March 17, 2025',readTime:'5 min',excerpt:'Most people leave money on the table in salary negotiations simply because they don't know their numbers. Here's how to walk in prepared — and why data wins every time.',calcLink:'salary-converter',calcName:'Salary Converter',
+sections:[
+{h2:'Know Your True Hourly Rate First',html:'<p>Most salaried employees have no idea what they actually earn per hour. Converting your annual salary to an hourly equivalent is the first step in understanding whether your compensation is fair — and in framing any negotiation conversation.</p><p>A $70,000 salary sounds substantial until you calculate you're earning $33.65/hour. Now compare that to the market rate for your role. If comparable positions advertise $85,000–$90,000, you have a concrete, unemotional number to anchor the conversation.</p>'},
+{h2:'Build Your Compensation Baseline',html:'<p>Before any negotiation, calculate your full current package:</p><ul><li>Base salary → annual</li><li>Bonus (express as annual average over 2–3 years)</li><li>Pension/401k match → annual dollar value</li><li>Health insurance (what would this cost you privately?)</li><li>Stock/equity (vesting schedule matters enormously)</li><li>Other benefits: car allowance, phone, education budget</li></ul><p>Total this up. Then do the same for any offer you're comparing it to. A $10,000 base salary raise can be effectively neutral if health insurance disappears.</p>'},
+{h2:'Research Market Rates Properly',html:'<p>Salary comparison sites (Glassdoor, LinkedIn Salary, Payscale, Levels.fyi for tech) give ranges but require careful interpretation. Filter ruthlessly by: exact job title, years of experience, company size, and location. National averages are meaningless if you're in a high cost-of-living city or specialised market.</p><p>The most powerful data comes from actual job postings in your area right now. If three similar roles at competitors are advertising $90,000–$100,000, that's real market evidence — significantly stronger than a website average.</p>'},
+{h2:'The Negotiation Conversation',html:'<p>Never state your desired salary without anchoring it to market data: <em>"Based on current market rates for this role and my X years of [specific experience], I was expecting something in the range of $X–$Y."</em> The range signals flexibility; the data signals preparation.</p><p>Counter-offers almost always exist. An initial offer is rarely the maximum available. The discomfort of asking for more lasts 30 seconds; the financial difference compounds for years. A $5,000 raise at age 30, compounding through promotions and future raises, is worth significantly more over a career than the nominal amount suggests.</p>'},
+{h2:'When to Use Competing Offers',html:'<p>A competing offer is the most effective negotiation tool available — but use it only if you're genuinely willing to leave. Bluffing about competing offers that don't exist is both ethically questionable and risky; many employers verify.</p><p>Present competing offers factually, not as an ultimatum: <em>"I've received an offer for $X. I prefer to stay here — is there flexibility to match or get close to that range?"</em> This frames it as a problem to solve together rather than a confrontation.</p>'},
+]},
+
+{id:'water-intake-guide',title:'How Much Water Should You Actually Drink Per Day?',category:'Health',catId:'health',date:'March 14, 2025',readTime:'4 min',excerpt:'The "8 glasses a day" rule is widely cited and largely made up. Here's what the actual science says about hydration — and how to know if you're drinking enough.',calcLink:'water-intake',calcName:'Water Intake Calculator',
+sections:[
+{h2:'Where Does the "8 Glasses" Rule Come From?',html:'<p>The 8×8 rule (eight 8-ounce glasses = roughly 2 litres daily) is frequently cited but has no strong scientific basis. It appears to originate from a 1945 US dietary recommendation that stated adults need about 2.5 litres of water daily — but included the critical footnote that "most of this quantity is contained in prepared foods." That footnote got lost.</p><p>The reality: there is no single universal daily water requirement because it varies enormously by body size, activity level, climate, diet, age, and health status.</p>'},
+{h2:'Evidence-Based Daily Intake Guidelines',html:'<p>Current scientific recommendations from bodies including the Institute of Medicine and WHO:</p><ul><li><strong>Men:</strong> approximately 3.7 litres (125 fl oz) total water from all sources daily</li><li><strong>Women:</strong> approximately 2.7 litres (91 fl oz) total water from all sources</li></ul><p><em>"All sources"</em> is key — this includes water in food (fruits, vegetables, cooked grains, soups), coffee, tea, and other beverages, not just plain water. Most people get 20–30% of their daily water from food alone.</p>'},
+{h2:'Factors That Increase Your Needs',html:'<ul><li><strong>Exercise:</strong> Add 0.5–1 litre for every hour of moderate exercise; more for intense training or hot conditions</li><li><strong>Climate:</strong> Hot and humid environments significantly increase sweat losses</li><li><strong>High altitude:</strong> Increases respiratory water loss and urine output</li><li><strong>Illness:</strong> Fever, vomiting, and diarrhoea rapidly deplete fluid levels</li><li><strong>Pregnancy & breastfeeding:</strong> Require significant additional fluid intake</li><li><strong>High-protein diet:</strong> Protein metabolism increases kidney water requirements</li></ul>'},
+{h2:'The Best Hydration Indicator',html:'<p>Urine colour is the most practical hydration guide available: pale straw yellow = well hydrated; clear = possibly overhydrated; dark yellow = mildly dehydrated; amber/brown = significantly dehydrated, drink immediately.</p><p>Thirst is also a reliable indicator for healthy adults — the idea that "if you're thirsty you're already dehydrated" is a myth. Thirst kicks in at about 1–2% body water deficit, which is a genuinely useful signal that hasn't been compromised yet.</p>'},
+{h2:'Practical Hydration Tips',html:'<ul><li>Start the day with a large glass of water — overnight is your longest regular fasting/dehydration period</li><li>Drink before, during, and after exercise — don't wait until thirsty during intense activity</li><li>Eat water-rich foods: cucumbers, watermelon, oranges, soups, and porridge all contribute meaningfully</li><li>Coffee and tea count towards hydration (mild diuretic effect is more than offset by their fluid content)</li><li>Alcohol is genuinely dehydrating — drink one glass of water per alcoholic drink</li></ul>'},
+]},
+
+{id:'random-numbers-statistics',title:'Random Numbers in Real Life: Sampling, Simulations and Probability',category:'Math',catId:'math',date:'March 11, 2025',readTime:'4 min',excerpt:'Random numbers underpin everything from scientific research to video games to cryptography. Understanding randomness helps you interpret statistics, spot bad data, and make better decisions.',calcLink:'random-number',calcName:'Random Number Generator',
+sections:[
+{h2:'What Does "Random" Actually Mean?',html:'<p>A sequence is random if each value is independent of all previous values and each possible outcome has a known probability. True randomness is harder to achieve than it sounds — computers, which are deterministic machines, generate <em>pseudorandom</em> numbers using mathematical algorithms that produce sequences that <em>appear</em> random but are technically predictable given the starting seed.</p><p>For nearly all practical purposes (games, simulations, statistical sampling), pseudorandom numbers are entirely sufficient. True hardware randomness (from thermal noise, radioactive decay, or quantum processes) is reserved for cryptographic applications where predictability is a genuine security risk.</p>'},
+{h2:'Random Sampling in Research',html:'<p>Random sampling is the foundation of valid statistical inference. A properly randomised sample allows researchers to draw conclusions about an entire population from a small subset. Without randomisation, samples become biased — systematically over- or under-representing certain groups in ways that invalidate conclusions.</p><p>Classic examples of sampling bias: phone surveys that miss people without phones; online surveys that exclude non-internet users; volunteer studies where self-selected participants differ systematically from the broader population. Good research design takes randomisation seriously precisely because it's so easy to accidentally bias a sample.</p>'},
+{h2:'Monte Carlo Simulations',html:'<p>Monte Carlo methods use large numbers of random samples to estimate complex outcomes that are difficult or impossible to calculate analytically. Named after the casino, the method underpins: financial risk modelling (testing portfolios against thousands of random market scenarios), physics simulations, engineering reliability testing, and climate modelling.</p><p>The core insight: if you repeat a random process enough times, the distribution of outcomes reveals the underlying probabilities. Running 100,000 simulations of a stock portfolio across random market conditions tells you far more about real risk than any single deterministic calculation.</p>'},
+{h2:'The Gambler's Fallacy',html:'<p>One of the most persistent probability misconceptions: believing that past random outcomes influence future ones. If a fair coin lands heads 10 times in a row, the probability of heads on the 11th flip is still exactly 50%. The coin has no memory.</p><p>Casinos profit enormously from this fallacy. A roulette wheel that has hit red 15 times straight is not "due" for black. Each spin is independent. The fallacy feels intuitively compelling because over a long run, outcomes do balance out — but that balancing happens through future probability, not some corrective force pulling towards the mean.</p>'},
+{h2:'Practical Uses of Random Numbers',html:'<ul><li><strong>Making decisions:</strong> When genuinely torn between options, randomise. Research shows people are surprisingly satisfied with random decisions because the randomisation removes the decision regret of "what if I chose differently."</li><li><strong>Fair selection:</strong> Randomly assigning order, groups, or responsibilities removes social bias and perception of favouritism</li><li><strong>A/B testing:</strong> Randomly assigning users to test and control groups is the gold standard for measuring the effect of any change</li><li><strong>Games:</strong> Randomness in games creates replayability and fair competition that pure skill games can lack</li></ul>'},
+]},
+
+{id:'construction-measurement-guide',title:'Construction Measurements: Avoiding the Costly Mistakes DIYers Always Make',category:'Construction',catId:'construction',date:'March 9, 2025',readTime:'5 min',excerpt:'Professional builders don't measure once and hope for the best. They measure twice, add waste, and work in consistent units. Here are the most common measurement mistakes — and exactly how to avoid them.',calcLink:'square-footage',calcName:'Square Footage Calculator',
+sections:[
+{h2:'The Most Expensive Measurement Mistake',html:'<p>Unit mixing is the single most common and costly error in DIY construction. Working in a mix of imperial and metric, or confusing centimetres with millimetres, produces results that can be out by factors of 2.54 or 10 — often not caught until materials are cut or poured.</p><p>The fix is simple: pick one unit system and convert everything before starting any calculation. Write the unit next to every measurement. It takes an extra 10 seconds and prevents hours of expensive rework.</p>'},
+{h2:'The 10% Waste Rule',html:'<p>Every material calculation should add 10% for waste — minimum. This accounts for: cutting losses (you rarely get clean rectangles from irregular spaces), breakage during installation, future repairs (having matching material is invaluable), and measuring errors.</p><p>Increase to 15% for: diagonal tile patterns (cutting waste is significantly higher), rooms with many corners, first-time installers, and natural materials like hardwood or stone where pieces must be matched for grain or colour.</p>'},
+{h2:'Measuring Irregular Spaces Correctly',html:'<p>Most rooms are not perfect rectangles. Bay windows, alcoves, built-in wardrobes, and chimney breasts all affect calculations. The method: divide the space into regular shapes (rectangles, triangles), calculate each separately, then add or subtract as appropriate.</p><p>For flooring specifically: always measure the room at its widest points, not the usable floor area. Material needs to cover the full footprint including under doors, in alcoves, and to the edges. Never measure on top of existing flooring if it's being replaced.</p>'},
+{h2:'Reading a Tape Measure Accurately',html:'<p>On imperial tape measures, the markings between inches represent halves, quarters, eighths, and sixteenths of an inch. The longer the line, the larger the fraction. The hardest to read is the 16th-inch mark — a very short line between all the others.</p><p>Always read from zero, not from the end of the tape case (which has a small offset). For precise work, hook the tape and pull it taut rather than laying it slack — a curved tape reads longer than the actual distance.</p>'},
+{h2:'Critical Measurements to Double-Check',html:'<p>Some measurements are worth triple-checking because mistakes are irreversible:</p><ul><li><strong>Door and window openings</strong> — measure at top, middle, and bottom; take the smallest measurement for clearance</li><li><strong>Staircase rises and runs</strong> — building codes have precise requirements and mistakes are structurally significant</li><li><strong>Plumbing rough-ins</strong> — fixture placement must match pipe locations exactly</li><li><strong>Ceiling height at multiple points</strong> — floors are rarely perfectly level; measure height in all four corners</li></ul>'},
+{h2:'Tools Worth Investing In',html:'<p>A good quality 8m tape measure is the most-used tool in any toolkit. For larger spaces, a laser distance measurer (£20–£50) measures rooms accurately in seconds and eliminates assistant-holding-the-tape errors entirely.</p><p>A spirit level and a reliable square are equally essential — most cutting and fitting errors stem not from wrong measurements but from surfaces that aren't level or plumb. Always check before assuming.</p>'},
+]},
+
+{id:'percentage-discount-shopping',title:'How to Spot a Real Bargain: The Maths Behind Sales and Discounts',category:'Finance',catId:'finance',date:'March 6, 2025',readTime:'4 min',excerpt:'Retail pricing is designed to make discounts look bigger than they are. Understanding the maths behind markdowns, anchoring, and compounding discounts helps you shop smarter.',calcLink:'discount',calcName:'Discount Calculator',
+sections:[
+{h2:'How Retail Pricing Psychology Works',html:'<p>The "original price" shown on a sale tag is often the recommended retail price (RRP) — which the item may never have been sold at regularly. A £200 item marked down to £80 (60% off) sounds spectacular, but if the item typically sells for £100, the real discount is only 20%.</p><p>Anchoring is the psychological principle at work: your brain fixes on the first number it sees (the "original" price) and evaluates the sale price relative to that anchor. Retailers set anchors deliberately to make sale prices appear more attractive than comparable non-sale prices at competitors.</p>'},
+{h2:'Calculating True Discount Value',html:'<p>To find the real saving: look up the item's typical selling price across multiple retailers, not just the store running the sale. Price comparison websites and browser extensions (like CamelCamelCamel for Amazon, tracking price history) reveal whether the "original price" is genuine.</p><p>The calculation: (Normal selling price − Sale price) ÷ Normal selling price × 100 = True discount %. If a TV normally sells for £800 and is £640 in a sale, the genuine discount is 20% — not the "40% off RRP" advertised against a rarely-used £1,067 RRP.</p>'},
+{h2:'Stacking Discounts — Does Order Matter?',html:'<p>When applying multiple discounts, order doesn't affect the final price — they're multiplicative. A 30% discount followed by an additional 20% off: 0.70 × 0.80 = 0.56 = 44% total discount. <strong>Not 50%</strong> — a common mistake.</p><p>Retailers sometimes present sequential discounts to make the total appear larger: "30% off, then take an extra 20% off that!" sounds better than "44% off", even though it's identical. Use the multiplication method to verify any stacked discount calculation.</p>'},
+{h2:'Sale Seasons and Timing',html:'<p>Genuine deep discounts typically appear at predictable times: end-of-season clearance (clothing, garden equipment), post-holiday sales (Christmas decorations, confectionery), model changeover sales (electronics, appliances), and financial year-end clearance for big-ticket items.</p><p>For major purchases you're not in a hurry to make, tracking prices over time almost always rewards patience. Black Friday delivers genuine deals on some categories (electronics in particular) but inflated "original prices" on many others — do your research beforehand.</p>'},
+{h2:'The Cost Per Use Calculation',html:'<p>A £40 item you use 200 times costs 20p per use. A £200 item you use 2 times costs £100 per use. Cost per use is the most honest measure of value for many purchases — particularly clothing, tools, and equipment.</p><p>Cheap consumables that fail quickly are often more expensive than quality alternatives over their lifetime. A 70% discount on a product that lasts a quarter as long is actually a worse deal: you pay 30% of the price for 25% of the value.</p>'},
+]},
+
+{id:'tax-vat-guide',title:'VAT, Sales Tax and Income Tax: A Plain-Language Guide to Tax Calculations',category:'Finance',catId:'finance',date:'March 3, 2025',readTime:'5 min',excerpt:'Tax calculations confuse most people — not because they're genuinely complex, but because the terminology is opaque. Here's how to calculate VAT, sales tax, and basic income tax without an accountant.',calcLink:'vat-calc',calcName:'VAT Calculator',
+sections:[
+{h2:'VAT vs Sales Tax: The Key Difference',html:'<p>VAT (Value Added Tax) is applied at every stage of the supply chain — manufacturer, wholesaler, retailer — with each stage claiming back the VAT it paid and remitting only the "value added" portion. Consumers ultimately bear the full VAT cost, but it's embedded in the price rather than added at checkout.</p><p>Sales tax (used in the US) is applied only at the final retail stage, added visibly at checkout. Because it's not embedded in displayed prices, total costs are only known at the register — a frequent frustration for visitors from VAT countries where prices include all tax.</p>'},
+{h2:'Calculating VAT: Both Directions',html:'<p><strong>Adding VAT (you have the net price):</strong> Net × (1 + VAT rate). A £100 product at 20% VAT: 100 × 1.20 = £120 gross price.</p><p><strong>Removing VAT (you have the gross price):</strong> Gross ÷ (1 + VAT rate). A £120 product at 20% VAT: 120 ÷ 1.20 = £100 net. Note: you do <em>not</em> simply subtract 20% (120 × 0.80 = £96, which is wrong). Always divide by (1 + rate).</p><p>This "divide, don't subtract" rule is the most common VAT calculation error made by non-accountants.</p>'},
+{h2:'VAT Rates Around the World',html:'<p>Standard VAT/GST rates vary significantly by country. Selected examples:</p><ul><li>UK: 20% standard (5% reduced for energy, children's car seats; 0% for food, children's clothes)</li><li>EU: 15–27% depending on country, with complex reduced rate systems</li><li>Australia/New Zealand: 10%/15% GST, broadly applied</li><li>Canada: 5% federal GST + provincial taxes (combined 5–15% depending on province)</li><li>United States: 0–10.25% sales tax, varies by state and county — no federal rate</li></ul>'},
+{h2:'Income Tax: Understanding Marginal vs Effective Rates',html:'<p>Most countries use progressive tax systems — higher income is taxed at higher rates, but only the portion above each threshold, not all income. The marginal rate is the rate on your highest dollar/pound of earnings. The effective rate is what you actually pay as a percentage of total income.</p><p>If tax brackets are 20% on the first £37,700 and 40% above that, someone earning £50,000 doesn't pay 40% on all £50,000. They pay 20% on £37,700 (£7,540) and 40% on £12,300 (£4,920), totalling £12,460 — an effective rate of 24.9%, not 40%.</p>'},
+{h2:'Practical Tax Planning Basics',html:'<ul><li><strong>Keep receipts for deductible expenses</strong> — legitimate business costs reduce taxable income, not tax directly</li><li><strong>Understand your pension contribution tax relief</strong> — contributions often receive tax relief at your marginal rate, effectively making them heavily subsidised savings</li><li><strong>Don't confuse gross and net when budgeting</strong> — always calculate your take-home (net) salary for any budget; gross figures are largely theoretical</li><li><strong>Check your tax code/withholding annually</strong> — errors are common and can result in underpaying (penalties) or overpaying (you're owed a refund)</li></ul>'},
+]},
+
+{id:'probability-everyday',title:'Probability in Everyday Life: Why Your Intuition Is Usually Wrong',category:'Statistics',catId:'statistics',date:'February 28, 2025',readTime:'5 min',excerpt:'Human brains are notoriously bad at probability. We fear plane crashes and play the lottery, despite the numbers saying the opposite of what our gut feels. Here's how to think about chance more clearly.',calcLink:'probability',calcName:'Probability Calculator',
+sections:[
+{h2:'Why Intuition Fails at Probability',html:'<p>Human probability intuition evolved for a world of immediate physical threats and social dynamics — not for abstract statistical reasoning. We systematically overestimate vivid, memorable, or recent risks (plane crashes, shark attacks) and underestimate mundane but far more common ones (car accidents, falling, heart disease).</p><p>This is called the <strong>availability heuristic</strong> — we estimate probability based on how easily an example comes to mind, not on actual frequency. News coverage amplifies the effect: rare but dramatic events receive massive coverage; common events do not.</p>'},
+{h2:'The Birthday Problem: Counterintuitive Probability',html:'<p>How many people do you need in a room before there's a 50% chance two share a birthday? Most people guess somewhere around 183 (half of 365). The actual answer is just <strong>23 people</strong>.</p><p>The reason: we're not asking whether someone shares your birthday, but whether <em>any two people</em> share a birthday. With 23 people, there are 253 possible pairs. Each pair has a 1/365 chance of sharing a birthday. The probability that at least one pair matches climbs surprisingly fast.</p>'},
+{h2:'The Lottery: What Your Ticket Is Worth',html:'<p>A UK National Lottery ticket costs £2 and offers roughly a 1 in 45 million chance of the jackpot. If the jackpot is £10 million, the expected value of the jackpot portion alone is about £0.22 — and there are other prizes, but the overall expected return is around 50p for a £2 ticket, before tax.</p><p>This isn't why people play — they're buying a fantasy, a brief period of "what if?", not a financial instrument. That's a legitimate reason to spend £2. It becomes a problem when people spend significant portions of their income on lottery tickets as a genuine wealth strategy.</p>'},
+{h2:'Risk: Absolute vs Relative Numbers',html:'<p>Medical and health news almost always reports relative risk changes, which sound impressive but can be misleading without context. "New drug cuts heart attack risk by 50%" sounds transformative. If baseline risk was 2%, the new risk is 1% — a 1 percentage point absolute reduction.</p><p>For most healthy people, that's a very small absolute benefit which must be weighed against side effects, costs, and the downsides of taking a medication. The same 50% relative risk reduction in a condition with 40% baseline risk represents a massive 20 percentage point absolute change — genuinely significant.</p>'},
+{h2:'Making Better Probability Decisions',html:'<ul><li><strong>Ask for absolute numbers</strong>, not just relative changes, when evaluating health risks or investment returns</li><li><strong>Consider base rates</strong> — the underlying prevalence of a condition before any test or intervention is critical context</li><li><strong>Distinguish independent from dependent events</strong> — past random outcomes don't influence future ones (the gambler's fallacy)</li><li><strong>Understand that rare doesn't mean impossible</strong> — a 1% chance over 100 independent trials gives a 63% chance of occurring at least once</li></ul>'},
+]},
+
+{id:'heart-rate-training-guide',title:'Heart Rate Zones: How to Train Smarter, Not Just Harder',category:'Health',catId:'health',date:'February 25, 2025',readTime:'4 min',excerpt:'Most people train in the wrong heart rate zone for their goals — often working too hard when trying to lose fat, or not hard enough when trying to improve fitness. Here's the complete zone guide.',calcLink:'heart-rate',calcName:'Heart Rate Zone Calculator',
+sections:[
+{h2:'What Is Maximum Heart Rate?',html:'<p>Maximum heart rate (MHR) is the highest your heart can beat per minute during maximum exertion. The standard estimate — <strong>220 minus your age</strong> — is a population average with significant individual variation (±10–20 bpm). At age 35, estimated MHR is 185 bpm, but individuals might range from 165 to 205.</p><p>For precision, MHR should be measured directly — either during a supervised maximal exercise test or via a graded run test. The 220-minus-age formula is a useful starting point, not a physiological fact.</p>'},
+{h2:'The Five Training Zones',html:'<p>Heart rate training zones are expressed as percentages of MHR:</p><ul><li><strong>Zone 1 (50–60%):</strong> Very light — active recovery, warm-up/cool-down. Builds base fitness without fatigue accumulation.</li><li><strong>Zone 2 (60–70%):</strong> Light — fat burning, aerobic base building. Conversational pace. The most underrated zone for endurance athletes and weight management.</li><li><strong>Zone 3 (70–80%):</strong> Moderate — improves aerobic efficiency. Comfortably hard. Good for general fitness.</li><li><strong>Zone 4 (80–90%):</strong> Hard — lactate threshold training. Improves race pace and cardiovascular capacity.</li><li><strong>Zone 5 (90–100%):</strong> Maximum — interval training, HIIT. Short bursts only; cannot be sustained.</li></ul>'},
+{h2:'Zone 2: The Most Misunderstood Zone',html:'<p>Zone 2 training — often dismissed as "too easy" — is the foundation of elite endurance performance. Professional athletes spend 70–80% of their total training volume in Zone 2. It builds mitochondrial density, improves fat oxidation, and creates the aerobic base upon which higher-intensity work sits.</p><p>Most recreational exercisers skip Zone 2 and default to Zone 3 — hard enough to feel like real exercise but not hard enough to develop the adaptations that come from either true Zone 2 base work or high-intensity Zone 4/5 work. This "grey zone" is the most common training mistake.</p>'},
+{h2:'Heart Rate for Fat Loss',html:'<p>The "fat burning zone" concept is real but frequently misapplied. At lower intensities (Zone 2), a higher percentage of calories comes from fat oxidation — roughly 60–70% of calories burned are fat-derived at Zone 2 vs 35–40% at Zone 4.</p><p>However, higher-intensity exercise burns significantly more total calories per minute. A 30-minute Zone 4 run burns far more total calories (and therefore total fat in absolute terms) than a Zone 2 walk of the same duration, even though a lower percentage comes from fat.</p><p>For pure fat loss, total calorie deficit matters most. For metabolic health and fat-burning efficiency, consistent Zone 2 training builds the aerobic machinery that makes fat burning easier long-term.</p>'},
+{h2:'Practical Heart Rate Monitoring',html:'<p>Chest strap monitors (Polar, Garmin, Wahoo) give the most accurate readings — particularly during intervals when wrist-based optical sensors lag. For steady-state Zone 2 training where precision matters less, wrist monitors are entirely adequate.</p><p>Resting heart rate (measured first thing in the morning before getting up) is a useful wellness indicator. A consistently elevated resting HR can indicate incomplete recovery, illness, or overtraining. Elite endurance athletes often have resting heart rates of 40–50 bpm; for most adults, 60–80 is normal.</p>'},
+]},
+);
+
 </script>
 </body>
 </html>
