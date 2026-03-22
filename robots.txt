@@ -1,0 +1,14 @@
+# robots.txt for CalcHub
+# https://calchub.com
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+
+# Block access to any admin or config files if added later
+Disallow: /admin/
+Disallow: /config/
+Disallow: /.env
+
+# Sitemap location — submit this URL to Google Search Console too
+Sitemap: https://calchub.com/sitemap.xml
