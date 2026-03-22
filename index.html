@@ -24,8 +24,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/e007013b32a13.js" data-cmp-host="d.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0"></script>
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9DFMJRSQBZ"></script>
 <script>
@@ -905,10 +903,64 @@ function parseRoute(){const h=window.location.hash.replace('#/','').split('/');r
 window.addEventListener('hashchange',render);
 window.addEventListener('load',render);
 
-function updateSEO(title,desc){
+// SEO keyword map — primary keyword + secondary keywords per calculator
+const CALC_SEO={
+  'percentage':       {kw:'percentage calculator',kw2:'calculate percentage of a number, percentage formula, what is X percent of Y'},
+  'bmi':              {kw:'BMI calculator',kw2:'body mass index calculator, bmi chart, healthy weight calculator'},
+  'compound-interest':{kw:'compound interest calculator',kw2:'compound interest formula, investment growth calculator, how compound interest works'},
+  'mortgage':         {kw:'mortgage calculator',kw2:'monthly mortgage payment calculator, home loan calculator, mortgage repayment'},
+  'loan-payment':     {kw:'loan calculator',kw2:'monthly loan payment calculator, loan repayment calculator, personal loan calculator'},
+  'tip-calculator':   {kw:'tip calculator',kw2:'how much to tip, restaurant tip calculator, bill split calculator'},
+  'tdee':             {kw:'calorie calculator',kw2:'TDEE calculator, how many calories should I eat, daily calorie needs'},
+  'age':              {kw:'age calculator',kw2:'how old am I, age in days, birthday calculator'},
+  'temperature':      {kw:'temperature converter',kw2:'celsius to fahrenheit, fahrenheit to celsius, temperature conversion'},
+  'salary-converter': {kw:'salary calculator',kw2:'hourly to salary calculator, annual salary to hourly, salary converter'},
+  'length':           {kw:'length converter',kw2:'meters to feet, km to miles, unit converter length'},
+  'weight-conv':      {kw:'weight converter',kw2:'kg to lbs, pounds to kilograms, weight unit converter'},
+  'discount':         {kw:'discount calculator',kw2:'percent off calculator, sale price calculator, how much is X percent off'},
+  'sales-tax':        {kw:'sales tax calculator',kw2:'tax calculator, how to calculate tax, price with tax'},
+  'vat-calc':         {kw:'VAT calculator',kw2:'add VAT, remove VAT, VAT calculation'},
+  'square-footage':   {kw:'square footage calculator',kw2:'how to calculate square footage, room area calculator, sq ft calculator'},
+  'concrete':         {kw:'concrete calculator',kw2:'how much concrete do I need, cubic yards of concrete, bags of concrete calculator'},
+  'paint':            {kw:'paint calculator',kw2:'how much paint do I need, litres of paint for room, paint coverage calculator'},
+  'sleep-calculator': {kw:'sleep calculator',kw2:'what time should I wake up, sleep cycle calculator, best time to sleep'},
+  'date-diff':        {kw:'date calculator',kw2:'days between dates, how many days between two dates, date difference calculator'},
+  'pythagorean':      {kw:'pythagorean theorem calculator',kw2:'right triangle calculator, hypotenuse calculator, a squared plus b squared'},
+  'roi':              {kw:'ROI calculator',kw2:'return on investment calculator, calculate ROI, investment return calculator'},
+  'body-fat':         {kw:'body fat calculator',kw2:'body fat percentage calculator, how to calculate body fat, body fat measurement'},
+  'ideal-weight':     {kw:'ideal weight calculator',kw2:'healthy weight for height, what should I weigh, ideal body weight calculator'},
+  'random-number':    {kw:'random number generator',kw2:'generate random numbers, random number picker, random integer generator'},
+};
+
+function updateSEO(title,desc,calcId){
   document.title=title;
   const m=document.querySelector('meta[name="description"]');
   if(m)m.setAttribute('content',desc);
+  // Update or inject per-page schema
+  let schema=document.getElementById('page-schema');
+  if(!schema){schema=document.createElement('script');schema.type='application/ld+json';schema.id='page-schema';document.head.appendChild(schema);}
+  const seo=calcId&&CALC_SEO[calcId];
+  if(calcId&&window.location.hash.includes('/calc/')){
+    const calc=getCalc&&getCalc(calcId);
+    schema.textContent=JSON.stringify({
+      "@context":"https://schema.org",
+      "@graph":[
+        {"@type":"WebApplication","name":title.replace(' — CalcHub',''),"url":`https://calchub.dpdns.org/#/calc/${calcId}`,"description":desc,"applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://calchub.dpdns.org/"},
+          {"@type":"ListItem","position":2,"name":title.replace(' — CalcHub',''),"item":`https://calchub.dpdns.org/#/calc/${calcId}`}
+        ]},
+        ...(FAQS&&FAQS[calcId]?[{"@type":"FAQPage","mainEntity":FAQS[calcId].map(f=>({
+          "@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}
+        }))}]:[])
+      ]
+    });
+  } else {
+    schema.textContent='';
+  }
+  // Update canonical
+  let can=document.querySelector('link[rel="canonical"]');
+  if(can) can.setAttribute('href',`https://calchub.dpdns.org/${window.location.hash}`);
 }
 
 function render(){
@@ -1029,7 +1081,7 @@ function renderCalculator(calcId){
   if(!calc)return'<div class="section" style="padding-top:40px"><p>Calculator not found. <a style="color:var(--accent);cursor:pointer" onclick="navigate(\'home\')">Go home</a></p></div>';
   const cat=getCat(calc.cat);
   const related=CALCULATORS.filter(c=>c.cat===calc.cat&&c.id!==calc.id).slice(0,4);
-  updateSEO(`${calc.name} — CalcHub`,calc.desc);
+  updateSEO(`${calc.name} — CalcHub`,calc.desc,calc.id);
   const inputsHtml=calc.inputs.map(inp=>`
     <div class="form-group">
       <label class="form-label" for="inp-${inp.id}">${inp.label}</label>
