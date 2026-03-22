@@ -1,5 +1,5 @@
 # robots.txt for CalcHub
-# https://calchub.com
+# https://calchub.dpdns.org
 
 # Allow all search engine crawlers
 User-agent: *
@@ -11,4 +11,4 @@ Disallow: /config/
 Disallow: /.env
 
 # Sitemap location — submit this URL to Google Search Console too
-Sitemap: https://calchub.com/sitemap.xml
+Sitemap: https://calchub.dpdns.org/sitemap.xml
