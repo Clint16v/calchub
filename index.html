@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="google-adsense-account" content="ca-pub-6802996001342908">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>CalcHub — Free Online Calculators for Math, Finance, Health & More</title>
@@ -33,8 +32,6 @@
   gtag('js', new Date());
   gtag('config', 'G-9DFMJRSQBZ');
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6802996001342908"
-     crossorigin="anonymous"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CalcHub","url":"https://calchub.dpdns.org","description":"Free online calculators for math, finance, health, conversions and more","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <style>
 :root{--bg:#0c0c10;--surface:#15151c;--surface2:#1e1e28;--border:#2a2a38;--accent:#b8ff57;--accent2:#57c8ff;--text:#f0f0ea;--muted:#7a7a90;--danger:#ff5757;--radius:12px;--font-head:'Syne',sans-serif;--font-body:'Instrument Sans',sans-serif;}
@@ -218,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:48px 24px 32px;}
 /* TAG COLORS */
 .tag-math{color:#a78bfa;}.tag-finance{color:#34d399;}.tag-health{color:#fb7185;}
 .tag-conversions{color:#38bdf8;}.tag-physics{color:#fbbf24;}.tag-everyday{color:#f97316;}
-.tag-statistics{color:#e879f9;}.tag-construction{color:#a3e635;}.tag-converters{color:#22d3ee;}
+.tag-statistics{color:#e879f9;}.tag-construction{color:#a3e635;}.tag-converters{color:#22d3ee;}.tag-comparisons{color:#f59e0b;}
 /* BLOG */
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
 .blog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform 0.2s,border-color 0.2s;display:flex;flex-direction:column;}
@@ -347,6 +344,7 @@ footer{border-top:1px solid var(--border);padding:48px 24px 32px;}
         <a onclick="navigate('cat','converters')">Converters</a>
         <a onclick="navigate('cat','construction')">Construction</a>
         <a onclick="navigate('cat','everyday')">Everyday Life</a>
+        <a onclick="navigate('cat','comparisons')">Comparisons</a>
         <a onclick="navigate('all')">All Calculators</a>
       </div>
       <div class="footer-col">
@@ -387,6 +385,7 @@ const CATEGORIES = [
   {id:'everyday',    name:'Everyday Life',  icon:'🗓️',  color:'#f97316', desc:'Age, dates, fuel, time & daily tools'},
   {id:'statistics',  name:'Statistics',     icon:'📊', color:'#e879f9', desc:'Mean, probability, z-scores & data analysis'},
   {id:'construction',name:'Construction',   icon:'🏗️',  color:'#a3e635', desc:'Area, paint, concrete, bricks & materials'},
+  {id:'comparisons',  name:'Comparisons',    icon:'⚖️',  color:'#f59e0b', desc:'Side-by-side comparisons to help you make smarter decisions'},
 ];
 
 // ═══════════════════════════════════════════
@@ -896,6 +895,169 @@ compute(v){const d1=+v.d1,d2=+v.d2,d3=+v.d3;if(isNaN(d1)||d1<=0)return{error:'En
 inputs:[{id:'length',label:'Room Length (ft)',type:'number',placeholder:'e.g. 15'},{id:'width',label:'Room Width (ft)',type:'number',placeholder:'e.g. 12'},{id:'height',label:'Ceiling Height (ft)',type:'number',placeholder:'e.g. 9',def:'8'},{id:'sunlight',label:'Sunlight Exposure',type:'select',options:['Normal','Heavy sunlight (+10%)','Heavily shaded (−10%)']}],
 compute(v){const l=+v.length,w=+v.width,h=+v.height||8;if(isNaN(l)||isNaN(w))return{error:'Enter room dimensions.'};let btu=l*w*20;const adj={'Normal':1,'Heavy sunlight (+10%)':1.1,'Heavily shaded (−10%)':0.9};btu*=(adj[v.sunlight]||1);return[{label:'BTU Required',value:Math.round(btu).toLocaleString()+' BTU'},{label:'Tonnes of cooling',value:fmt(btu/12000)+' ton'},{label:'Kilowatts',value:fmt(btu*0.000293)+' kW'},{label:'Room Area',value:fmt(l*w)+' ft²'}];}},
 
+// ─── COMPARISONS ──────────────────────────────────────────────────────────────
+{id:'rent-vs-buy',name:'Rent vs Buy Calculator',cat:'comparisons',icon:'🏠',desc:'Compare the true long-term cost of renting vs buying a home.',
+inputs:[
+  {id:'home',label:'Home Purchase Price ($)',type:'number',placeholder:'e.g. 350000'},
+  {id:'down',label:'Down Payment (%)',type:'number',placeholder:'e.g. 20',def:'20'},
+  {id:'rate',label:'Mortgage Rate (%)',type:'number',placeholder:'e.g. 6.8',def:'6.8'},
+  {id:'years',label:'Time Horizon (years)',type:'number',placeholder:'e.g. 10',def:'10'},
+  {id:'rent',label:'Monthly Rent ($)',type:'number',placeholder:'e.g. 1800'},
+  {id:'appre',label:'Annual Home Appreciation (%)',type:'number',placeholder:'e.g. 3',def:'3'},
+  {id:'invest',label:'Investment Return on Savings (%)',type:'number',placeholder:'e.g. 7',def:'7'},
+],
+compute(v){
+  const home=+v.home,downPct=+v.down/100,annRate=+v.rate/100,yrs=+v.years,rent=+v.rent,appre=+v.appre/100,invest=+v.invest/100;
+  if([home,downPct,annRate,yrs,rent].some(isNaN)||home<=0||yrs<=0)return{error:'Enter all required values.'};
+  const down=home*downPct,loan=home-down,r=annRate/12,n=yrs*12;
+  const monthly=r===0?loan/n:loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const totalMortgage=monthly*n;
+  const totalInterest=totalMortgage-loan;
+  const propTax=home*0.012*yrs;
+  const maintenance=home*0.01*yrs;
+  const insurance=home*0.005*yrs;
+  const totalBuyCost=down+totalInterest+propTax+maintenance+insurance;
+  const futureHomeValue=home*Math.pow(1+appre,yrs);
+  const equity=futureHomeValue-loan*(1-yrs/30);
+  const netBuyCost=totalBuyCost-equity+home;
+  // Renting cost
+  const totalRent=rent*12*yrs*(1+0.03*yrs/2);
+  // Opportunity cost: down payment invested
+  const oppCost=down*(Math.pow(1+invest,yrs)-1);
+  const netRentCost=totalRent+oppCost;
+  const winner=netBuyCost<netRentCost?'Buying':'Renting';
+  const saving=Math.abs(netBuyCost-netRentCost);
+  return[
+    {label:'Verdict',value:winner+' wins 🏆'},
+    {label:'Est. saving',value:fmtC(saving)+' over '+yrs+' yrs'},
+    {label:'Total buy cost',value:fmtC(netBuyCost)},
+    {label:'Total rent cost',value:fmtC(netRentCost)},
+    {label:'Monthly mortgage',value:fmtC(monthly)},
+    {label:'Future home value',value:fmtC(futureHomeValue)},
+  ];
+}},
+
+{id:'lease-vs-buy-car',name:'Lease vs Buy Car Calculator',cat:'comparisons',icon:'🚗',desc:'Compare the total cost of leasing vs buying a car over any time period.',
+inputs:[
+  {id:'price',label:'Car Price ($)',type:'number',placeholder:'e.g. 35000'},
+  {id:'down',label:'Down Payment ($)',type:'number',placeholder:'e.g. 3000',def:'3000'},
+  {id:'rate',label:'Loan Interest Rate (%)',type:'number',placeholder:'e.g. 7',def:'7'},
+  {id:'loanYrs',label:'Loan Term (years)',type:'number',placeholder:'e.g. 5',def:'5'},
+  {id:'leaseMonth',label:'Monthly Lease Payment ($)',type:'number',placeholder:'e.g. 350'},
+  {id:'leaseDown',label:'Lease Down / Drive-off ($)',type:'number',placeholder:'e.g. 2000',def:'2000'},
+  {id:'leaseYrs',label:'Lease Term (years)',type:'number',placeholder:'e.g. 3',def:'3'},
+  {id:'depr',label:'Annual Depreciation (%)',type:'number',placeholder:'e.g. 15',def:'15'},
+],
+compute(v){
+  const price=+v.price,down=+v.down,annRate=+v.rate/100,loanYrs=+v.loanYrs,leaseMonth=+v.leaseMonth,leaseDown=+v.leaseDown,leaseYrs=+v.leaseYrs,depr=+v.depr/100;
+  if([price,down,annRate,loanYrs,leaseMonth,leaseYrs].some(isNaN)||price<=0)return{error:'Enter all values.'};
+  // Buy cost
+  const loan=price-down,r=annRate/12,n=loanYrs*12;
+  const monthly=r===0?loan/n:loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const totalLoan=monthly*n+down;
+  const residualValue=price*Math.pow(1-depr,leaseYrs);
+  const netBuyCost=totalLoan-residualValue;
+  // Lease cost over same period
+  const totalLease=leaseMonth*12*leaseYrs+leaseDown;
+  const winner=netBuyCost<totalLease?'Buying':'Leasing';
+  const diff=Math.abs(netBuyCost-totalLease);
+  return[
+    {label:'Verdict',value:winner+' wins 🏆'},
+    {label:'Difference',value:fmtC(diff)+' over '+leaseYrs+' yrs'},
+    {label:'Buy total cost',value:fmtC(netBuyCost)},
+    {label:'Lease total cost',value:fmtC(totalLease)},
+    {label:'Monthly loan payment',value:fmtC(monthly)},
+    {label:'Car value after '+leaseYrs+'y',value:fmtC(residualValue)},
+  ];
+}},
+
+{id:'petrol-vs-diesel',name:'Petrol vs Diesel Calculator',cat:'comparisons',icon:'⛽',desc:'Calculate the break-even point and savings of petrol vs diesel over time.',
+inputs:[
+  {id:'petrolPrice',label:'Petrol Price (per litre, $)',type:'number',placeholder:'e.g. 1.85'},
+  {id:'dieselPrice',label:'Diesel Price (per litre, $)',type:'number',placeholder:'e.g. 1.75'},
+  {id:'petrolConsump',label:'Petrol Consumption (L/100km)',type:'number',placeholder:'e.g. 9'},
+  {id:'dieselConsump',label:'Diesel Consumption (L/100km)',type:'number',placeholder:'e.g. 6.5'},
+  {id:'kmYear',label:'Annual Distance (km)',type:'number',placeholder:'e.g. 20000'},
+  {id:'extraCost',label:'Diesel Premium — extra upfront cost ($)',type:'number',placeholder:'e.g. 2000',def:'2000'},
+],
+compute(v){
+  const pp=+v.petrolPrice,dp=+v.dieselPrice,pc=+v.petrolConsump,dc=+v.dieselConsump,km=+v.kmYear,extra=+v.extraCost||0;
+  if([pp,dp,pc,dc,km].some(isNaN)||km<=0)return{error:'Enter all values.'};
+  const petrolYr=km*pc/100*pp;
+  const dieselYr=km*dc/100*dp;
+  const savingYr=petrolYr-dieselYr;
+  const breakeven=savingYr>0?extra/savingYr:null;
+  const petrolPer100=pc*pp;
+  const dieselPer100=dc*dp;
+  return[
+    {label:'Verdict',value:savingYr>0?'Diesel cheaper to run ⛽':'Petrol cheaper to run ⛽'},
+    {label:'Annual saving',value:savingYr>0?fmtC(savingYr)+' with diesel':fmtC(-savingYr)+' with petrol'},
+    {label:'Break-even',value:breakeven?fmt(breakeven)+' years':extra===0?'Immediate':'Diesel costs more to run'},
+    {label:'Petrol cost/100km',value:fmtC(petrolPer100)},
+    {label:'Diesel cost/100km',value:fmtC(dieselPer100)},
+    {label:'Petrol annual fuel bill',value:fmtC(petrolYr)},
+    {label:'Diesel annual fuel bill',value:fmtC(dieselYr)},
+  ];
+}},
+
+{id:'electric-vs-petrol',name:'Electric vs Petrol Car Calculator',cat:'comparisons',icon:'⚡',desc:'Calculate the true running cost savings of an electric car vs petrol.',
+inputs:[
+  {id:'petrolConsump',label:'Petrol Consumption (L/100km)',type:'number',placeholder:'e.g. 8',def:'8'},
+  {id:'petrolPrice',label:'Petrol Price (per litre, $)',type:'number',placeholder:'e.g. 1.85'},
+  {id:'evConsump',label:'EV Consumption (kWh/100km)',type:'number',placeholder:'e.g. 18',def:'18'},
+  {id:'elecPrice',label:'Electricity Price (per kWh, $)',type:'number',placeholder:'e.g. 0.28'},
+  {id:'kmYear',label:'Annual Distance (km)',type:'number',placeholder:'e.g. 20000'},
+  {id:'evPremium',label:'EV Extra Upfront Cost ($)',type:'number',placeholder:'e.g. 15000',def:'15000'},
+  {id:'servSaving',label:'Annual Service Saving with EV ($)',type:'number',placeholder:'e.g. 500',def:'500'},
+],
+compute(v){
+  const pc=+v.petrolConsump,pp=+v.petrolPrice,ec=+v.evConsump,ep=+v.elecPrice,km=+v.kmYear,premium=+v.evPremium||0,servSave=+v.servSaving||0;
+  if([pc,pp,ec,ep,km].some(isNaN)||km<=0)return{error:'Enter all values.'};
+  const petrolYr=km*pc/100*pp;
+  const evYr=km*ec/100*ep;
+  const fuelSaveYr=petrolYr-evYr;
+  const totalSaveYr=fuelSaveYr+servSave;
+  const breakeven=totalSaveYr>0?premium/totalSaveYr:null;
+  const co2Petrol=km*pc/100*2.31;
+  const co2EV=km*ec/100*0.233;
+  return[
+    {label:'Annual fuel saving',value:fmtC(fuelSaveYr)+' with EV'},
+    {label:'Total annual saving',value:fmtC(totalSaveYr)+' (incl. service)'},
+    {label:'Break-even point',value:breakeven&&breakeven>0?fmt(breakeven)+' years':'Already cheaper!'},
+    {label:'Petrol fuel cost/yr',value:fmtC(petrolYr)},
+    {label:'EV electricity cost/yr',value:fmtC(evYr)},
+    {label:'CO₂ saving/yr',value:fmt(co2Petrol-co2EV)+' kg CO₂'},
+    {label:'10-year total saving',value:fmtC(totalSaveYr*10-premium)},
+  ];
+}},
+
+{id:'inflation-calc',name:'Inflation Calculator',cat:'comparisons',icon:'📈',desc:'Calculate the equivalent purchasing power of money across any time period.',
+inputs:[
+  {id:'amount',label:'Amount ($)',type:'number',placeholder:'e.g. 100'},
+  {id:'fromYear',label:'From Year',type:'number',placeholder:'e.g. 2000'},
+  {id:'toYear',label:'To Year',type:'number',placeholder:'e.g. 2024'},
+  {id:'inflRate',label:'Average Annual Inflation (%)',type:'number',placeholder:'e.g. 3',def:'3'},
+],
+compute(v){
+  const amount=+v.amount,from=+v.fromYear,to=+v.toYear,rate=+v.inflRate/100;
+  if([amount,from,to,rate].some(isNaN)||amount<=0)return{error:'Enter all values.'};
+  if(from===to)return{error:'From and to year must be different.'};
+  const yrs=to-from;
+  const adjusted=amount*Math.pow(1+rate,yrs);
+  const purchasing=amount/Math.pow(1+rate,Math.abs(yrs));
+  const totalInflation=(Math.pow(1+rate,Math.abs(yrs))-1)*100;
+  const direction=yrs>0?'future':'past';
+  return[
+    {label:yrs>0?`$${amount} in ${from} is worth today:`:`$${amount} in ${from} equals:`,value:fmtC(Math.abs(yrs)===yrs?adjusted:purchasing)},
+    {label:'Purchasing power lost',value:fmt(totalInflation)+'%'},
+    {label:'Equivalent '+to+' value',value:fmtC(adjusted)},
+    {label:'Years compared',value:Math.abs(yrs)+' years'},
+    {label:'Inflation rate used',value:fmt(rate*100)+'% per year'},
+    {label:'Real value of $1 then',value:'$'+fmt(1/Math.pow(1+rate,Math.abs(yrs)))+' today'},
+  ];
+}},
+
+
 ];
 
 // ═══════════════════════════════════════════
@@ -931,6 +1093,11 @@ const CALC_SEO={
   'pythagorean':      {kw:'pythagorean theorem calculator',kw2:'right triangle calculator, hypotenuse calculator, a squared plus b squared'},
   'roi':              {kw:'ROI calculator',kw2:'return on investment calculator, calculate ROI, investment return calculator'},
   'body-fat':         {kw:'body fat calculator',kw2:'body fat percentage calculator, how to calculate body fat, body fat measurement'},
+  'rent-vs-buy':      {kw:'rent vs buy calculator',kw2:'should I rent or buy a house, renting vs buying comparison, rent or buy home calculator'},
+  'lease-vs-buy-car': {kw:'lease vs buy car calculator',kw2:'should I lease or buy a car, car lease vs finance calculator, leasing vs buying comparison'},
+  'petrol-vs-diesel':  {kw:'petrol vs diesel calculator',kw2:'petrol or diesel which is cheaper, diesel vs petrol running costs, fuel cost comparison'},
+  'electric-vs-petrol':{kw:'electric car vs petrol calculator',kw2:'EV vs petrol running costs, electric car savings calculator, how much can I save with electric car'},
+  'inflation-calc':    {kw:'inflation calculator',kw2:'past vs present money value, purchasing power calculator, inflation rate calculator'},
   'ideal-weight':     {kw:'ideal weight calculator',kw2:'healthy weight for height, what should I weigh, ideal body weight calculator'},
   'random-number':    {kw:'random number generator',kw2:'generate random numbers, random number picker, random integer generator'},
 };
