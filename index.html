@@ -1820,9 +1820,22 @@ compute(v){
 // ═══════════════════════════════════════════
 // ROUTER
 // ═══════════════════════════════════════════
-function navigate(page,param){window.location.hash=param?`#/${page}/${param}`:`#/${page}`;window.scrollTo(0,0);}
-function parseRoute(){const h=window.location.hash.replace('#/','').split('/');return{page:h[0]||'home',param:h[1]||''};}
-window.addEventListener('hashchange',render);
+function navigate(page,param){
+  let url;
+  if(!page||page==='home') url='/';
+  else if(param) url='/'+page+'/'+param;
+  else url='/'+page;
+  history.pushState({page,param},document.title,url);
+  window.scrollTo(0,0);
+  render();
+}
+function parseRoute(){
+  const path=window.location.pathname.replace(/^\/|\/$/g,'');
+  if(!path) return{page:'home',param:''};
+  const parts=path.split('/');
+  return{page:parts[0]||'home',param:parts[1]||''};
+}
+window.addEventListener('popstate',render);
 window.addEventListener('load',render);
 
 // SEO keyword map — primary keyword + secondary keywords per calculator
@@ -1912,7 +1925,7 @@ function updateSEO(title,desc,calcId){
   }
   // Update canonical
   let can=document.querySelector('link[rel="canonical"]');
-  if(can) can.setAttribute('href',`https://calchub.dpdns.org/${window.location.hash}`);
+  if(can) can.setAttribute('href','https://calchub.dpdns.org'+window.location.pathname);
 }
 
 function render(){
@@ -2597,7 +2610,7 @@ function shareCalc(name){
 function showEmbedModal(calcId){
   const calc=getCalc(calcId);
   if(!calc)return;
-  const url=`https://calchub.dpdns.org/#/calc/${calcId}`;
+  const url=`https://calchub.dpdns.org/calc/${calcId}`;
   const code=`<iframe src="${url}" width="100%" height="520" frameborder="0" style="border-radius:12px;border:1px solid #2a2a38;" title="${calc.name} — CalcHub" loading="lazy"></iframe>\n<p style="font-size:12px;color:#888;margin-top:6px;">Powered by <a href="https://calchub.dpdns.org" target="_blank">CalcHub</a> — Free Online Calculators</p>`;
   document.getElementById('embed-code').textContent=code;
   document.getElementById('embed-modal').classList.remove('hidden');
