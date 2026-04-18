@@ -414,4 +414,53 @@
   <url><loc>https://calchub.dpdns.org/#/calc/electric-vs-petrol</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
   <url><loc>https://calchub.dpdns.org/#/calc/inflation-calc</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
 
+
+  <!-- ═══════════════════════════════ -->
+  <!-- NEW CALCULATORS — BATCH 3       -->
+  <!-- ═══════════════════════════════ -->
+
+  <!-- Finance -->
+  <url><loc>https://calchub.dpdns.org/#/calc/net-worth</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/budget-503020</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/debt-payoff</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/credit-card-payoff</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/retirement-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/dividend-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <!-- Health -->
+  <url><loc>https://calchub.dpdns.org/#/calc/macro-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/calories-burned</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/running-pace</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/ovulation-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/pregnancy-weight</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <!-- Everyday -->
+  <url><loc>https://calchub.dpdns.org/#/calc/caffeine-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/recipe-scaler</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/pace-calculator</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/screen-time-cost</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <!-- Construction -->
+  <url><loc>https://calchub.dpdns.org/#/calc/fence-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/deck-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/roof-area</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/pool-volume</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/staircase-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <!-- Comparisons -->
+  <url><loc>https://calchub.dpdns.org/#/calc/cable-vs-streaming</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/coffee-cost-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/wfh-savings</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
+  <!-- Math -->
+  <url><loc>https://calchub.dpdns.org/#/calc/prime-checker</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/calc/pct-of-pct</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
+  <!-- NEW ARTICLES — BATCH 3 -->
+  <url><loc>https://calchub.dpdns.org/#/article/how-to-calculate-net-worth</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/debt-snowball-vs-avalanche</loc><lastmod>2025-04-03</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/how-to-calculate-macros</loc><lastmod>2025-04-05</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/running-pace-guide</loc><lastmod>2025-04-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/how-much-do-you-need-to-retire</loc><lastmod>2025-04-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/5030-20-budgeting-rule</loc><lastmod>2025-04-11</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/caffeine-guide</loc><lastmod>2025-04-13</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/calories-burned-guide</loc><lastmod>2025-04-15</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/home-buying-guide</loc><lastmod>2025-04-17</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://calchub.dpdns.org/#/article/wfh-vs-office-costs</loc><lastmod>2025-04-19</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
 </urlset>

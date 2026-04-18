@@ -1058,6 +1058,763 @@ compute(v){
 }},
 
 
+// ─── FINANCE (NEW) ────────────────────────────────────────────────────────────
+{id:'net-worth',name:'Net Worth Calculator',cat:'finance',icon:'💎',desc:'Calculate your total net worth — assets minus liabilities.',
+inputs:[
+  {id:'cash',label:'Cash & Savings ($)',type:'number',placeholder:'e.g. 15000',def:'0'},
+  {id:'investments',label:'Investments & Stocks ($)',type:'number',placeholder:'e.g. 50000',def:'0'},
+  {id:'property',label:'Property Value ($)',type:'number',placeholder:'e.g. 300000',def:'0'},
+  {id:'vehicles',label:'Vehicles ($)',type:'number',placeholder:'e.g. 20000',def:'0'},
+  {id:'other_assets',label:'Other Assets ($)',type:'number',placeholder:'e.g. 5000',def:'0'},
+  {id:'mortgage_bal',label:'Mortgage Balance ($)',type:'number',placeholder:'e.g. 200000',def:'0'},
+  {id:'car_loans',label:'Car Loans ($)',type:'number',placeholder:'e.g. 10000',def:'0'},
+  {id:'credit_cards',label:'Credit Card Debt ($)',type:'number',placeholder:'e.g. 5000',def:'0'},
+  {id:'student_loans',label:'Student Loans ($)',type:'number',placeholder:'e.g. 20000',def:'0'},
+  {id:'other_debt',label:'Other Debt ($)',type:'number',placeholder:'e.g. 0',def:'0'},
+],
+compute(v){
+  const assets=(+v.cash||0)+(+v.investments||0)+(+v.property||0)+(+v.vehicles||0)+(+v.other_assets||0);
+  const liabilities=(+v.mortgage_bal||0)+(+v.car_loans||0)+(+v.credit_cards||0)+(+v.student_loans||0)+(+v.other_debt||0);
+  const nw=assets-liabilities;
+  const liabRatio=assets>0?liabilities/assets*100:0;
+  return[
+    {label:'Net Worth',value:fmtC(nw)},
+    {label:'Total Assets',value:fmtC(assets)},
+    {label:'Total Liabilities',value:fmtC(liabilities)},
+    {label:'Debt-to-Asset Ratio',value:fmt(liabRatio)+'%'},
+    {label:'Status',value:nw>0?'Positive Net Worth ✅':nw===0?'Break Even':'Negative — Focus on debt 🔴'},
+  ];
+}},
+
+{id:'budget-503020',name:'50/30/20 Budget Calculator',cat:'finance',icon:'📊',desc:'Split your income using the 50/30/20 budgeting rule — needs, wants, savings.',
+inputs:[
+  {id:'income',label:'Monthly Take-Home Income ($)',type:'number',placeholder:'e.g. 5000'},
+  {id:'needs',label:'Your Actual Needs Spending ($)',type:'number',placeholder:'e.g. 2400',def:'0'},
+  {id:'wants',label:'Your Actual Wants Spending ($)',type:'number',placeholder:'e.g. 1600',def:'0'},
+  {id:'savings',label:'Your Actual Savings ($)',type:'number',placeholder:'e.g. 800',def:'0'},
+],
+compute(v){
+  const inc=+v.income,needs=+v.needs||0,wants=+v.wants||0,savings=+v.savings||0;
+  if(isNaN(inc)||inc<=0)return{error:'Enter your monthly income.'};
+  const tNeeds=inc*0.5,tWants=inc*0.3,tSave=inc*0.2;
+  return[
+    {label:'Needs (50%) Target',value:fmtC(tNeeds)},
+    {label:'Wants (30%) Target',value:fmtC(tWants)},
+    {label:'Savings (20%) Target',value:fmtC(tSave)},
+    {label:'Your Needs',value:fmtC(needs)+' ('+(needs>tNeeds?'⚠️ Over':'✅ OK')+')'},
+    {label:'Your Wants',value:fmtC(wants)+' ('+(wants>tWants?'⚠️ Over':'✅ OK')+')'},
+    {label:'Your Savings',value:fmtC(savings)+' ('+(savings>=tSave?'✅ On track':'⚠️ Under')+')'},
+    {label:'Unallocated',value:fmtC(inc-needs-wants-savings)},
+  ];
+}},
+
+{id:'debt-payoff',name:'Debt Payoff Calculator',cat:'finance',icon:'🎯',desc:'See when you will be debt-free using the snowball or avalanche method.',
+inputs:[
+  {id:'balance',label:'Total Debt Balance ($)',type:'number',placeholder:'e.g. 25000'},
+  {id:'rate',label:'Average Interest Rate (%)',type:'number',placeholder:'e.g. 18'},
+  {id:'payment',label:'Monthly Payment ($)',type:'number',placeholder:'e.g. 500'},
+  {id:'method',label:'Payoff Method',type:'select',options:['Avalanche (highest rate first — saves most interest)','Snowball (smallest balance first — builds momentum)']},
+],
+compute(v){
+  const bal=+v.balance,rate=+v.rate/100/12,payment=+v.payment;
+  if([bal,rate,payment].some(isNaN)||bal<=0||payment<=0)return{error:'Enter valid values.'};
+  if(payment<=bal*rate)return{error:'Payment too low to cover interest. Increase monthly payment.'};
+  let balance=bal,months=0,totalInterest=0;
+  while(balance>0&&months<600){
+    const interest=balance*rate;
+    totalInterest+=interest;
+    balance=balance+interest-payment;
+    months++;
+    if(balance<0)balance=0;
+  }
+  const yrs=Math.floor(months/12),mo=months%12;
+  return[
+    {label:'Debt-Free In',value:(yrs>0?yrs+'y ':'')+mo+'mo'},
+    {label:'Total Interest Paid',value:fmtC(totalInterest)},
+    {label:'Total Paid',value:fmtC(payment*months)},
+    {label:'Monthly Payment',value:fmtC(payment)},
+    {label:'Method',value:v.method.startsWith('Avalanche')?'Avalanche':'Snowball'},
+    {label:'Interest as % of debt',value:fmt(totalInterest/bal*100)+'%'},
+  ];
+}},
+
+{id:'credit-card-payoff',name:'Credit Card Payoff Calculator',cat:'finance',icon:'💳',desc:'Find out how long to pay off your credit card and how much interest you will pay.',
+inputs:[
+  {id:'balance',label:'Current Balance ($)',type:'number',placeholder:'e.g. 5000'},
+  {id:'rate',label:'Annual Interest Rate (APR %)',type:'number',placeholder:'e.g. 20'},
+  {id:'mode',label:'I want to…',type:'select',options:['Pay a fixed amount monthly','Be debt-free by a target date']},
+  {id:'payment',label:'Monthly Payment ($)',type:'number',placeholder:'e.g. 200'},
+  {id:'months',label:'Target Months to Pay Off',type:'number',placeholder:'e.g. 24'},
+],
+compute(v){
+  const bal=+v.balance,apr=+v.rate/100,r=apr/12;
+  if(isNaN(bal)||isNaN(apr)||bal<=0)return{error:'Enter balance and interest rate.'};
+  if(v.mode.startsWith('Pay a fixed')){
+    const pmt=+v.payment;
+    if(isNaN(pmt)||pmt<=0)return{error:'Enter monthly payment.'};
+    if(pmt<=bal*r)return{error:'Payment too low — increase your monthly payment.'};
+    let b=bal,months=0,interest=0;
+    while(b>0&&months<600){const i=b*r;interest+=i;b=b+i-pmt;months++;}
+    const yrs=Math.floor(months/12),mo=months%12;
+    return[
+      {label:'Paid off in',value:(yrs>0?yrs+'y ':'')+mo+'mo'},
+      {label:'Total interest',value:fmtC(interest)},
+      {label:'Total paid',value:fmtC(pmt*months)},
+      {label:'Min payment tip',value:fmtC(bal*r+1)+'/mo covers interest only'},
+    ];
+  } else {
+    const n=+v.months;
+    if(isNaN(n)||n<=0)return{error:'Enter target months.'};
+    const pmt=r===0?bal/n:bal*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+    const totalInterest=pmt*n-bal;
+    return[
+      {label:'Required Monthly Payment',value:fmtC(pmt)},
+      {label:'Total Interest',value:fmtC(totalInterest)},
+      {label:'Total Paid',value:fmtC(pmt*n)},
+      {label:'Target',value:n+' months'},
+    ];
+  }
+}},
+
+{id:'retirement-calc',name:'Retirement Calculator',cat:'finance',icon:'🏖️',desc:'Calculate how much you need to retire and if you are on track.',
+inputs:[
+  {id:'age',label:'Current Age',type:'number',placeholder:'e.g. 35'},
+  {id:'retireAge',label:'Retirement Age',type:'number',placeholder:'e.g. 65',def:'65'},
+  {id:'current',label:'Current Retirement Savings ($)',type:'number',placeholder:'e.g. 50000',def:'0'},
+  {id:'monthly',label:'Monthly Contribution ($)',type:'number',placeholder:'e.g. 500'},
+  {id:'income',label:'Desired Annual Retirement Income ($)',type:'number',placeholder:'e.g. 50000'},
+  {id:'retireYrs',label:'Years in Retirement',type:'number',placeholder:'e.g. 25',def:'25'},
+  {id:'returnRate',label:'Expected Annual Return (%)',type:'number',placeholder:'e.g. 7',def:'7'},
+],
+compute(v){
+  const age=+v.age,retireAge=+v.retireAge,current=+v.current||0,monthly=+v.monthly||0;
+  const income=+v.income,retireYrs=+v.retireYrs||25,ret=+v.returnRate/100||0.07;
+  if([age,retireAge,income].some(isNaN)||age>=retireAge)return{error:'Enter valid ages (current < retirement).'};
+  const yrsToRetire=retireAge-age;
+  const r=ret/12;
+  const n=yrsToRetire*12;
+  const futureVal=current*Math.pow(1+ret,yrsToRetire)+monthly*(Math.pow(1+r,n)-1)/r;
+  const needed=income*((1-Math.pow(1+ret,-retireYrs))/ret);
+  const onTrack=futureVal>=needed;
+  const gap=Math.abs(needed-futureVal);
+  const extraNeeded=onTrack?0:gap*(ret/12)/(Math.pow(1+ret/12,n)-1);
+  return[
+    {label:'Projected Savings',value:fmtC(futureVal)},
+    {label:'Amount Needed',value:fmtC(needed)},
+    {label:'Status',value:onTrack?'✅ On Track!':'⚠️ Shortfall of '+fmtC(gap)},
+    {label:'Extra monthly needed',value:onTrack?'None':fmtC(extraNeeded)},
+    {label:'Years to retirement',value:yrsToRetire},
+    {label:'Monthly income in retirement',value:fmtC(income/12)},
+  ];
+}},
+
+{id:'dividend-calc',name:'Dividend Calculator',cat:'finance',icon:'💸',desc:'Calculate dividend income, yield, and annual payout from your stock investment.',
+inputs:[
+  {id:'shares',label:'Number of Shares',type:'number',placeholder:'e.g. 100'},
+  {id:'price',label:'Share Price ($)',type:'number',placeholder:'e.g. 50'},
+  {id:'divPerShare',label:'Annual Dividend Per Share ($)',type:'number',placeholder:'e.g. 2.40'},
+  {id:'freq',label:'Payment Frequency',type:'select',options:['Annually','Semi-annually','Quarterly','Monthly']},
+  {id:'drip',label:'Reinvest dividends (DRIP)?',type:'select',options:['No — take as cash','Yes — reinvest']},
+  {id:'yrs',label:'Years (for DRIP projection)',type:'number',placeholder:'e.g. 10',def:'10'},
+],
+compute(v){
+  const shares=+v.shares,price=+v.price,dpShare=+v.divPerShare,yrs=+v.yrs||10;
+  if([shares,price,dpShare].some(isNaN)||shares<=0||price<=0)return{error:'Enter shares, price and dividend.'};
+  const annual=shares*dpShare;
+  const yield_=dpShare/price*100;
+  const invest=shares*price;
+  const freqMap={'Annually':1,'Semi-annually':2,'Quarterly':4,'Monthly':12};
+  const perPayment=annual/(freqMap[v.freq]||4);
+  let results=[
+    {label:'Annual Dividend Income',value:fmtC(annual)},
+    {label:'Dividend Yield',value:fmt(yield_)+'%'},
+    {label:'Per Payment ('+v.freq+')',value:fmtC(perPayment)},
+    {label:'Total Investment',value:fmtC(invest)},
+  ];
+  if(v.drip==='Yes — reinvest'){
+    let s=shares,totalIncome=0;
+    for(let y=0;y<yrs;y++){const div=s*dpShare;totalIncome+=div;s+=div/price;}
+    results.push({label:`After ${yrs}y (DRIP)`,value:fmt(s)+' shares'});
+    results.push({label:'Total dividends reinvested',value:fmtC(totalIncome)});
+  }
+  return results;
+}},
+
+// ─── HEALTH (NEW) ──────────────────────────────────────────────────────────────
+{id:'macro-calc',name:'Macro Calculator',cat:'health',icon:'🥗',desc:'Calculate your ideal daily protein, carbs and fat targets for any fitness goal.',
+inputs:[
+  {id:'weight',label:'Weight (kg)',type:'number',placeholder:'e.g. 75'},
+  {id:'height',label:'Height (cm)',type:'number',placeholder:'e.g. 175'},
+  {id:'age',label:'Age',type:'number',placeholder:'e.g. 30'},
+  {id:'gender',label:'Biological Sex',type:'select',options:['Male','Female']},
+  {id:'activity',label:'Activity Level',type:'select',options:['Sedentary','Light (1-3 days/wk)','Moderate (3-5 days/wk)','Active (6-7 days/wk)','Very Active']},
+  {id:'goal',label:'Goal',type:'select',options:['Lose weight','Maintain weight','Build muscle','Aggressive bulk']},
+],
+compute(v){
+  const w=+v.weight,h=+v.height,age=+v.age;
+  if([w,h,age].some(isNaN))return{error:'Enter weight, height and age.'};
+  const bmr=v.gender==='Male'?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
+  const mults=[1.2,1.375,1.55,1.725,1.9];
+  const idx=['Sedentary','Light (1-3 days/wk)','Moderate (3-5 days/wk)','Active (6-7 days/wk)','Very Active'].indexOf(v.activity);
+  const tdee=bmr*(mults[idx]||1.55);
+  const goalAdj={	'Lose weight':-500,'Maintain weight':0,'Build muscle':250,'Aggressive bulk':500};
+  const cal=tdee+(goalAdj[v.goal]||0);
+  const proteinG=w*2.0;
+  const fatG=cal*0.25/9;
+  const carbG=(cal-proteinG*4-fatG*9)/4;
+  return[
+    {label:'Daily Calories',value:Math.round(cal)+' kcal'},
+    {label:'Protein',value:Math.round(proteinG)+'g ('+Math.round(proteinG*4/cal*100)+'%)'},
+    {label:'Carbohydrates',value:Math.round(carbG)+'g ('+Math.round(carbG*4/cal*100)+'%)'},
+    {label:'Fat',value:Math.round(fatG)+'g ('+Math.round(fatG*9/cal*100)+'%)'},
+    {label:'TDEE (maintenance)',value:Math.round(tdee)+' kcal'},
+    {label:'Goal',value:v.goal},
+  ];
+}},
+
+{id:'calories-burned',name:'Calories Burned Calculator',cat:'health',icon:'🔥',desc:'Estimate calories burned during exercise based on activity, weight and duration.',
+inputs:[
+  {id:'weight',label:'Weight (kg)',type:'number',placeholder:'e.g. 70'},
+  {id:'activity',label:'Activity',type:'select',options:['Running (8 km/h)','Running (12 km/h)','Cycling (moderate)','Cycling (vigorous)','Swimming (moderate)','Swimming (vigorous)','Walking (5 km/h)','Walking (brisk 6.5 km/h)','HIIT','Yoga','Weight Training','Football/Soccer','Basketball','Tennis','Rowing (moderate)','Jump Rope','Dancing','Hiking']},
+  {id:'duration',label:'Duration (minutes)',type:'number',placeholder:'e.g. 45'},
+],
+compute(v){
+  const w=+v.weight,dur=+v.duration;
+  if([w,dur].some(isNaN)||w<=0||dur<=0)return{error:'Enter weight and duration.'};
+  const mets={
+    'Running (8 km/h)':8.3,'Running (12 km/h)':11.5,'Cycling (moderate)':6,'Cycling (vigorous)':10,
+    'Swimming (moderate)':6,'Swimming (vigorous)':10,'Walking (5 km/h)':3.5,'Walking (brisk 6.5 km/h)':4.3,
+    'HIIT':8.5,'Yoga':2.5,'Weight Training':4,'Football/Soccer':7,'Basketball':6.5,
+    'Tennis':7,'Rowing (moderate)':7,'Jump Rope':10,'Dancing':4.5,'Hiking':6,
+  };
+  const met=mets[v.activity]||5;
+  const calories=met*w*3.5/200*dur;
+  return[
+    {label:'Calories Burned',value:Math.round(calories)+' kcal'},
+    {label:'Activity',value:v.activity},
+    {label:'Duration',value:dur+' minutes'},
+    {label:'Burn rate',value:Math.round(calories/dur*60)+' kcal/hour'},
+    {label:'Fat burned (est.)',value:fmt(calories/7700*1000)+'g of fat'},
+    {label:'MET value',value:met},
+  ];
+}},
+
+{id:'running-pace',name:'Running Pace Calculator',cat:'health',icon:'🏃',desc:'Calculate your running pace, finish time, or distance for any race.',
+inputs:[
+  {id:'mode',label:'Calculate',type:'select',options:['Pace (from distance & time)','Finish Time (from distance & pace)','Distance (from pace & time)']},
+  {id:'dist',label:'Distance (km)',type:'number',placeholder:'e.g. 5'},
+  {id:'hrs',label:'Hours',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'mins',label:'Minutes',type:'number',placeholder:'e.g. 25'},
+  {id:'secs',label:'Seconds',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'paceMin',label:'Pace — Minutes',type:'number',placeholder:'e.g. 5'},
+  {id:'paceSec',label:'Pace — Seconds',type:'number',placeholder:'e.g. 30',def:'0'},
+],
+compute(v){
+  const mode=v.mode;
+  if(mode.startsWith('Pace')){
+    const dist=+v.dist,totalSec=(+v.hrs||0)*3600+(+v.mins||0)*60+(+v.secs||0);
+    if(isNaN(dist)||dist<=0||totalSec<=0)return{error:'Enter distance and time.'};
+    const secPerKm=totalSec/dist;
+    const pm=Math.floor(secPerKm/60),ps=Math.round(secPerKm%60);
+    const mph=dist/(totalSec/3600)*0.621371;
+    const raceDistances=[5,10,21.0975,42.195];
+    const raceNames=['5K','10K','Half Marathon','Marathon'];
+    const results=[
+      {label:'Pace',value:`${pm}:${pad(ps)} /km`},
+      {label:'Speed',value:fmt(dist/(totalSec/3600))+' km/h ('+fmt(mph)+' mph)'},
+    ];
+    raceDistances.forEach((rd,i)=>results.push({label:'Projected '+raceNames[i],value:(()=>{const s=secPerKm*rd;const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=Math.round(s%60);return h>0?`${h}:${pad(m)}:${pad(sec)}`:`${m}:${pad(sec)}`;})()}));
+    return results;
+  } else if(mode.startsWith('Finish')){
+    const dist=+v.dist,pSec=(+v.paceMin||0)*60+(+v.paceSec||0);
+    if(isNaN(dist)||dist<=0||pSec<=0)return{error:'Enter distance and pace.'};
+    const totalSec=pSec*dist;
+    const h=Math.floor(totalSec/3600),m=Math.floor((totalSec%3600)/60),s=Math.round(totalSec%60);
+    return[
+      {label:'Finish Time',value:h>0?`${h}:${pad(m)}:${pad(s)}`:`${m}:${pad(s)}`},
+      {label:'Distance',value:dist+' km'},
+      {label:'Pace',value:`${v.paceMin}:${pad(+v.paceSec||0)} /km`},
+      {label:'Speed',value:fmt(3600/pSec)+' km/h'},
+    ];
+  } else {
+    const totalSec=(+v.hrs||0)*3600+(+v.mins||0)*60+(+v.secs||0);
+    const pSec=(+v.paceMin||0)*60+(+v.paceSec||0);
+    if(totalSec<=0||pSec<=0)return{error:'Enter time and pace.'};
+    const dist=totalSec/pSec;
+    return[
+      {label:'Distance',value:fmt(dist)+' km ('+fmt(dist*0.621371)+' miles)'},
+      {label:'Time',value:`${+v.hrs||0}h ${+v.mins||0}m ${+v.secs||0}s`},
+      {label:'Pace',value:`${v.paceMin}:${pad(+v.paceSec||0)} /km`},
+    ];
+  }
+}},
+
+{id:'ovulation-calc',name:'Ovulation & Fertility Calculator',cat:'health',icon:'🌸',desc:'Estimate your ovulation date and fertile window based on your cycle.',
+inputs:[
+  {id:'lmp',label:'First Day of Last Period',type:'date'},
+  {id:'cycleLen',label:'Average Cycle Length (days)',type:'number',placeholder:'e.g. 28',def:'28'},
+  {id:'luteal',label:'Luteal Phase Length (days)',type:'number',placeholder:'e.g. 14',def:'14'},
+],
+compute(v){
+  if(!v.lmp)return{error:'Enter the first day of your last period.'};
+  const lmp=new Date(v.lmp),cycle=+v.cycleLen||28,luteal=+v.luteal||14;
+  if(cycle<21||cycle>35)return{error:'Cycle length should be between 21 and 35 days.'};
+  const ovDay=cycle-luteal;
+  const ovDate=new Date(lmp);ovDate.setDate(ovDate.getDate()+ovDay-1);
+  const fertStart=new Date(ovDate);fertStart.setDate(fertStart.getDate()-5);
+  const fertEnd=new Date(ovDate);fertEnd.setDate(fertEnd.getDate()+1);
+  const nextPeriod=new Date(lmp);nextPeriod.setDate(nextPeriod.getDate()+cycle);
+  const opts={month:'long',day:'numeric'};
+  return[
+    {label:'Estimated Ovulation',value:ovDate.toLocaleDateString('en-US',opts)},
+    {label:'Fertile Window',value:fertStart.toLocaleDateString('en-US',opts)+' – '+fertEnd.toLocaleDateString('en-US',opts)},
+    {label:'Peak Fertility Day',value:ovDate.toLocaleDateString('en-US',opts)},
+    {label:'Next Period (est.)',value:nextPeriod.toLocaleDateString('en-US',opts)},
+    {label:'Cycle Length',value:cycle+' days'},
+    {label:'Note',value:'Estimates only — cycles vary'},
+  ];
+}},
+
+{id:'pregnancy-weight',name:'Pregnancy Weight Gain Calculator',cat:'health',icon:'🤰',desc:'Calculate recommended pregnancy weight gain based on pre-pregnancy BMI.',
+inputs:[
+  {id:'preWeight',label:'Pre-pregnancy Weight (kg)',type:'number',placeholder:'e.g. 65'},
+  {id:'height',label:'Height (cm)',type:'number',placeholder:'e.g. 165'},
+  {id:'week',label:'Current Week of Pregnancy',type:'number',placeholder:'e.g. 20'},
+  {id:'twins',label:'Carrying',type:'select',options:['Single baby','Twins']},
+],
+compute(v){
+  const w=+v.preWeight,h=+v.height/100,week=+v.week;
+  if([w,h,week].some(isNaN)||w<=0||week<1||week>42)return{error:'Enter valid weight, height and week (1-42).'};
+  const bmi=w/(h*h);
+  let minGain,maxGain,label;
+  const twins=v.twins==='Twins';
+  if(bmi<18.5){minGain=twins?16.8:12.5;maxGain=twins?24.5:18;label='Underweight';}
+  else if(bmi<25){minGain=twins?16.8:11.5;maxGain=twins?24.5:16;label='Normal weight';}
+  else if(bmi<30){minGain=twins?14.1:7;maxGain=twins?22.7:11.5;label='Overweight';}
+  else{minGain=twins?11.3:5;maxGain=twins?19.1:9;label='Obese';}
+  const weeklyMin=week>12?(minGain-1.5)/(40-12):0;
+  const weeklyMax=week>12?(maxGain-2.5)/(40-12):0;
+  const currMin=week<=12?1.5:1.5+(week-12)*weeklyMin;
+  const currMax=week<=12?2.5:2.5+(week-12)*weeklyMax;
+  return[
+    {label:'Pre-pregnancy BMI',value:fmt(bmi)+' ('+label+')'},
+    {label:'Total Recommended Gain',value:fmt(minGain)+'–'+fmt(maxGain)+' kg'},
+    {label:'Expected by Week '+week,value:fmt(currMin)+'–'+fmt(currMax)+' kg'},
+    {label:'Recommended Rate (2nd/3rd tri)',value:fmt((minGain+maxGain)/2/28)+' kg/week'},
+    {label:'Carrying',value:v.twins},
+  ];
+}},
+
+// ─── EVERYDAY LIFE (NEW) ──────────────────────────────────────────────────────
+{id:'caffeine-calc',name:'Caffeine Calculator',cat:'everyday',icon:'☕',desc:'Calculate caffeine intake from coffee, tea and energy drinks vs safe daily limits.',
+inputs:[
+  {id:'coffeeShots',label:'Espresso shots',type:'number',placeholder:'e.g. 2',def:'0'},
+  {id:'filtCups',label:'Filter coffee cups (240ml)',type:'number',placeholder:'e.g. 1',def:'0'},
+  {id:'teaCups',label:'Black tea cups',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'greenTea',label:'Green tea cups',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'energyDrinks',label:'Energy drinks (250ml can)',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'cola',label:'Cola cans (330ml)',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'weight',label:'Body Weight (kg, for personalised limit)',type:'number',placeholder:'e.g. 70',def:'70'},
+],
+compute(v){
+  const espresso=(+v.coffeeShots||0)*63;
+  const filter=(+v.filtCups||0)*95;
+  const blackTea=(+v.teaCups||0)*47;
+  const greenTea=(+v.greenTea||0)*28;
+  const energy=(+v.energyDrinks||0)*80;
+  const cola=(+v.cola||0)*34;
+  const total=espresso+filter+blackTea+greenTea+energy+cola;
+  const weight=+v.weight||70;
+  const personalLimit=weight*5.7;
+  const safeLimit=400;
+  const pct=total/safeLimit*100;
+  return[
+    {label:'Total Caffeine',value:total+' mg'},
+    {label:'General Safe Limit',value:'400 mg/day'},
+    {label:'% of Safe Limit',value:fmt(pct)+'% '+(pct>100?'⚠️ Over limit':'✅ Within limit')},
+    {label:'Your Personalised Limit',value:Math.round(personalLimit)+' mg (5.7 mg/kg)'},
+    {label:'Half-life (in body ~5h)',value:'~'+Math.round(total/2)+' mg still active at bedtime'},
+    {label:'Tip',value:total>400?'Consider reducing intake':'Within healthy range'},
+  ];
+}},
+
+{id:'recipe-scaler',name:'Recipe Scaler',cat:'everyday',icon:'👨‍🍳',desc:'Scale any recipe up or down for any number of servings.',
+inputs:[
+  {id:'originalServings',label:'Original Servings',type:'number',placeholder:'e.g. 4'},
+  {id:'desiredServings',label:'Desired Servings',type:'number',placeholder:'e.g. 10'},
+  {id:'ing1',label:'Ingredient 1 quantity',type:'number',placeholder:'e.g. 200',def:'0'},
+  {id:'ing2',label:'Ingredient 2 quantity',type:'number',placeholder:'e.g. 150',def:'0'},
+  {id:'ing3',label:'Ingredient 3 quantity',type:'number',placeholder:'e.g. 2',def:'0'},
+  {id:'ing4',label:'Ingredient 4 quantity',type:'number',placeholder:'e.g. 3',def:'0'},
+  {id:'ing5',label:'Ingredient 5 quantity',type:'number',placeholder:'e.g. 500',def:'0'},
+],
+compute(v){
+  const orig=+v.originalServings,desired=+v.desiredServings;
+  if(isNaN(orig)||isNaN(desired)||orig<=0||desired<=0)return{error:'Enter original and desired servings.'};
+  const scale=desired/orig;
+  const results=[
+    {label:'Scale Factor',value:fmt(scale)+'x'},
+    {label:'Original Servings',value:orig},
+    {label:'New Servings',value:desired},
+  ];
+  for(let i=1;i<=5;i++){
+    const qty=+v[`ing${i}`];
+    if(qty&&qty>0)results.push({label:`Ingredient ${i} (was ${qty})`,value:fmt(qty*scale)});
+  }
+  results.push({label:'Cooking tip',value:scale>2?'Scale up — check oven temp & timing':'Standard scaling applies'});
+  return results;
+}},
+
+{id:'pace-calculator',name:'Walking Pace Calculator',cat:'everyday',icon:'🚶',desc:'Calculate walking pace, distance, or time for any walk or hike.',
+inputs:[
+  {id:'mode',label:'Calculate',type:'select',options:['Pace (from distance & time)','Time (from distance & pace)','Distance (from pace & time)']},
+  {id:'dist',label:'Distance (km)',type:'number',placeholder:'e.g. 5'},
+  {id:'hrs',label:'Hours',type:'number',placeholder:'e.g. 1',def:'0'},
+  {id:'mins',label:'Minutes',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'paceMin',label:'Pace (min/km)',type:'number',placeholder:'e.g. 12'},
+],
+compute(v){
+  if(v.mode.startsWith('Pace')){
+    const dist=+v.dist,totalMin=(+v.hrs||0)*60+(+v.mins||0);
+    if(isNaN(dist)||dist<=0||totalMin<=0)return{error:'Enter distance and time.'};
+    const minPerKm=totalMin/dist;
+    const kmh=dist/((+v.hrs||0)+(+v.mins||0)/60);
+    const mph=kmh*0.621371;
+    const steps=Math.round(dist*1312);
+    return[
+      {label:'Pace',value:Math.floor(minPerKm)+':'+pad(Math.round((minPerKm%1)*60))+' min/km'},
+      {label:'Speed',value:fmt(kmh)+' km/h ('+fmt(mph)+' mph)'},
+      {label:'Approx Steps',value:steps.toLocaleString()},
+      {label:'Calories (70kg person)',value:Math.round(dist*60)+' kcal (est.)'},
+    ];
+  } else if(v.mode.startsWith('Time')){
+    const dist=+v.dist,pace=+v.paceMin;
+    if(isNaN(dist)||isNaN(pace)||dist<=0||pace<=0)return{error:'Enter distance and pace.'};
+    const totalMin=dist*pace;
+    const h=Math.floor(totalMin/60),m=Math.round(totalMin%60);
+    return[{label:'Time',value:`${h}h ${m}m`},{label:'Distance',value:dist+' km'},{label:'Speed',value:fmt(60/pace)+' km/h'}];
+  } else {
+    const totalMin=(+v.hrs||0)*60+(+v.mins||0),pace=+v.paceMin;
+    if(totalMin<=0||isNaN(pace)||pace<=0)return{error:'Enter time and pace.'};
+    const dist=totalMin/pace;
+    return[{label:'Distance',value:fmt(dist)+' km ('+fmt(dist*0.621371)+' miles)'},{label:'Steps (est.)',value:Math.round(dist*1312).toLocaleString()}];
+  }
+}},
+
+{id:'screen-time-cost',name:'Screen Time Cost Calculator',cat:'everyday',icon:'📺',desc:'Calculate how much your entertainment subscriptions and screen time really cost you.',
+inputs:[
+  {id:'netflix',label:'Netflix ($/month)',type:'number',placeholder:'e.g. 15.99',def:'0'},
+  {id:'spotify',label:'Spotify ($/month)',type:'number',placeholder:'e.g. 9.99',def:'0'},
+  {id:'disney',label:'Disney+ ($/month)',type:'number',placeholder:'e.g. 7.99',def:'0'},
+  {id:'youtube',label:'YouTube Premium ($/month)',type:'number',placeholder:'e.g. 13.99',def:'0'},
+  {id:'other1',label:'Other subscription 1 ($/month)',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'other2',label:'Other subscription 2 ($/month)',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'hoursPerDay',label:'Average screen time (hours/day)',type:'number',placeholder:'e.g. 3'},
+  {id:'hourlyRate',label:'Your hourly rate ($/hr)',type:'number',placeholder:'e.g. 25',def:'25'},
+],
+compute(v){
+  const subs=(+v.netflix||0)+(+v.spotify||0)+(+v.disney||0)+(+v.youtube||0)+(+v.other1||0)+(+v.other2||0);
+  const hrs=+v.hoursPerDay||0;
+  const rate=+v.hourlyRate||25;
+  const annualSubs=subs*12;
+  const annualTimeVal=hrs*365*rate;
+  const totalCost=annualSubs+annualTimeVal;
+  return[
+    {label:'Monthly Subscriptions',value:fmtC(subs)},
+    {label:'Annual Subscription Cost',value:fmtC(annualSubs)},
+    {label:'Annual Screen Time',value:Math.round(hrs*365)+' hours'},
+    {label:'Time Value (at your rate)',value:fmtC(annualTimeVal)},
+    {label:'Total Annual Cost',value:fmtC(totalCost)},
+    {label:'Daily screen time cost',value:fmtC(subs/30+hrs*rate)},
+  ];
+}},
+
+// ─── CONSTRUCTION (NEW) ───────────────────────────────────────────────────────
+{id:'fence-calc',name:'Fence Calculator',cat:'construction',icon:'🪧',desc:'Calculate how many fence panels, posts and rails you need for any fence.',
+inputs:[
+  {id:'length',label:'Total Fence Length (m)',type:'number',placeholder:'e.g. 30'},
+  {id:'panelW',label:'Panel Width (m)',type:'number',placeholder:'e.g. 1.83',def:'1.83'},
+  {id:'gates',label:'Number of Gates',type:'number',placeholder:'e.g. 1',def:'0'},
+  {id:'gateW',label:'Gate Width (m)',type:'number',placeholder:'e.g. 1',def:'1'},
+  {id:'rails',label:'Number of Rails per Bay',type:'number',placeholder:'e.g. 3',def:'3'},
+],
+compute(v){
+  const len=+v.length,panelW=+v.panelW||1.83,gates=+v.gates||0,gateW=+v.gateW||1,rails=+v.rails||3;
+  if(isNaN(len)||len<=0)return{error:'Enter fence length.'};
+  const fenceLen=len-gates*gateW;
+  const panels=Math.ceil(fenceLen/panelW);
+  const posts=panels+1+gates*2;
+  const totalRails=panels*rails;
+  return[
+    {label:'Fence Panels',value:panels},
+    {label:'Fence Posts',value:posts},
+    {label:'Rails',value:totalRails},
+    {label:'Gates',value:gates},
+    {label:'Fenceable Length',value:fmt(fenceLen)+' m'},
+    {label:'+10% waste (panels)',value:Math.ceil(panels*1.1)},
+  ];
+}},
+
+{id:'deck-calc',name:'Decking Calculator',cat:'construction',icon:'🪵',desc:'Calculate how many decking boards you need for any deck area.',
+inputs:[
+  {id:'length',label:'Deck Length (m)',type:'number',placeholder:'e.g. 5'},
+  {id:'width',label:'Deck Width (m)',type:'number',placeholder:'e.g. 4'},
+  {id:'boardW',label:'Board Width (mm)',type:'number',placeholder:'e.g. 140',def:'140'},
+  {id:'boardL',label:'Board Length (m)',type:'number',placeholder:'e.g. 4.8',def:'4.8'},
+  {id:'gap',label:'Gap Between Boards (mm)',type:'number',placeholder:'e.g. 5',def:'5'},
+],
+compute(v){
+  const len=+v.length,wid=+v.width,boardW=(+v.boardW||140)/1000,boardL=+v.boardL||4.8,gap=(+v.gap||5)/1000;
+  if(isNaN(len)||isNaN(wid)||len<=0||wid<=0)return{error:'Enter deck dimensions.'};
+  const area=len*wid;
+  const spacing=boardW+gap;
+  const numBoards=Math.ceil(wid/spacing)*Math.ceil(len/boardL);
+  const boardArea=boardW*boardL;
+  const linearM=numBoards*boardL;
+  return[
+    {label:'Deck Area',value:fmt(area)+' m²'},
+    {label:'Boards Needed',value:numBoards},
+    {label:'+10% waste',value:Math.ceil(numBoards*1.1)},
+    {label:'Linear metres of timber',value:fmt(linearM)+' m'},
+    {label:'Board spacing',value:fmt(spacing*1000)+' mm (inc. gap)'},
+    {label:'Board coverage',value:fmt(boardArea)+' m² each'},
+  ];
+}},
+
+{id:'roof-area',name:'Roof Area Calculator',cat:'construction',icon:'🏠',desc:'Calculate the total roof area for materials such as tiles, felt or metal roofing.',
+inputs:[
+  {id:'length',label:'Building Length (m)',type:'number',placeholder:'e.g. 10'},
+  {id:'width',label:'Building Width (m)',type:'number',placeholder:'e.g. 8'},
+  {id:'pitch',label:'Roof Pitch (degrees)',type:'number',placeholder:'e.g. 30',def:'30'},
+  {id:'style',label:'Roof Style',type:'select',options:['Gable (2 slopes)','Hip (4 slopes)','Flat (+10% for overlap)','Shed (1 slope)']},
+],
+compute(v){
+  const len=+v.length,wid=+v.width,pitch=+v.pitch||30;
+  if(isNaN(len)||isNaN(wid)||len<=0||wid<=0)return{error:'Enter building dimensions.'};
+  const slopeFactor=1/Math.cos(pitch*Math.PI/180);
+  const footprint=len*wid;
+  let area;
+  if(v.style.startsWith('Gable'))area=footprint*slopeFactor;
+  else if(v.style.startsWith('Hip'))area=footprint*slopeFactor*1.05;
+  else if(v.style.startsWith('Flat'))area=footprint*1.1;
+  else area=(footprint/2)*slopeFactor;
+  return[
+    {label:'Roof Area',value:fmt(area)+' m²'},
+    {label:'Footprint Area',value:fmt(footprint)+' m²'},
+    {label:'Slope Factor',value:fmt(slopeFactor)+'x'},
+    {label:'Roof Style',value:v.style},
+    {label:'+15% for waste/overlap',value:fmt(area*1.15)+' m²'},
+    {label:'Approx tiles (10/m²)',value:Math.ceil(area*1.15*10)},
+  ];
+}},
+
+{id:'pool-volume',name:'Swimming Pool Volume Calculator',cat:'construction',icon:'🏊',desc:'Calculate pool volume, water needed, and chemical dosing for any pool shape.',
+inputs:[
+  {id:'shape',label:'Pool Shape',type:'select',options:['Rectangular','Oval/Elliptical','Circular','L-Shaped']},
+  {id:'len',label:'Length (m)',type:'number',placeholder:'e.g. 10'},
+  {id:'wid',label:'Width (m)',type:'number',placeholder:'e.g. 5'},
+  {id:'depthS',label:'Shallow End Depth (m)',type:'number',placeholder:'e.g. 1',def:'1'},
+  {id:'depthD',label:'Deep End Depth (m)',type:'number',placeholder:'e.g. 2',def:'2'},
+],
+compute(v){
+  const len=+v.len,wid=+v.wid,ds=+v.depthS||1,dd=+v.depthD||2;
+  if(isNaN(len)||isNaN(wid)||len<=0||wid<=0)return{error:'Enter pool dimensions.'};
+  const avgDepth=(ds+dd)/2;
+  let vol;
+  if(v.shape==='Rectangular')vol=len*wid*avgDepth;
+  else if(v.shape==='Oval/Elliptical')vol=Math.PI*(len/2)*(wid/2)*avgDepth;
+  else if(v.shape==='Circular')vol=Math.PI*(len/2)*(len/2)*avgDepth;
+  else vol=len*wid*avgDepth*0.85;
+  const litres=vol*1000;
+  const gallons=litres*0.264172;
+  const fillHrs=litres/1000;
+  return[
+    {label:'Volume',value:fmt(vol)+' m³'},
+    {label:'Litres',value:Math.round(litres).toLocaleString()+' L'},
+    {label:'US Gallons',value:Math.round(gallons).toLocaleString()+' gal'},
+    {label:'Fill time (at 1000L/hr)',value:fmt(fillHrs)+' hours'},
+    {label:'Chlorine (3 ppm dose)',value:fmt(litres*0.003)+' g'},
+    {label:'Surface area (est.)',value:fmt(len*wid)+' m²'},
+  ];
+}},
+
+{id:'staircase-calc',name:'Staircase Calculator',cat:'construction',icon:'🪜',desc:'Calculate riser height, tread depth, and number of steps for any staircase.',
+inputs:[
+  {id:'totalRise',label:'Total Rise (floor to floor, mm)',type:'number',placeholder:'e.g. 2700'},
+  {id:'totalRun',label:'Total Run (horizontal space, mm)',type:'number',placeholder:'e.g. 3600'},
+  {id:'targetRiser',label:'Target Riser Height (mm)',type:'number',placeholder:'e.g. 175',def:'175'},
+],
+compute(v){
+  const rise=+v.totalRise,run=+v.totalRun,targetR=+v.targetRiser||175;
+  if(isNaN(rise)||isNaN(run)||rise<=0)return{error:'Enter total rise and run.'};
+  const numRisers=Math.round(rise/targetR);
+  const riserH=rise/numRisers;
+  const numTreads=numRisers-1;
+  const treadD=run>0?run/numTreads:0;
+  const angle=Math.atan(riserH/treadD)*180/Math.PI;
+  const ok=riserH>=150&&riserH<=220&&treadD>=220&&treadD<=350;
+  const rule=2*riserH+treadD;
+  return[
+    {label:'Number of Risers',value:numRisers},
+    {label:'Riser Height',value:fmt(riserH)+' mm'},
+    {label:'Number of Treads',value:numTreads},
+    {label:'Tread Depth',value:treadD>0?fmt(treadD)+' mm':'Enter total run'},
+    {label:'Stair Angle',value:fmt(angle)+'°'},
+    {label:'2R+T Rule (580-620 ideal)',value:fmt(rule)+' mm '+(rule>=580&&rule<=620?'✅':'⚠️')},
+    {label:'Building Code Check',value:ok?'✅ Likely compliant':'⚠️ Check local codes'},
+  ];
+}},
+
+// ─── COMPARISONS (NEW) ────────────────────────────────────────────────────────
+{id:'cable-vs-streaming',name:'Cable vs Streaming Calculator',cat:'comparisons',icon:'📺',desc:'Find out how much you could save by cutting the cord and switching to streaming.',
+inputs:[
+  {id:'cableCost',label:'Monthly Cable/Satellite Bill ($)',type:'number',placeholder:'e.g. 120'},
+  {id:'internet',label:'Monthly Internet Bill ($)',type:'number',placeholder:'e.g. 60'},
+  {id:'streaming1',label:'Streaming Service 1 ($/month)',type:'number',placeholder:'e.g. 15.99',def:'0'},
+  {id:'streaming2',label:'Streaming Service 2 ($/month)',type:'number',placeholder:'e.g. 9.99',def:'0'},
+  {id:'streaming3',label:'Streaming Service 3 ($/month)',type:'number',placeholder:'e.g. 7.99',def:'0'},
+  {id:'streaming4',label:'Streaming Service 4 ($/month)',type:'number',placeholder:'e.g. 0',def:'0'},
+  {id:'device',label:'One-time device cost ($)',type:'number',placeholder:'e.g. 50',def:'0'},
+],
+compute(v){
+  const cable=+v.cableCost||0,internet=+v.internet||0;
+  const streams=(+v.streaming1||0)+(+v.streaming2||0)+(+v.streaming3||0)+(+v.streaming4||0);
+  const device=+v.device||0;
+  const cableTotal=cable+internet;
+  const streamTotal=streams+internet+device/12;
+  const saving=cableTotal-streamTotal;
+  return[
+    {label:'Current Monthly (Cable)',value:fmtC(cableTotal)},
+    {label:'Streaming Monthly',value:fmtC(streamTotal)},
+    {label:'Monthly Saving',value:fmtC(saving)+' '+(saving>0?'✅':'💡 Cable cheaper')},
+    {label:'Annual Saving',value:fmtC(saving*12)},
+    {label:'5-Year Saving',value:fmtC(saving*60)},
+    {label:'Verdict',value:saving>0?'Cut the cord and save!':'Keep cable or reduce streaming'},
+  ];
+}},
+
+{id:'coffee-cost-calc',name:'Coffee at Home vs Cafe Calculator',cat:'comparisons',icon:'☕',desc:'Calculate how much you spend on coffee and what you could save making it at home.',
+inputs:[
+  {id:'cafeDays',label:'Days per week you buy cafe coffee',type:'number',placeholder:'e.g. 5',def:'0'},
+  {id:'cafePrice',label:'Average cafe coffee price ($)',type:'number',placeholder:'e.g. 5.50'},
+  {id:'homeMethod',label:'Home brew method',type:'select',options:['Instant coffee ($0.20/cup)','Filter/Drip ($0.25/cup)','Pod/Capsule ($0.80/cup)','French Press ($0.30/cup)','Home Espresso ($0.50/cup)']},
+  {id:'machineCost',label:'Machine cost (if upgrading, $)',type:'number',placeholder:'e.g. 200',def:'0'},
+],
+compute(v){
+  const cafeDays=+v.cafeDays||0,cafePrice=+v.cafePrice||0,machine=+v.machineCost||0;
+  const homeCosts={'Instant coffee ($0.20/cup)':0.20,'Filter/Drip ($0.25/cup)':0.25,'Pod/Capsule ($0.80/cup)':0.80,'French Press ($0.30/cup)':0.30,'Home Espresso ($0.50/cup)':0.50};
+  const homeCost=homeCosts[v.homeMethod]||0.25;
+  const weekCafe=cafeDays*cafePrice,weekHome=cafeDays*homeCost;
+  const weekSave=weekCafe-weekHome;
+  const annualSave=weekSave*52-machine;
+  const breakEven=weekSave>0?machine/weekSave:null;
+  return[
+    {label:'Weekly cafe spend',value:fmtC(weekCafe)},
+    {label:'Weekly home cost',value:fmtC(weekHome)},
+    {label:'Weekly saving',value:fmtC(weekSave)},
+    {label:'Annual saving',value:fmtC(annualSave)},
+    {label:'Machine break-even',value:breakEven?fmt(breakEven)+' weeks':'No machine cost'},
+    {label:'10-year saving',value:fmtC(weekSave*520-machine)},
+  ];
+}},
+
+{id:'wfh-savings',name:'Work From Home Savings Calculator',cat:'comparisons',icon:'🏡',desc:'Calculate how much you save — or spend — working from home vs commuting to the office.',
+inputs:[
+  {id:'commuteDays',label:'Days in office per week',type:'number',placeholder:'e.g. 5',def:'5'},
+  {id:'commuteKm',label:'One-way commute distance (km)',type:'number',placeholder:'e.g. 20'},
+  {id:'fuelL100',label:'Fuel consumption (L/100km)',type:'number',placeholder:'e.g. 8',def:'8'},
+  {id:'fuelPrice',label:'Fuel price (per litre, $)',type:'number',placeholder:'e.g. 1.85'},
+  {id:'parking',label:'Daily parking cost ($)',type:'number',placeholder:'e.g. 15',def:'0'},
+  {id:'lunch',label:'Office lunch cost ($/day)',type:'number',placeholder:'e.g. 15',def:'0'},
+  {id:'homeLunch',label:'Home lunch cost ($/day)',type:'number',placeholder:'e.g. 5',def:'5'},
+  {id:'electricity',label:'Extra home electricity/day ($)',type:'number',placeholder:'e.g. 2',def:'2'},
+],
+compute(v){
+  const days=+v.commuteDays||5,km=+v.commuteKm||0,L100=+v.fuelL100||8,fuelP=+v.fuelPrice||0;
+  const parking=+v.parking||0,officeLunch=+v.lunch||0,homeLunch=+v.homeLunch||5,elec=+v.electricity||2;
+  const dailyFuel=km*2*L100/100*fuelP;
+  const dailyOffice=dailyFuel+parking+officeLunch;
+  const dailyHome=homeLunch+elec;
+  const dailySave=dailyOffice-dailyHome;
+  const weeklySave=dailySave*days;
+  const annualSave=weeklySave*48;
+  const commuteHrs=km/30*2*days*48;
+  return[
+    {label:'Daily office cost',value:fmtC(dailyOffice)},
+    {label:'Daily WFH cost',value:fmtC(dailyHome)},
+    {label:'Daily saving (WFH)',value:fmtC(dailySave)},
+    {label:'Annual saving',value:fmtC(annualSave)},
+    {label:'Annual commute hours saved',value:fmt(commuteHrs)+' hours'},
+    {label:'Commute hours = working days',value:fmt(commuteHrs/8)+' days/year'},
+  ];
+}},
+
+// ─── MATH (NEW) ───────────────────────────────────────────────────────────────
+{id:'prime-checker',name:'Prime Number Checker',cat:'math',icon:'🔢',desc:'Check if a number is prime and find prime factors.',
+inputs:[
+  {id:'num',label:'Number to check',type:'number',placeholder:'e.g. 97'},
+  {id:'mode',label:'Also',type:'select',options:['Check if prime only','Find all prime factors','List primes up to this number']},
+],
+compute(v){
+  const n=parseInt(v.num);
+  if(isNaN(n)||n<1)return{error:'Enter a positive integer.'};
+  if(n>10000000&&v.mode==='List primes up to this number')return{error:'Too large for listing. Try a number under 10,000,000.'};
+  const isPrime=n2=>{if(n2<2)return false;if(n2===2)return true;if(n2%2===0)return false;for(let i=3;i<=Math.sqrt(n2);i+=2)if(n2%i===0)return false;return true;};
+  const prime=isPrime(n);
+  if(v.mode==='Check if prime only'){
+    return[
+      {label:'Is Prime?',value:prime?'Yes ✅':'No ❌'},
+      {label:'Number',value:n.toLocaleString()},
+      {label:'Category',value:n<2?'Not prime':prime?'Prime':'Composite'},
+      {label:'Nearest prime below',value:(()=>{let x=n-1;while(x>1&&!isPrime(x))x--;return x>=2?x:'None';})()},
+    ];
+  } else if(v.mode==='Find all prime factors'){
+    const factors=[];let x=n;
+    for(let d=2;d*d<=x;d++){while(x%d===0){factors.push(d);x=Math.floor(x/d);}}
+    if(x>1)factors.push(x);
+    const unique=[...new Set(factors)];
+    return[
+      {label:'Is Prime?',value:prime?'Yes ✅':'No ❌'},
+      {label:'Prime Factors',value:factors.join(' × ')},
+      {label:'Unique Factors',value:unique.join(', ')},
+      {label:'Number of factors',value:factors.length},
+    ];
+  } else {
+    const primes=[];
+    for(let i=2;i<=n;i++)if(isPrime(i))primes.push(i);
+    return[
+      {label:'Primes up to '+n.toLocaleString(),value:primes.length.toLocaleString()+' primes'},
+      {label:'Largest prime',value:primes[primes.length-1]?.toLocaleString()||'None'},
+      {label:'List (first 20)',value:primes.slice(0,20).join(', ')+(primes.length>20?'…':'')},
+      {label:'Is '+n+' prime?',value:prime?'Yes':'No'},
+    ];
+  }
+}},
+
+{id:'pct-of-pct',name:'Percentage of Percentage Calculator',cat:'math',icon:'%%',desc:'Calculate a percentage of a percentage — useful for discounts, tax on discounts, commissions and more.',
+inputs:[
+  {id:'base',label:'Starting Value',type:'number',placeholder:'e.g. 200'},
+  {id:'pct1',label:'First Percentage (%)',type:'number',placeholder:'e.g. 20'},
+  {id:'pct2',label:'Second Percentage (%)',type:'number',placeholder:'e.g. 15'},
+  {id:'mode',label:'Apply as',type:'select',options:['Sequential (% of %)','Combined (add percentages)','% of % of original']},
+],
+compute(v){
+  const base=+v.base,p1=+v.pct1,p2=+v.pct2;
+  if([base,p1,p2].some(isNaN))return{error:'Enter all three values.'};
+  const after1=base*(1-p1/100);
+  const after2=after1*(1-p2/100);
+  const combined=base*(1-(p1+p2)/100);
+  const effective=(1-(1-p1/100)*(1-p2/100))*100;
+  return[
+    {label:'After first % ('+p1+'%)',value:fmt(after1)},
+    {label:'After second % ('+p2+'%)',value:fmt(after2)},
+    {label:'Effective combined %',value:fmt(effective)+'% (not '+(p1+p2)+'%)'},
+    {label:'If combined directly',value:fmt(combined)},
+    {label:'Total reduction',value:fmt(base-after2)},
+    {label:'Example: 20% + 15% off',value:'= '+fmt(effective)+'% off total, not 35%'},
+  ];
+}},
+
 ];
 
 // ═══════════════════════════════════════════
@@ -1098,6 +1855,31 @@ const CALC_SEO={
   'petrol-vs-diesel':  {kw:'petrol vs diesel calculator',kw2:'petrol or diesel which is cheaper, diesel vs petrol running costs, fuel cost comparison'},
   'electric-vs-petrol':{kw:'electric car vs petrol calculator',kw2:'EV vs petrol running costs, electric car savings calculator, how much can I save with electric car'},
   'inflation-calc':    {kw:'inflation calculator',kw2:'past vs present money value, purchasing power calculator, inflation rate calculator'},
+  'net-worth':         {kw:'net worth calculator',kw2:'how to calculate net worth, total assets minus liabilities, am I wealthy calculator'},
+  'budget-503020':     {kw:'50 30 20 budget calculator',kw2:'50/30/20 rule, how to budget, budgeting calculator, needs wants savings'},
+  'debt-payoff':       {kw:'debt payoff calculator',kw2:'debt snowball calculator, debt avalanche, how long to pay off debt'},
+  'credit-card-payoff':{kw:'credit card payoff calculator',kw2:'how long to pay off credit card, credit card interest calculator'},
+  'retirement-calc':   {kw:'retirement calculator',kw2:'how much do I need to retire, retirement savings calculator, retirement planning'},
+  'dividend-calc':     {kw:'dividend calculator',kw2:'dividend income calculator, dividend yield calculator, stock dividend'},
+  'macro-calc':        {kw:'macro calculator',kw2:'macronutrient calculator, protein carbs fat calculator, how to calculate macros'},
+  'calories-burned':   {kw:'calories burned calculator',kw2:'how many calories do I burn, exercise calorie calculator, activity calories'},
+  'running-pace':      {kw:'running pace calculator',kw2:'pace calculator, marathon pace calculator, 5k pace calculator, run time calculator'},
+  'ovulation-calc':    {kw:'ovulation calculator',kw2:'fertile window calculator, when am I ovulating, ovulation date calculator'},
+  'pregnancy-weight':  {kw:'pregnancy weight gain calculator',kw2:'how much weight to gain during pregnancy, pregnancy BMI calculator'},
+  'caffeine-calc':     {kw:'caffeine calculator',kw2:'how much caffeine in coffee, daily caffeine intake, is my caffeine intake too high'},
+  'recipe-scaler':     {kw:'recipe scaler',kw2:'scale recipe up, how to double a recipe, recipe converter calculator'},
+  'pace-calculator':   {kw:'walking pace calculator',kw2:'walking speed calculator, steps per km, hiking pace calculator'},
+  'screen-time-cost':  {kw:'subscription cost calculator',kw2:'streaming cost calculator, how much do I spend on subscriptions'},
+  'fence-calc':        {kw:'fence calculator',kw2:'how many fence panels do I need, fence post calculator, fencing materials calculator'},
+  'deck-calc':         {kw:'decking calculator',kw2:'how many decking boards do I need, deck material calculator, timber decking calculator'},
+  'roof-area':         {kw:'roof area calculator',kw2:'how to calculate roof area, roof size calculator, roofing materials calculator'},
+  'pool-volume':       {kw:'pool volume calculator',kw2:'swimming pool volume, how many litres in my pool, pool size calculator'},
+  'staircase-calc':    {kw:'staircase calculator',kw2:'stair riser calculator, step calculator, stair tread depth calculator'},
+  'cable-vs-streaming':{kw:'cable vs streaming calculator',kw2:'cut the cord savings, cable vs netflix, streaming vs cable cost'},
+  'coffee-cost-calc':  {kw:'coffee cost calculator',kw2:'how much do I spend on coffee, coffee at home vs cafe, daily coffee habit cost'},
+  'wfh-savings':       {kw:'work from home savings calculator',kw2:'WFH cost calculator, commute cost calculator, how much do I save working from home'},
+  'prime-checker':     {kw:'prime number checker',kw2:'is this number prime, prime factors calculator, prime number calculator'},
+  'pct-of-pct':        {kw:'percentage of percentage calculator',kw2:'double discount calculator, percentage on percentage, combined discount calculator'},
   'ideal-weight':     {kw:'ideal weight calculator',kw2:'healthy weight for height, what should I weigh, ideal body weight calculator'},
   'random-number':    {kw:'random number generator',kw2:'generate random numbers, random number picker, random integer generator'},
 };
@@ -1861,6 +2643,9 @@ function toggleFAQ(el){
 // ═══════════════════════════════════════════
 JSON.parse("[{\"id\": \"sleep-cycles-guide\", \"title\": \"Sleep Cycles Explained: Why 7.5 Hours Beats 8\", \"category\": \"Everyday Life\", \"catId\": \"everyday\", \"date\": \"March 20, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Most people think more sleep is always better. The science says otherwise - waking at the right point in your sleep cycle matters just as much as total hours.\", \"calcLink\": \"sleep-calculator\", \"calcName\": \"Sleep Calculator\", \"sections\": [{\"h2\": \"The Architecture of a Night's Sleep\", \"html\": \"<p>Sleep is a repeating series of stages. Each complete cycle lasts approximately 90 minutes and includes light sleep (N1 and N2), deep slow-wave sleep (N3), and REM sleep. A typical night involves 4-6 full cycles.</p><p>Deep sleep dominates early cycles; REM sleep (where memory consolidation happens) dominates cycles closest to waking. This is why cutting a night short by even an hour disproportionately reduces the most restorative stages.</p>\"}, {\"h2\": \"Why Waking Mid-Cycle Feels So Awful\", \"html\": \"<p>Sleep inertia - that groggy fog after waking - is dramatically worse when you are jolted awake during deep sleep (N3). Your brain struggles to rapidly shift from slow-wave activity back to full wakefulness, impairing cognitive performance for 20-90 minutes.</p><p>Waking at the end of a cycle, when you are in the lightest sleep stage, requires far less physiological effort. You surface feeling genuinely refreshed rather than dragged unwillingly back to consciousness.</p>\"}, {\"h2\": \"The Mathematics of Better Sleep\", \"html\": \"<p>Add 14 minutes (average time to fall asleep) to your cycles:</p><ul><li>4 cycles: 90x4 + 14 = <strong>6 hours 14 minutes</strong></li><li>5 cycles: 90x5 + 14 = <strong>7 hours 44 minutes</strong></li><li>6 cycles: 90x6 + 14 = <strong>9 hours 14 minutes</strong></li></ul><p>For most adults, 5 cycles (7h 44min) is the sweet spot. This is why 7.5 hours often beats 8 hours - the extra 15 minutes can strand you mid-cycle rather than completing it cleanly.</p>\"}, {\"h2\": \"Practical Tips\", \"html\": \"<ul><li>Set your alarm to a cycle completion time, not an arbitrary round hour</li><li>Keep a consistent bedtime within 30 minutes each night</li><li>If you nap, keep it to 20 minutes or a full 90 minutes</li><li>Avoid screens 45-60 minutes before sleep - blue light suppresses melatonin production by up to 50%</li></ul>\"}]}, {\"id\": \"tip-etiquette-guide\", \"title\": \"Tipping Around the World: Country-by-Country Guide\", \"category\": \"Everyday Life\", \"catId\": \"everyday\", \"date\": \"March 19, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Tip too little and you have insulted someone. Tip in the wrong country and you have caused offence. This guide covers tipping norms for 15 countries so you always know what is expected.\", \"calcLink\": \"tip-calculator\", \"calcName\": \"Tip Calculator\", \"sections\": [{\"h2\": \"Why Tipping Norms Vary So Widely\", \"html\": \"<p>Tipping culture is shaped by wage laws, cultural attitudes towards service, and historical conventions. In countries where tipped workers receive a lower minimum wage (particularly the US), tips are economically essential. In countries with strong minimum wage laws, tips are supplemental or optional.</p>\"}, {\"h2\": \"Countries Where Tipping Is Expected\", \"html\": \"<p><strong>United States and Canada:</strong> 18-22% is standard at restaurants for good service. 15% signals slight dissatisfaction. Tip taxi drivers 10-15%, hotel porters $1-2 per bag, housekeeping $2-5 per night.</p><p><strong>Mexico:</strong> 10-15% at restaurants, 20% for excellent service in tourist areas. Much of the service industry is tip-dependent.</p>\"}, {\"h2\": \"Countries Where Tipping Is Optional\", \"html\": \"<p><strong>UK:</strong> 10-15% at sit-down restaurants if a service charge is not already included. Pubs typically do not expect tips.</p><p><strong>Australia and New Zealand:</strong> No strong tipping culture - service workers earn a living wage. 10% for good service is appreciated but not expected.</p><p><strong>South Africa:</strong> 10-15% at restaurants is standard and meaningful given wage levels.</p>\"}, {\"h2\": \"Countries Where Tipping Is Unusual\", \"html\": \"<p><strong>Japan:</strong> Tipping can be considered rude - an implication that the person needs charity. Service is considered part of the job.</p><p><strong>China and South Korea:</strong> Tipping is uncommon domestically. International hotels have adapted to tourist expectations but local restaurants do not expect tips.</p><p><strong>Most of continental Europe:</strong> Rounding up bills or leaving small change is appreciated. 5-10% for good restaurant service is normal.</p>\"}, {\"h2\": \"Universal Tips on Tipping\", \"html\": \"<ul><li>Always check whether a service charge is already included before adding a tip</li><li>In countries with poor wage protection, err on the side of generosity</li><li>Cash tips go directly to the individual; card tips may be pooled depending on the establishment</li></ul>\"}]}, {\"id\": \"salary-negotiation-guide\", \"title\": \"How to Use Salary Calculators to Negotiate a Better Pay Rise\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"March 17, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Most people leave money on the table in salary negotiations simply because they do not know their numbers. Here is how to walk in prepared - and why data wins every time.\", \"calcLink\": \"salary-converter\", \"calcName\": \"Salary Converter\", \"sections\": [{\"h2\": \"Know Your True Hourly Rate First\", \"html\": \"<p>Most salaried employees have no idea what they actually earn per hour. Converting your annual salary to an hourly equivalent is the first step in understanding whether your compensation is fair and in framing any negotiation conversation.</p><p>A $70,000 salary sounds substantial until you calculate you are earning $33.65 per hour. Now compare that to the market rate for your role. If comparable positions advertise $85,000-$90,000, you have a concrete number to anchor the conversation.</p>\"}, {\"h2\": \"Build Your Compensation Baseline\", \"html\": \"<p>Before any negotiation, calculate your full current package including base salary, bonus, pension match, health insurance value, stock or equity, and other benefits. A $10,000 base salary raise can be effectively neutral if health insurance disappears from the package.</p>\"}, {\"h2\": \"Research Market Rates\", \"html\": \"<p>Salary comparison sites (Glassdoor, LinkedIn Salary, Payscale) give ranges but require careful filtering by exact job title, years of experience, company size, and location. The most powerful data comes from actual job postings in your area right now.</p>\"}, {\"h2\": \"The Negotiation Conversation\", \"html\": \"<p>Never state your desired salary without anchoring it to market data. Counter-offers almost always exist. An initial offer is rarely the maximum available. The discomfort of asking for more lasts 30 seconds; the financial difference compounds for years.</p>\"}, {\"h2\": \"When to Use Competing Offers\", \"html\": \"<p>A competing offer is the most effective negotiation tool available - but use it only if you are genuinely willing to leave. Present it factually, not as an ultimatum: frame it as a problem to solve together rather than a confrontation.</p>\"}]}, {\"id\": \"water-intake-guide\", \"title\": \"How Much Water Should You Actually Drink Per Day?\", \"category\": \"Health\", \"catId\": \"health\", \"date\": \"March 14, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"The 8 glasses a day rule is widely cited and largely made up. Here is what the actual science says about hydration - and how to know if you are drinking enough.\", \"calcLink\": \"water-intake\", \"calcName\": \"Water Intake Calculator\", \"sections\": [{\"h2\": \"Where Does the 8 Glasses Rule Come From?\", \"html\": \"<p>The 8x8 rule has no strong scientific basis. It appears to originate from a 1945 US dietary recommendation that stated adults need about 2.5 litres of water daily - but included the critical footnote that most of this quantity is contained in prepared foods. That footnote got lost.</p>\"}, {\"h2\": \"Evidence-Based Daily Intake Guidelines\", \"html\": \"<p>Current recommendations from the Institute of Medicine and WHO: Men approximately 3.7 litres total from all sources daily; Women approximately 2.7 litres. All sources includes water in food, coffee, tea, and other beverages - not just plain water.</p>\"}, {\"h2\": \"Factors That Increase Your Needs\", \"html\": \"<ul><li>Exercise: Add 0.5-1 litre for every hour of moderate exercise</li><li>Hot and humid climates significantly increase sweat losses</li><li>Illness: fever, vomiting, and diarrhoea rapidly deplete fluid levels</li><li>Pregnancy and breastfeeding require significant additional fluid</li></ul>\"}, {\"h2\": \"The Best Hydration Indicator\", \"html\": \"<p>Urine colour is the most practical guide: pale straw yellow means well hydrated; clear may mean overhydrated; dark yellow means mildly dehydrated; amber or brown means significantly dehydrated - drink immediately.</p>\"}, {\"h2\": \"Practical Tips\", \"html\": \"<ul><li>Start the day with a large glass of water - overnight is your longest regular dehydration period</li><li>Coffee and tea count towards hydration - their mild diuretic effect is more than offset by their fluid content</li><li>Alcohol is genuinely dehydrating - drink one glass of water per alcoholic drink</li></ul>\"}]}, {\"id\": \"random-numbers-statistics\", \"title\": \"Random Numbers in Real Life: Sampling, Simulations and Probability\", \"category\": \"Math\", \"catId\": \"math\", \"date\": \"March 11, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Random numbers underpin everything from scientific research to video games to cryptography. Understanding randomness helps you interpret statistics, spot bad data, and make better decisions.\", \"calcLink\": \"random-number\", \"calcName\": \"Random Number Generator\", \"sections\": [{\"h2\": \"What Does Random Actually Mean?\", \"html\": \"<p>A sequence is random if each value is independent of all previous values and each possible outcome has a known probability. Computers generate pseudorandom numbers using mathematical algorithms that produce sequences appearing random but technically predictable given the starting seed.</p>\"}, {\"h2\": \"Random Sampling in Research\", \"html\": \"<p>Random sampling is the foundation of valid statistical inference. Without randomisation, samples become biased - systematically over or under-representing certain groups in ways that invalidate conclusions. Classic examples: phone surveys miss people without phones; online surveys exclude non-internet users.</p>\"}, {\"h2\": \"Monte Carlo Simulations\", \"html\": \"<p>Monte Carlo methods use large numbers of random samples to estimate complex outcomes. The method underpins financial risk modelling, physics simulations, engineering reliability testing, and climate modelling. Running 100,000 random scenarios tells you far more about real risk than any single deterministic calculation.</p>\"}, {\"h2\": \"The Gambler Fallacy\", \"html\": \"<p>One of the most persistent probability misconceptions: believing that past random outcomes influence future ones. If a fair coin lands heads 10 times in a row, the probability of heads on the 11th flip is still exactly 50%. The coin has no memory. Casinos profit enormously from this fallacy.</p>\"}, {\"h2\": \"Practical Uses\", \"html\": \"<ul><li>Making decisions: when genuinely torn between options, randomise - research shows people are surprisingly satisfied with random decisions</li><li>Fair selection: randomly assigning order or groups removes social bias and perception of favouritism</li><li>A/B testing: randomly assigning users to test groups is the gold standard for measuring any change</li></ul>\"}]}, {\"id\": \"construction-measurement-guide\", \"title\": \"Construction Measurements: Avoiding the Costly Mistakes DIYers Always Make\", \"category\": \"Construction\", \"catId\": \"construction\", \"date\": \"March 9, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Professional builders measure twice and add waste. Here are the most common measurement mistakes - and exactly how to avoid them.\", \"calcLink\": \"square-footage\", \"calcName\": \"Square Footage Calculator\", \"sections\": [{\"h2\": \"The Most Expensive Measurement Mistake\", \"html\": \"<p>Unit mixing is the single most common and costly error in DIY construction. Working in a mix of imperial and metric produces results that can be out by factors of 2.54 or 10. The fix is simple: pick one unit system and convert everything before starting any calculation.</p>\"}, {\"h2\": \"The 10 Percent Waste Rule\", \"html\": \"<p>Every material calculation should add 10% for waste as a minimum. This accounts for cutting losses, breakage during installation, future repairs, and measuring errors. Increase to 15% for diagonal tile patterns, rooms with many corners, and first-time installers.</p>\"}, {\"h2\": \"Measuring Irregular Spaces\", \"html\": \"<p>Most rooms are not perfect rectangles. Divide the space into regular shapes, calculate each separately, then add or subtract as appropriate. For flooring, always measure the room at its widest points - material needs to cover the full footprint including under doors and in alcoves.</p>\"}, {\"h2\": \"Critical Measurements to Double-Check\", \"html\": \"<ul><li>Door and window openings - measure at top, middle, and bottom; take the smallest for clearance</li><li>Ceiling height at multiple points - floors are rarely perfectly level</li><li>Plumbing rough-ins - fixture placement must match pipe locations exactly</li></ul>\"}]}, {\"id\": \"percentage-discount-shopping\", \"title\": \"How to Spot a Real Bargain: The Maths Behind Sales and Discounts\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"March 6, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Retail pricing is designed to make discounts look bigger than they are. Understanding the maths behind markdowns and anchoring helps you shop smarter.\", \"calcLink\": \"discount\", \"calcName\": \"Discount Calculator\", \"sections\": [{\"h2\": \"How Retail Pricing Psychology Works\", \"html\": \"<p>The original price shown on a sale tag is often the recommended retail price (RRP) - which the item may never have been sold at regularly. Anchoring is the psychological principle at work: your brain fixes on the first number it sees and evaluates the sale price relative to that anchor. Retailers set anchors deliberately.</p>\"}, {\"h2\": \"Calculating True Discount Value\", \"html\": \"<p>To find the real saving, look up the typical selling price across multiple retailers, not just the store running the sale. Price comparison websites and browser extensions reveal whether the original price is genuine. Formula: (Normal price - Sale price) / Normal price x 100 = True discount %.</p>\"}, {\"h2\": \"Stacking Discounts\", \"html\": \"<p>When applying multiple discounts, order does not affect the final price - they are multiplicative. A 30% discount followed by an additional 20% off: 0.70 x 0.80 = 0.56, meaning 44% total discount. Not 50% - a common mistake.</p>\"}, {\"h2\": \"Cost Per Use Calculation\", \"html\": \"<p>A $40 item you use 200 times costs 20 cents per use. A $200 item you use twice costs $100 per use. Cost per use is the most honest measure of value for clothing, tools, and equipment. A 70% discount on a product that lasts a quarter as long is often a worse deal.</p>\"}]}, {\"id\": \"tax-vat-guide\", \"title\": \"VAT, Sales Tax and Income Tax: A Plain-Language Guide\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"March 3, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Tax calculations confuse most people - not because they are genuinely complex, but because the terminology is opaque. Here is how to calculate VAT, sales tax, and basic income tax without an accountant.\", \"calcLink\": \"vat-calc\", \"calcName\": \"VAT Calculator\", \"sections\": [{\"h2\": \"VAT vs Sales Tax: The Key Difference\", \"html\": \"<p>VAT (Value Added Tax) is applied at every stage of the supply chain - manufacturer, wholesaler, retailer. Consumers bear the full VAT cost, but it is embedded in the price rather than added at checkout. Sales tax (used in the US) is applied only at the final retail stage, added visibly at checkout.</p>\"}, {\"h2\": \"Calculating VAT Both Ways\", \"html\": \"<p><strong>Adding VAT:</strong> Net x (1 + rate). A $100 product at 20% VAT: 100 x 1.20 = $120 gross.</p><p><strong>Removing VAT:</strong> Gross / (1 + rate). A $120 product at 20%: 120 / 1.20 = $100 net. Do NOT simply subtract 20% - that gives the wrong answer. Always divide by (1 + rate).</p>\"}, {\"h2\": \"VAT Rates Around the World\", \"html\": \"<p>UK: 20% standard. EU: 15-27% depending on country. Australia/New Zealand: 10%/15% GST. Canada: 5% federal GST plus provincial taxes (combined 5-15%). United States: 0-10.25% sales tax varying by state - no federal rate.</p>\"}, {\"h2\": \"Income Tax: Marginal vs Effective Rates\", \"html\": \"<p>Most countries use progressive tax systems. The marginal rate is the rate on your highest dollar of earnings. The effective rate is what you actually pay as a percentage of total income. Someone in a 40% bracket does NOT pay 40% on all their income - only on earnings above the threshold.</p>\"}]}, {\"id\": \"probability-everyday\", \"title\": \"Probability in Everyday Life: Why Your Intuition Is Usually Wrong\", \"category\": \"Statistics\", \"catId\": \"statistics\", \"date\": \"February 28, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Human brains are notoriously bad at probability. We fear plane crashes and play the lottery despite the numbers saying the opposite. Here is how to think about chance more clearly.\", \"calcLink\": \"probability\", \"calcName\": \"Probability Calculator\", \"sections\": [{\"h2\": \"Why Intuition Fails at Probability\", \"html\": \"<p>Human probability intuition evolved for immediate physical threats, not abstract statistical reasoning. We systematically overestimate vivid or recent risks (plane crashes, shark attacks) and underestimate mundane but far more common ones (car accidents, heart disease). This is called the availability heuristic.</p>\"}, {\"h2\": \"The Birthday Problem\", \"html\": \"<p>How many people do you need in a room before there is a 50% chance two share a birthday? Most people guess around 183. The actual answer is just 23. With 23 people, there are 253 possible pairs, and the probability that at least one pair matches climbs surprisingly fast.</p>\"}, {\"h2\": \"The Lottery: What Your Ticket Is Worth\", \"html\": \"<p>A UK National Lottery ticket costs $2 and offers roughly a 1 in 45 million chance of the jackpot. If the jackpot is $10 million, the expected value of the jackpot portion alone is about $0.22. The overall expected return is around 50 cents for a $2 ticket.</p>\"}, {\"h2\": \"Absolute vs Relative Risk\", \"html\": \"<p>Medical news almost always reports relative risk changes. A drug that cuts heart attack risk by 50% sounds transformative. If baseline risk was 2%, the new risk is 1% - a 1 percentage point absolute reduction. Always ask for absolute numbers alongside relative ones.</p>\"}, {\"h2\": \"Making Better Probability Decisions\", \"html\": \"<ul><li>Ask for absolute numbers, not just relative changes, when evaluating health risks or investment returns</li><li>Consider base rates - the underlying prevalence before any test or intervention</li><li>Past random outcomes do not influence future ones - the gambler fallacy</li><li>A 1% chance over 100 independent trials gives a 63% chance of occurring at least once</li></ul>\"}]}, {\"id\": \"heart-rate-training-guide\", \"title\": \"Heart Rate Zones: How to Train Smarter, Not Just Harder\", \"category\": \"Health\", \"catId\": \"health\", \"date\": \"February 25, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Most people train in the wrong heart rate zone for their goals. Here is the complete zone guide and why Zone 2 is the most underrated training tool available.\", \"calcLink\": \"heart-rate\", \"calcName\": \"Heart Rate Zone Calculator\", \"sections\": [{\"h2\": \"What Is Maximum Heart Rate?\", \"html\": \"<p>Maximum heart rate (MHR) is the highest your heart can beat per minute during maximum exertion. The standard estimate is 220 minus your age - a population average with significant individual variation of plus or minus 10-20 bpm. For precision, MHR should be measured directly during a maximal exercise test.</p>\"}, {\"h2\": \"The Five Training Zones\", \"html\": \"<ul><li><strong>Zone 1 (50-60%):</strong> Very light - active recovery, warm-up. Builds base fitness without fatigue accumulation.</li><li><strong>Zone 2 (60-70%):</strong> Light - fat burning, aerobic base building. Conversational pace.</li><li><strong>Zone 3 (70-80%):</strong> Moderate - improves aerobic efficiency. Comfortably hard.</li><li><strong>Zone 4 (80-90%):</strong> Hard - lactate threshold training. Improves race pace.</li><li><strong>Zone 5 (90-100%):</strong> Maximum - interval training. Short bursts only.</li></ul>\"}, {\"h2\": \"Zone 2: The Most Misunderstood Zone\", \"html\": \"<p>Zone 2 training is dismissed by many as too easy, but it is the foundation of elite endurance performance. Professional athletes spend 70-80% of their total training volume in Zone 2. It builds mitochondrial density, improves fat oxidation, and creates the aerobic base for all higher-intensity work.</p>\"}, {\"h2\": \"Heart Rate for Fat Loss\", \"html\": \"<p>At lower intensities (Zone 2), a higher percentage of calories comes from fat oxidation. However, higher-intensity exercise burns significantly more total calories per minute. For pure fat loss, total calorie deficit matters most. For metabolic health, consistent Zone 2 training builds the aerobic machinery that makes fat burning easier long-term.</p>\"}, {\"h2\": \"Practical Monitoring\", \"html\": \"<p>Chest strap monitors give the most accurate readings, especially during intervals. Resting heart rate measured first thing in the morning is a useful wellness indicator. A consistently elevated resting heart rate can indicate incomplete recovery, illness, or overtraining.</p>\"}]}]").forEach(a=>ARTICLES.push(a));
 
+
+// 10 NEW ARTICLES
+JSON.parse("[{\"id\": \"how-to-calculate-net-worth\", \"title\": \"How to Calculate Your Net Worth (And Why It Matters)\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"April 1, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Net worth is the single most important number in your financial life. Here is exactly how to calculate it, what it tells you, and how to use it to build real wealth.\", \"calcLink\": \"net-worth\", \"calcName\": \"Net Worth Calculator\", \"sections\": [{\"h2\": \"What Is Net Worth?\", \"html\": \"<p>Net worth is simply what you own minus what you owe: <strong>Assets - Liabilities = Net Worth</strong>. If you own $300,000 in assets and have $180,000 in debts, your net worth is $120,000.</p><p>It is the most complete snapshot of your financial health available. Income tells you how much flows in. Net worth tells you how much you have actually kept and built. Many high earners have surprisingly low net worth because lifestyle inflation and debt consume everything they make.</p>\"}, {\"h2\": \"What Counts as an Asset?\", \"html\": \"<ul><li><strong>Liquid assets:</strong> Cash, bank accounts, money market funds</li><li><strong>Investment assets:</strong> Stocks, bonds, ETFs, pension funds, 401k, ISAs</li><li><strong>Property:</strong> Market value of any real estate you own (not what you paid)</li><li><strong>Vehicles:</strong> Current market value, not purchase price</li><li><strong>Other:</strong> Business equity, collectibles, jewellery with real market value</li></ul><p>Use current market values, not what you paid. A car you bought for $30,000 that is now worth $18,000 counts as $18,000.</p>\"}, {\"h2\": \"What Counts as a Liability?\", \"html\": \"<ul><li>Mortgage balance outstanding</li><li>Car loans</li><li>Credit card balances (the full balance, not minimum payment)</li><li>Student loans</li><li>Personal loans</li><li>Any other money owed</li></ul><p>Include all debt, no matter how small. Every dollar of debt directly reduces your net worth dollar for dollar.</p>\"}, {\"h2\": \"What Is a Good Net Worth?\", \"html\": \"<p>There is no universal benchmark, but a widely cited rule of thumb from <em>The Millionaire Next Door</em> suggests target net worth = age x annual income / 10. For a 40-year-old earning $80,000: target $320,000.</p><p>More practically: positive net worth at any age is better than negative, growing net worth year over year is the real goal, and eliminating all consumer debt (credit cards, car loans) is the single fastest way to improve the number.</p>\"}, {\"h2\": \"How to Grow Your Net Worth\", \"html\": \"<ul><li><strong>Increase assets:</strong> Invest consistently, build equity in property, grow pension contributions</li><li><strong>Reduce liabilities:</strong> Pay off high-interest debt aggressively, avoid new consumer debt</li><li><strong>Track it regularly:</strong> Calculate quarterly and watch the trend - the direction matters more than the current number</li></ul>\"}]}, {\"id\": \"debt-snowball-vs-avalanche\", \"title\": \"Debt Snowball vs Avalanche: Which Method Pays Off Debt Faster?\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"April 3, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Two proven strategies for paying off debt - one saves the most money, one keeps you most motivated. Here is how to choose the right one for your situation.\", \"calcLink\": \"debt-payoff\", \"calcName\": \"Debt Payoff Calculator\", \"sections\": [{\"h2\": \"The Two Methods\", \"html\": \"<p>Both methods involve paying minimums on all debts, then directing every extra dollar at one target debt at a time. The only difference is which debt you target first.</p><p><strong>Avalanche:</strong> Target the highest interest rate debt first. Mathematically optimal - minimises total interest paid.<br><strong>Snowball:</strong> Target the smallest balance first. Psychologically powerful - builds momentum through quick wins.</p>\"}, {\"h2\": \"The Avalanche Method in Detail\", \"html\": \"<p>List all debts by interest rate, highest to lowest. Pay minimums on everything, then throw every spare dollar at the top-rate debt. When it is gone, roll that payment into the next-highest rate debt. Repeat until debt-free.</p><p>On a $20,000 debt portfolio averaging 18%, the avalanche method typically saves $1,000-$3,000 in interest compared to snowball, and clears debt a few months faster. The math is unambiguous - avalanche wins on numbers.</p>\"}, {\"h2\": \"The Snowball Method in Detail\", \"html\": \"<p>List all debts by balance, smallest to largest. Pay minimums on everything, then attack the smallest balance with everything extra. The first debt disappears quickly, giving a real psychological win. That payment then rolls into the second-smallest balance.</p><p>Research published in the Journal of Consumer Research found that snowball users are more likely to actually become debt-free because the early wins maintain motivation. The best debt strategy is the one you stick to.</p>\"}, {\"h2\": \"Which Should You Choose?\", \"html\": \"<p>Choose <strong>Avalanche</strong> if: you are motivated by numbers and saving money, your debts are similar in size but different in rate, and you have strong financial discipline.</p><p>Choose <strong>Snowball</strong> if: you have struggled to maintain financial motivation before, you have several small debts that feel overwhelming, or you need visible progress to stay on track.</p><p>Hybrid approach: some people use snowball initially to clear 2-3 small debts, then switch to avalanche for the remaining larger balances.</p>\"}, {\"h2\": \"The Most Important Factor\", \"html\": \"<p>Neither method works without extra payments. The real lever is how much extra you can direct at debt each month. Before choosing a method, find ways to increase that amount - cut spending, increase income, sell unused assets. An extra $200-$300 per month changes the timeline dramatically regardless of which method you use.</p>\"}]}, {\"id\": \"how-to-calculate-macros\", \"title\": \"How to Calculate Macros for Weight Loss and Muscle Gain\", \"category\": \"Health\", \"catId\": \"health\", \"date\": \"April 5, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Counting calories is only half the picture. Macronutrients - protein, carbs, and fat - determine what happens to your body composition. Here is how to calculate yours.\", \"calcLink\": \"macro-calc\", \"calcName\": \"Macro Calculator\", \"sections\": [{\"h2\": \"What Are Macros?\", \"html\": \"<p>Macronutrients are the three main categories of nutrients that provide calories: <strong>protein</strong> (4 kcal/g), <strong>carbohydrates</strong> (4 kcal/g), and <strong>fat</strong> (9 kcal/g). Alcohol provides 7 kcal/g but is not a macronutrient. Total calories equal the sum of all macros consumed.</p><p>Tracking macros rather than just calories gives you control over body composition - how much of your weight change comes from fat vs muscle. Two people eating 2,000 calories can have completely different body composition outcomes depending on macro split.</p>\"}, {\"h2\": \"How Much Protein Do You Need?\", \"html\": \"<p>Protein is the most important macro for body composition. Research consistently shows optimal protein intake for body composition improvement is <strong>1.6-2.2g per kg of bodyweight</strong> for people exercising regularly. At 80kg, that means 128-176g of protein per day.</p><p>Higher protein intake: preserves muscle during calorie deficits, increases satiety (reduces hunger), has the highest thermic effect (burns more calories to digest), and supports muscle building when combined with resistance training.</p>\"}, {\"h2\": \"Fat Intake: How Low Can You Go?\", \"html\": \"<p>Fat should not fall below roughly 0.7-1g per kg of bodyweight to support hormone production, fat-soluble vitamin absorption, and general health. For most people this means 20-35% of total calories from fat.</p><p>The old fear of dietary fat is outdated. Fat quality matters more than quantity - unsaturated fats from olive oil, avocado, nuts and fatty fish are beneficial. Excessive refined vegetable oils and trans fats are the real concern.</p>\"}, {\"h2\": \"Carbohydrates: The Flexible Macro\", \"html\": \"<p>After setting protein and minimum fat, remaining calories are typically filled with carbohydrates. Carbs fuel exercise performance and support recovery. The optimal amount is highly individual and depends on activity level, preferences, and metabolic health.</p><p>Low-carb approaches (including keto) work well for some people - particularly those with insulin resistance or strong preferences for fat-based foods. Higher-carb approaches suit endurance athletes and those who perform better with glycogen-fueled training. Neither is universally superior.</p>\"}, {\"h2\": \"A Practical Starting Point\", \"html\": \"<p>Start with these targets and adjust based on 4-week real-world results:</p><ul><li><strong>Weight loss:</strong> Protein 2g/kg, Fat 25% of calories, Carbs fill remaining calories at TDEE minus 500</li><li><strong>Maintenance:</strong> Protein 1.8g/kg, Fat 30%, Carbs remaining at TDEE</li><li><strong>Muscle gain:</strong> Protein 2g/kg, Fat 25%, Carbs remaining at TDEE plus 250-300</li></ul>\"}]}, {\"id\": \"running-pace-guide\", \"title\": \"Running Pace Calculator Guide: Train for Any Race Distance\", \"category\": \"Health\", \"catId\": \"health\", \"date\": \"April 7, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Whether you are training for your first 5K or targeting a marathon PB, understanding pace is the key to smarter training. Here is everything you need to know.\", \"calcLink\": \"running-pace\", \"calcName\": \"Running Pace Calculator\", \"sections\": [{\"h2\": \"Understanding Running Pace\", \"html\": \"<p>Running pace is expressed as time per kilometre (or mile). A 5:30/km pace means you cover one kilometre every 5 minutes and 30 seconds. Pace and speed are inversely related - lower pace numbers mean faster running.</p><p>Reference paces: 4:00/km is sub-elite club level; 5:00/km is a solid recreational runner; 6:00/km is comfortable jogging for many; 7:00-8:00/km is a brisk walk-run. Most first-time 5K runners finish between 6:00-8:00/km.</p>\"}, {\"h2\": \"Common Race Target Paces\", \"html\": \"<ul><li><strong>5K in 25 min:</strong> 5:00/km pace</li><li><strong>5K in 30 min:</strong> 6:00/km pace</li><li><strong>10K in 50 min:</strong> 5:00/km pace</li><li><strong>10K in 60 min:</strong> 6:00/km pace</li><li><strong>Half marathon in 2 hours:</strong> 5:41/km pace</li><li><strong>Marathon in 4 hours:</strong> 5:41/km pace</li><li><strong>Marathon in 3:30:</strong> 4:59/km pace</li></ul>\"}, {\"h2\": \"The 80/20 Training Rule\", \"html\": \"<p>Elite runners spend approximately 80% of their training volume at easy, conversational pace (Zone 2) and only 20% at harder intensities. Most recreational runners invert this - training too hard on easy days and never hitting true hard effort on quality days.</p><p>Easy pace should feel genuinely comfortable. If you cannot hold a conversation, you are going too fast. The physiological adaptations from easy running (aerobic base, mitochondrial density, fat oxidation) are cumulative and require volume, not intensity.</p>\"}, {\"h2\": \"Progressive Overload for Runners\", \"html\": \"<p>The 10% rule: increase total weekly mileage by no more than 10% per week to reduce injury risk. Every 4th week should be a recovery week with reduced volume (60-70% of the previous week).</p><p>For a first 5K, a typical progression: walk/run intervals for 3-4 weeks, continuous 20-25 minute runs for 2-3 weeks, then gentle race-pace work in the final 2 weeks. Total preparation: 6-10 weeks is enough for most beginners.</p>\"}]}, {\"id\": \"how-much-do-you-need-to-retire\", \"title\": \"Retirement Planning: How Much Do You Actually Need?\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"April 9, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"The question everyone asks but few can answer confidently. Here is a clear framework for calculating your retirement number and knowing whether you are on track.\", \"calcLink\": \"retirement-calc\", \"calcName\": \"Retirement Calculator\", \"sections\": [{\"h2\": \"The 25x Rule (4% Withdrawal Rate)\", \"html\": \"<p>The most widely used retirement planning benchmark: multiply your desired annual retirement income by 25 to get your target nest egg. Want $50,000/year? You need $1.25 million. Want $80,000/year? You need $2 million.</p><p>This is based on the Trinity Study, which found that a 4% annual withdrawal from a diversified portfolio has historically sustained a 30-year retirement without running out of money in the vast majority of scenarios. It is a starting point, not a guarantee.</p>\"}, {\"h2\": \"Factors That Change Your Number\", \"html\": \"<p><strong>Retirement age:</strong> Retiring at 55 instead of 65 means more years of drawing down and fewer years of contributions - your number may need to be 40-50% higher.</p><p><strong>State pension/Social Security:</strong> Any guaranteed income reduces how much your portfolio needs to provide. $15,000/year in government pension reduces your required portfolio by $375,000 (at 4% rule).</p><p><strong>Investment returns assumption:</strong> Most models use 5-7% real returns. If returns are lower, a 3-3.5% withdrawal rate is more conservative.</p>\"}, {\"h2\": \"The Power of Starting Early\", \"html\": \"<p>Starting retirement saving at 25 vs 35 does not require twice the savings to achieve the same outcome at 65. Due to compounding, $300/month from age 25 at 7% annual return produces roughly $960,000 by 65. Starting at 35 requires $620/month to reach the same figure - more than double the monthly amount for the same result.</p><p>This asymmetry means the single most impactful retirement decision most young people can make is starting now, even with a small amount.</p>\"}, {\"h2\": \"Practical Milestones by Age\", \"html\": \"<p>Fidelity Investments guidelines (rough benchmarks based on salary multiples):</p><ul><li><strong>By 30:</strong> 1x annual salary saved</li><li><strong>By 40:</strong> 3x annual salary saved</li><li><strong>By 50:</strong> 6x annual salary saved</li><li><strong>By 60:</strong> 8x annual salary saved</li><li><strong>At 67:</strong> 10x annual salary saved</li></ul><p>Behind on these? You are not alone - the majority of people are. The solution is the same regardless of age: increase contributions, reduce expenses, consider working a few extra years.</p>\"}]}, {\"id\": \"5030-20-budgeting-rule\", \"title\": \"The 50/30/20 Budget Rule: A Simple System That Actually Works\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"April 11, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Most budgeting systems are too complex to stick to. The 50/30/20 rule is different - it is simple enough to actually use, flexible enough to fit any lifestyle, and powerful enough to build real financial progress.\", \"calcLink\": \"budget-503020\", \"calcName\": \"50/30/20 Budget Calculator\", \"sections\": [{\"h2\": \"The Rule Explained\", \"html\": \"<p>Divide your after-tax (take-home) income into three buckets:</p><ul><li><strong>50% Needs:</strong> Essential expenses you cannot easily avoid - rent/mortgage, utilities, groceries, transport to work, minimum debt payments, insurance</li><li><strong>30% Wants:</strong> Non-essential spending that improves quality of life - dining out, entertainment, hobbies, streaming, gym, clothing beyond basics</li><li><strong>20% Savings/Debt:</strong> Building wealth and financial security - emergency fund, pension, investments, extra debt payments</li></ul>\"}, {\"h2\": \"The Crucial Distinction: Needs vs Wants\", \"html\": \"<p>The hardest part of 50/30/20 is honest categorisation. Some examples:</p><ul><li>Basic mobile phone plan: Need. Latest iPhone on contract: Want.</li><li>Groceries at reasonable cost: Need. Premium supermarket habit: Want (partially).</li><li>Minimum car insurance: Need. Comprehensive on a luxury car: partially Want.</li><li>Commuter transport: Need. Taxi every day when bus is available: Want.</li></ul><p>The distinction is not about deprivation - it is about clarity. Knowing your wants spending is a choice, not a necessity, gives you power over it.</p>\"}, {\"h2\": \"Adjusting for Your Reality\", \"html\": \"<p>In high cost-of-living cities, 50% for needs may be genuinely impossible - rent alone can consume 40%+ of income. In that case, the 20% savings target should be maintained as a non-negotiable, and the needs/wants split adjusted around it.</p><p>The spirit of the rule: ensure savings come first, distinguish essential from discretionary, and have a framework that prevents lifestyle inflation from consuming income gains.</p>\"}, {\"h2\": \"Making It Work in Practice\", \"html\": \"<ul><li>Calculate on take-home (post-tax) income only</li><li>Track for one month before judging - most people are surprised how their actual spending maps to the categories</li><li>Automate the 20%: set up automatic transfers to savings and pension on payday before you can spend it</li><li>Review quarterly, not obsessively daily - the goal is awareness and direction, not perfection</li></ul>\"}]}, {\"id\": \"caffeine-guide\", \"title\": \"How Much Caffeine Is Too Much? The Science of Your Daily Coffee\", \"category\": \"Everyday Life\", \"catId\": \"everyday\", \"date\": \"April 13, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Most people have no idea how much caffeine they actually consume each day. Here is what science says about safe limits, what too much looks like, and how caffeine actually works in your body.\", \"calcLink\": \"caffeine-calc\", \"calcName\": \"Caffeine Calculator\", \"sections\": [{\"h2\": \"How Caffeine Works\", \"html\": \"<p>Caffeine is an adenosine receptor antagonist. Adenosine is a neurotransmitter that builds up throughout the day and makes you feel progressively sleepier. Caffeine molecules have a similar shape to adenosine and block its receptors - you feel alert not because caffeine adds energy but because it prevents the sleepiness signal from getting through.</p><p>The adenosine keeps accumulating. When caffeine wears off (half-life approximately 5 hours), all that blocked adenosine floods in at once - the caffeine crash.</p>\"}, {\"h2\": \"Safe Daily Limits\", \"html\": \"<p>Research consensus: up to <strong>400mg per day</strong> is safe for most healthy adults. This equates to roughly:</p><ul><li>4 standard espresso shots</li><li>4-5 cups of filter coffee</li><li>8-10 cups of black tea</li><li>5 standard energy drinks (though not recommended due to other ingredients)</li></ul><p>Pregnant women are advised to limit intake to 200mg/day. Some individuals are genetically slow metabolisers and are more sensitive to caffeine effects at lower doses.</p>\"}, {\"h2\": \"Signs You Are Having Too Much\", \"html\": \"<ul><li>Anxiety or restlessness, particularly in the afternoon</li><li>Difficulty falling asleep even when tired</li><li>Heart palpitations or racing heartbeat</li><li>Dependency symptoms - headaches when you skip your usual intake</li><li>Digestive discomfort or acid reflux worsening</li></ul><p>Caffeine tolerance builds with regular consumption. Many heavy coffee drinkers feel nothing from amounts that would cause significant anxiety in occasional consumers.</p>\"}, {\"h2\": \"The Optimal Caffeine Timing\", \"html\": \"<p>Cortisol (your natural alertness hormone) peaks in the first 1-2 hours after waking. Consuming caffeine during this window provides minimal additional benefit while building tolerance faster.</p><p>Research from the US Army suggests the optimal caffeine timing is 90-120 minutes after waking, then again around early afternoon. Avoiding caffeine after 2-3pm (depending on your sleep schedule) preserves sleep quality significantly for most people.</p>\"}]}, {\"id\": \"calories-burned-guide\", \"title\": \"Calories Burned During Exercise: What the Numbers Really Mean\", \"category\": \"Health\", \"catId\": \"health\", \"date\": \"April 15, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Fitness trackers make calorie burn look precise. The reality is messier - and understanding why matters for your fitness and weight loss goals.\", \"calcLink\": \"calories-burned\", \"calcName\": \"Calories Burned Calculator\", \"sections\": [{\"h2\": \"How Calorie Burn Is Calculated\", \"html\": \"<p>Exercise calorie calculators use MET values (Metabolic Equivalents of Task). One MET equals the energy used at rest (roughly 1 kcal per kg per hour). Running at 10km/h has a MET of about 10 - meaning it burns approximately 10x the energy of sitting still.</p><p>The formula: <strong>Calories = MET x Weight (kg) x Duration (hours)</strong>. A 70kg person running at 10km/h for 30 minutes burns roughly 10 x 70 x 0.5 = 350 kcal. This is a reasonable estimate, not a precise measurement.</p>\"}, {\"h2\": \"Why Tracker Numbers Are Often Wrong\", \"html\": \"<p>Fitness tracker calorie estimates have been shown in research to be off by 20-93% compared to laboratory measurements. Wrist-based optical heart rate monitors are more accurate than simple step counters, but still imperfect. Individual variation in metabolism, fitness level, and movement efficiency means population averages are just that - averages.</p><p>Use calorie burn estimates as rough guides for relative effort comparison, not as precise fuel accounting for eating decisions.</p>\"}, {\"h2\": \"The Afterburn Effect (EPOC)\", \"html\": \"<p>Exercise increases metabolic rate not just during the activity but for hours afterward - this is called Excess Post-exercise Oxygen Consumption (EPOC). High-intensity interval training and heavy resistance training produce the greatest EPOC effect, sometimes adding 6-15% to the total calorie burn of the session.</p><p>However, the absolute EPOC from typical exercise sessions is modest - often 30-100 kcal. It is meaningful but not a magic multiplier.</p>\"}, {\"h2\": \"Which Exercise Burns the Most Calories?\", \"html\": \"<p>High-intensity activities burn most per minute: running, HIIT, jump rope, rowing, and cycling at vigorous effort are all excellent. But sustainability matters more than peak burn rate.</p><p>A study in the International Journal of Obesity found that people consistently overestimate calorie burn from exercise by 3-4x on average, then compensate by eating more. The psychological response to exercise often undermines the direct calorie impact.</p>\"}]}, {\"id\": \"home-buying-guide\", \"title\": \"First Home vs Renting: How to Make the Right Decision for You\", \"category\": \"Finance\", \"catId\": \"finance\", \"date\": \"April 17, 2025\", \"readTime\": \"5 min\", \"excerpt\": \"Buying a home is not always the financially superior choice. Here is a rigorous framework for making the rent vs buy decision based on your actual numbers.\", \"calcLink\": \"rent-vs-buy\", \"calcName\": \"Rent vs Buy Calculator\", \"sections\": [{\"h2\": \"The Myth of Renting as Throwing Money Away\", \"html\": \"<p>The most persistent myth in personal finance: renting is throwing money away. This is false. Every month, renters pay for something real - a place to live. Every month, homeowners also pay for things beyond building equity: mortgage interest, property taxes, insurance, maintenance, and opportunity cost of the deposit.</p><p>In the first years of a mortgage, the vast majority of each payment goes to interest, not equity building. The real equity accumulation is much slower than most buyers realise.</p>\"}, {\"h2\": \"The True Costs of Buying\", \"html\": \"<p>Beyond the mortgage payment, homeowners typically pay:</p><ul><li><strong>Property taxes:</strong> 0.5-2.5% of home value annually</li><li><strong>Maintenance:</strong> Budget 1% of home value per year minimum</li><li><strong>Insurance:</strong> varies significantly by location and property</li><li><strong>Transaction costs:</strong> buying and eventually selling a home costs 5-10% of the purchase price in fees, stamp duty, and legal costs</li><li><strong>Opportunity cost:</strong> the deposit invested in index funds would compound at historical market returns</li></ul>\"}, {\"h2\": \"When Buying Is Clearly Better\", \"html\": \"<p>Buying generally wins when: you plan to stay for 7+ years (transaction costs are amortised); rental yields in your area are high (rents are expensive relative to purchase prices); you value the stability, personalisation, and forced savings of homeownership; and you have the financial stability to absorb unexpected maintenance costs.</p>\"}, {\"h2\": \"When Renting Is Clearly Better\", \"html\": \"<p>Renting often wins when: property prices are extremely high relative to rents (high price-to-rent ratio); you may need to move within 5 years; your career or personal circumstances are uncertain; the discipline to invest the deposit and monthly savings difference actually happens; or you are in a high-cost city where buying requires overextending financially.</p>\"}, {\"h2\": \"The Only Right Answer\", \"html\": \"<p>The rent vs buy decision is personal, local, and financial simultaneously. Run your actual numbers using a calculator, be honest about how long you will stay, include all costs on both sides, and consider the psychological value you place on ownership vs flexibility. There is no universally correct answer.</p>\"}]}, {\"id\": \"wfh-vs-office-costs\", \"title\": \"Work From Home vs Office: The Real Financial Comparison\", \"category\": \"Everyday Life\", \"catId\": \"everyday\", \"date\": \"April 19, 2025\", \"readTime\": \"4 min\", \"excerpt\": \"Working from home saves money - but also costs money. Here is the honest financial breakdown of remote vs office work, and how to calculate your personal number.\", \"calcLink\": \"wfh-savings\", \"calcName\": \"Work From Home Savings Calculator\", \"sections\": [{\"h2\": \"The Savings Side of WFH\", \"html\": \"<p>Remote workers typically save on: commuting costs (fuel, public transport, parking), work wardrobe and dry cleaning, daily lunches and coffees near the office, and sometimes after-work socialising driven by proximity to colleagues.</p><p>A UK study found office workers spend an average of $4,000-$6,000 per year on commuting and work-adjacent costs. US data from the Bureau of Labor Statistics suggests similar figures. These savings are real and immediate.</p>\"}, {\"h2\": \"The Hidden Costs of WFH\", \"html\": \"<p>Remote work also has real costs that are often overlooked: higher home electricity bills (heating/cooling a home during work hours adds 10-30% to energy costs), faster home internet requirements, home office equipment over time, and the cost of work-appropriate home space.</p><p>In countries where home office costs are tax-deductible (UK, many EU countries, Australia), claiming these reduces the net cost significantly. Check what is claimable in your jurisdiction.</p>\"}, {\"h2\": \"The Time Dividend\", \"html\": \"<p>The most underrated WFH benefit is not financial - it is the commute hours returned to your life. The average UK commute is 59 minutes each way. Five days per week, that is nearly 10 hours per week, or 480 hours per year - equivalent to 60 working days.</p><p>What is your time worth to you? Even valued conservatively, the time dividend is often larger than the direct financial saving.</p>\"}, {\"h2\": \"The Hybrid Reality\", \"html\": \"<p>Most office workers now have hybrid arrangements. The financial and time calculations change significantly at 2-3 office days per week vs 5. Running the numbers for your specific arrangement - actual days in office, actual commute cost, actual home costs - gives you a precise personal figure rather than a population average.</p>\"}]}]").forEach(a=>ARTICLES.push(a));
 
 </script>
 </body>
