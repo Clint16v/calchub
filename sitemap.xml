@@ -1,466 +1,1024 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- ═══════════════════════════════ -->
-  <!-- STATIC PAGES                    -->
-  <!-- ═══════════════════════════════ -->
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://calchub.dpdns.org/</loc>
-    <lastmod>2025-03-18</lastmod>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/all</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://calchub.dpdns.org/blog</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/about</loc>
-    <lastmod>2025-03-18</lastmod>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/contact</loc>
-    <lastmod>2025-03-18</lastmod>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/privacy</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/terms</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://calchub.dpdns.org/disclaimer</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- CATEGORY PAGES                  -->
-  <!-- ═══════════════════════════════ -->
-
-  <url>
-    <loc>https://calchub.dpdns.org/cat/math</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/percentage</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/finance</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/percentage-increase</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/health</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/percentage-decrease</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/conversions</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/square-root</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/converters</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/pythagorean</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/physics</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/quadratic</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/everyday</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/circumference</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/statistics</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/exponent</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://calchub.dpdns.org/cat/construction</loc>
-    <lastmod>2025-03-18</lastmod>
+    <loc>https://calchub.dpdns.org/calc/logarithm</loc>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- ARTICLES                        -->
-  <!-- ═══════════════════════════════ -->
-
+  <url>
+    <loc>https://calchub.dpdns.org/calc/antilog</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/factorial</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/gcd-lcm</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/fraction-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/trig-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/ratio-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/proportion-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/sig-figs</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/weighted-avg</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/hex-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/midpoint-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/summation-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/area-shapes</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/volume-shapes</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/surface-area</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/compound-interest</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/loan-payment</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/mortgage</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/vat-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/percent-off</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/markup-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/commission-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/present-value</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/future-value</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/car-depreciation</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/rent-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/roe-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/roa-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/roi</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/sales-tax</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/discount</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/salary-converter</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/hourly-to-salary</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/tip-calculator</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/savings-goal</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/break-even</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/bmi</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/tdee</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/body-fat</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/keto-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/ideal-weight</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/water-intake</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/heart-rate</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/height-comparison</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/due-date</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/length</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/weight-conv</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/temperature</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/speed</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/volume-conv</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/data-storage</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/area-conv</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/km-miles</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/inches-cm</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/feet-inches-conv</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/grams-ml</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/grams-oz</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/lbs-oz-conv</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/lbs-newtons</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/psi-bar</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/torque-hp</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/roman-numerals</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/clothing-size</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/time-format</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/imperial-metric</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/percent-frac</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/kinetic-energy</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/speed-dist-time</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/free-fall</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/force</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/density-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/acceleration-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/angular-velocity</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/buoyancy-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/thermal-expansion</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/age</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/date-diff</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/days-until</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/hours-between</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/birthday-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/time-card</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/fuel-cost</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/gas-mpg</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/random-number</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/reading-time</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/sleep-calculator</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/unit-price</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/mean-median-mode</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/std-deviation</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/geometric-mean</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/harmonic-mean</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/probability</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/z-score</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/combinations</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/relative-risk</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/square-footage</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/paint</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/concrete</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/tiles</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/wallpaper</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/brick-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/gravel-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/sand-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/carpet-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/drywall-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/cement-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/mulch-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/paver-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/tank-volume</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/air-btu</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/rent-vs-buy</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/lease-vs-buy-car</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/petrol-vs-diesel</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/electric-vs-petrol</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/inflation-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/net-worth</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/budget-503020</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/debt-payoff</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/credit-card-payoff</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/retirement-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/dividend-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/macro-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/calories-burned</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/running-pace</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/ovulation-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/pregnancy-weight</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/caffeine-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/recipe-scaler</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/pace-calculator</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/screen-time-cost</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/fence-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/deck-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/roof-area</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/pool-volume</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/staircase-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/cable-vs-streaming</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/coffee-cost-calc</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/wfh-savings</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/prime-checker</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/pct-of-pct</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://calchub.dpdns.org/article/compound-interest-explained</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/understanding-bmi</loc>
-    <lastmod>2025-01-18</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/percentage-calculations-guide</loc>
-    <lastmod>2025-01-22</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <url>
-    <loc>https://calchub.dpdns.org/article/mortgage-guide-first-home</loc>
-    <lastmod>2025-02-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/tdee-calories-explained</loc>
-    <lastmod>2025-02-05</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/pythagorean-theorem-real-life</loc>
-    <lastmod>2025-02-10</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/unit-conversions-guide</loc>
-    <lastmod>2025-02-15</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <url>
-    <loc>https://calchub.dpdns.org/article/ohms-law-explained</loc>
-    <lastmod>2025-02-20</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/standard-deviation-explained</loc>
-    <lastmod>2025-02-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/how-much-paint-do-i-need</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/roi-explained</loc>
-    <lastmod>2025-03-05</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/loan-payments-explained</loc>
-    <lastmod>2025-03-08</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/body-fat-vs-bmi</loc>
-    <lastmod>2025-03-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/concrete-calculator-guide</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://calchub.dpdns.org/article/fuel-cost-road-trip</loc>
-    <lastmod>2025-03-18</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- MATH CALCULATORS                -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/percentage</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/percentage-increase</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/percentage-decrease</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/square-root</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/pythagorean</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/quadratic</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/circumference</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/exponent</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/logarithm</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/antilog</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/factorial</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/gcd-lcm</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/fraction-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/trig-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/ratio-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/proportion-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/sig-figs</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/weighted-avg</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/hex-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/midpoint-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/summation-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/area-shapes</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/volume-shapes</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/surface-area</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- FINANCE CALCULATORS             -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/compound-interest</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/loan-payment</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/mortgage</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/tip-calculator</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/roi</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/sales-tax</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/discount</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/salary-converter</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/hourly-to-salary</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/savings-goal</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/break-even</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/vat-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/percent-off</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/markup-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/commission-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/present-value</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/future-value</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/car-depreciation</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/rent-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/roe-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/roa-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- HEALTH CALCULATORS              -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/bmi</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/tdee</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/ideal-weight</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/body-fat</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/keto-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/water-intake</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/heart-rate</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/height-comparison</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/due-date</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- CONVERSION CALCULATORS          -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/length</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/weight-conv</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/temperature</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/speed</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/volume-conv</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/data-storage</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/area-conv</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- CONVERTER CALCULATORS           -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/km-miles</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/inches-cm</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/feet-inches-conv</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/grams-ml</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/grams-oz</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/lbs-oz-conv</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/lbs-newtons</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/psi-bar</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/torque-hp</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/roman-numerals</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/clothing-size</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/time-format</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/imperial-metric</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/percent-frac</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- PHYSICS CALCULATORS             -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/ohms-law</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/kinetic-energy</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/speed-dist-time</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/free-fall</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/force</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/density-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/acceleration-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/angular-velocity</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/buoyancy-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/thermal-expansion</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- EVERYDAY LIFE CALCULATORS       -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/age</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/date-diff</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/days-until</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/hours-between</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/birthday-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/time-card</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/fuel-cost</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/gas-mpg</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/random-number</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/reading-time</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/sleep-calculator</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/unit-price</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- STATISTICS CALCULATORS          -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/mean-median-mode</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/std-deviation</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/geometric-mean</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/harmonic-mean</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/probability</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/z-score</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/combinations</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/relative-risk</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- CONSTRUCTION CALCULATORS        -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/calc/square-footage</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/paint</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/concrete</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/tiles</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/wallpaper</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/brick-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/gravel-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/sand-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/carpet-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/drywall-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/cement-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/mulch-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/paver-calc</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/tank-volume</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/air-btu</loc><lastmod>2025-03-18</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-
-
-  <!-- ═══════════════════════════════ -->
-  <!-- COMPARISON CALCULATORS          -->
-  <!-- ═══════════════════════════════ -->
-
-  <url><loc>https://calchub.dpdns.org/cat/comparisons</loc><lastmod>2025-03-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/rent-vs-buy</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/lease-vs-buy-car</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/petrol-vs-diesel</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/electric-vs-petrol</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/inflation-calc</loc><lastmod>2025-03-24</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-
-
-  <!-- ═══════════════════════════════ -->
-  <!-- NEW CALCULATORS — BATCH 3       -->
-  <!-- ═══════════════════════════════ -->
-
-  <!-- Finance -->
-  <url><loc>https://calchub.dpdns.org/calc/net-worth</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/budget-503020</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/debt-payoff</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/credit-card-payoff</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/retirement-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/dividend-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <!-- Health -->
-  <url><loc>https://calchub.dpdns.org/calc/macro-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/calories-burned</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/running-pace</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/ovulation-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/pregnancy-weight</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <!-- Everyday -->
-  <url><loc>https://calchub.dpdns.org/calc/caffeine-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/recipe-scaler</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/pace-calculator</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/screen-time-cost</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <!-- Construction -->
-  <url><loc>https://calchub.dpdns.org/calc/fence-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/deck-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/roof-area</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/pool-volume</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/staircase-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <!-- Comparisons -->
-  <url><loc>https://calchub.dpdns.org/calc/cable-vs-streaming</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/coffee-cost-calc</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/wfh-savings</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
-  <!-- Math -->
-  <url><loc>https://calchub.dpdns.org/calc/prime-checker</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/calc/pct-of-pct</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-
-  <!-- NEW ARTICLES — BATCH 3 -->
-  <url><loc>https://calchub.dpdns.org/article/how-to-calculate-net-worth</loc><lastmod>2025-04-01</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/debt-snowball-vs-avalanche</loc><lastmod>2025-04-03</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/how-to-calculate-macros</loc><lastmod>2025-04-05</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/running-pace-guide</loc><lastmod>2025-04-07</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/how-much-do-you-need-to-retire</loc><lastmod>2025-04-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/5030-20-budgeting-rule</loc><lastmod>2025-04-11</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/caffeine-guide</loc><lastmod>2025-04-13</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/calories-burned-guide</loc><lastmod>2025-04-15</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/home-buying-guide</loc><lastmod>2025-04-17</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://calchub.dpdns.org/article/wfh-vs-office-costs</loc><lastmod>2025-04-19</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-
+  <url>
+    <loc>https://calchub.dpdns.org/calc/solar-payback</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/heat-pump-savings</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calchub.dpdns.org/calc/home-energy-audit</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>
