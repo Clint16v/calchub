@@ -1,1 +1,75 @@
+# CalcHub robots.txt
+# https://calchub.dpdns.org
 
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# ─── AI Search Crawlers (explicitly allowed) ─────────────────────────────────
+
+# OpenAI — ChatGPT Search & browsing
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — Claude web search & citations
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI — sources & citations (sends actual referral traffic)
+User-agent: PerplexityBot
+Allow: /
+
+# Google — Gemini, AI Overviews, model training
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# Microsoft — Copilot & Bing AI
+User-agent: bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+# Apple Intelligence & Siri
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta — Llama AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Amazon — Alexa & AWS AI
+User-agent: Amazonbot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Common Crawl (training data for many AI models)
+User-agent: CCBot
+Allow: /
+
+# ─── Sitemaps ─────────────────────────────────────────────────────────────────
+Sitemap: https://calchub.dpdns.org/sitemap.xml
