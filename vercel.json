@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/((?!robots\\.txt|sitemap\\.xml|manifest\\.json|icons/).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
