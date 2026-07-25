@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/((?!robots\\.txt|sitemap\\.xml|manifest\\.json|icons/).*)",
