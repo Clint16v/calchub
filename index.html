@@ -2844,6 +2844,9 @@ function svgGaugeChart(segments,value,opts={}){
     x+=segW;
     return rect+label;
   }).join('');
+  if(opts.noMarker){
+    return `<svg viewBox="0 0 ${w} ${h}" class="calc-chart-svg" preserveAspectRatio="xMidYMid meet">${bars}</svg>`;
+  }
   const clampedVal=Math.max(segments[0].min,Math.min(value,segments[segments.length-1].max));
   const valFrac=(clampedVal-segments[0].min)/((segments[segments.length-1].max-segments[0].min)||1);
   const markerX=pad.l+valFrac*innerW;
@@ -2862,6 +2865,22 @@ function svgZoneChart(zones,opts={}){
     <rect x="${pad.l}" y="${y+4}" width="${innerW}" height="16" rx="8" fill="var(--border)" opacity="0.5"/>
     <rect x="${x1.toFixed(1)}" y="${y+4}" width="${(x2-x1).toFixed(1)}" height="16" rx="8" fill="${z.color}"/>
     <text x="${(pad.l+innerW+8).toFixed(1)}" y="${y+16}" font-size="10" fill="var(--muted)" text-anchor="start">${Math.round(z.min)}-${Math.round(z.max)}</text>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" class="calc-chart-svg" preserveAspectRatio="xMidYMid meet">${rows}</svg>`;
+}
+
+function svgCompareBars(items,opts={}){
+  const w=opts.width||560,rowH=34,pad={l:130,r:14,t:6};
+  const h=items.length*rowH+pad.t+6;
+  const innerW=w-pad.l-pad.r;
+  const maxVal=opts.max||Math.max(...items.map(it=>it.value))||1;
+  const rows=items.map((it,i)=>{
+    const y=pad.t+i*rowH;
+    const barW=Math.max(2,(it.value/maxVal)*innerW);
+    return `<text x="${pad.l-8}" y="${y+17}" font-size="11" fill="var(--muted)" text-anchor="end">${it.label}</text>
+    <rect x="${pad.l}" y="${y+4}" width="${innerW}" height="18" rx="4" fill="var(--border)" opacity="0.4"/>
+    <rect x="${pad.l}" y="${y+4}" width="${barW.toFixed(1)}" height="18" rx="4" fill="${it.color||'var(--accent)'}"/>
+    <text x="${(pad.l+barW+8).toFixed(1)}" y="${y+17}" font-size="11" font-weight="700" fill="var(--text)" text-anchor="start">${it.formatted!==undefined?it.formatted:it.value}</text>`;
   }).join('');
   return `<svg viewBox="0 0 ${w} ${h}" class="calc-chart-svg" preserveAspectRatio="xMidYMid meet">${rows}</svg>`;
 }
@@ -2893,6 +2912,30 @@ const CHART_TITLES={
   'electric-vs-petrol':'📈 Cumulative Savings vs EV Premium',
   'body-fat':'📊 Where You Fall',
   'heat-pump-savings':'📈 Cumulative Savings vs Install Premium',
+  'present-value':'📉 Value Discounted Over Time',
+  'petrol-vs-diesel':'📈 Cumulative Savings vs Diesel Premium',
+  'coffee-cost-calc':'📈 Cumulative Savings vs Machine Cost',
+  'rent-vs-buy':'📊 Net Cost: Rent vs Buy',
+  'lease-vs-buy-car':'📊 Total Cost: Lease vs Buy',
+  'dividend-calc':'📈 DRIP vs Cash Dividends',
+  'break-even':'📊 Revenue vs Cost by Units',
+  'macro-calc':'🥗 Macro Split',
+  'keto-calc':'🥑 Macro Split',
+  'net-worth':'💎 Assets vs Liabilities',
+  'cable-vs-streaming':'📺 Monthly Cost Comparison',
+  'wfh-savings':'🏡 Daily Cost Comparison',
+  'budget-503020':'📊 Your Actual Spending Split',
+  'pregnancy-weight':'🤰 Recommended Weight Gain Range',
+  'home-energy-audit':'🏠 Payback Period by Upgrade',
+  'roi':'📈 Investment vs Final Value',
+  'ideal-weight':'⚖️ Formula Comparison',
+  'water-intake':'💧 Daily Intake Breakdown',
+  'markup-calc':'💲 Cost vs Selling Price',
+  'commission-calc':'💰 Base vs Commission',
+  'relative-risk':'⚕️ Risk Comparison',
+  'probability':'🎯 Probability vs Complement',
+  'z-score':'📊 Value vs Mean',
+  'weighted-avg':'⚖️ Weighted vs Simple Average',
 };
 
 const CHART_GENERATORS={
@@ -3113,6 +3156,324 @@ const CHART_GENERATORS={
     let cum=0;const points=[{x:0,y:0}];
     for(let y=1;y<=20;y++){cum+=annualSaving;points.push({x:y,y:cum});}
     return svgLineChart(points,{xFormat:x=>'Y'+x,yFormat:y=>'$'+Math.round(y/1000)+'k',targetY:premium,targetLabel:'Install Premium'});
+  },
+  'present-value'(v){
+    const fv=+v.fv,r=(+v.r)/100,n=+v.n;
+    if(!fv||!r||!n||r<=0||n<=0)return'';
+    const points=[];
+    for(let x=0;x<=n;x++){points.push({x:x,y:fv/Math.pow(1+r,x)});}
+    return svgLineChart(points,{xFormat:x=>x+'p',yFormat:y=>'$'+Math.round(y).toLocaleString()});
+  },
+  'petrol-vs-diesel'(v){
+    const pp=+v.petrolPrice,dp=+v.dieselPrice,pc=+v.petrolConsump,dc=+v.dieselConsump,km=+v.kmYear,extra=+v.extraCost||0;
+    if(!pp||!dp||!pc||!dc||!km)return'';
+    const petrolYr=km*pc/100*pp,dieselYr=km*dc/100*dp;
+    const savingYr=petrolYr-dieselYr;
+    if(savingYr<=0)return'';
+    let cum=0;const points=[{x:0,y:0}];
+    for(let y=1;y<=10;y++){cum+=savingYr;points.push({x:y,y:cum});}
+    return svgLineChart(points,{xFormat:x=>'Y'+x,yFormat:y=>'$'+Math.round(y).toLocaleString(),targetY:extra,targetLabel:'Diesel Premium'});
+  },
+  'coffee-cost-calc'(v){
+    const cafeDays=+v.cafeDays||0,cafePrice=+v.cafePrice||0,machine=+v.machineCost||0;
+    const homeCosts={'Instant coffee ($0.20/cup)':0.20,'Filter/Drip ($0.25/cup)':0.25,'Pod/Capsule ($0.80/cup)':0.80,'French Press ($0.30/cup)':0.30,'Home Espresso ($0.50/cup)':0.50};
+    const homeCost=homeCosts[v.homeMethod]||0.25;
+    const weekSave=cafeDays*cafePrice-cafeDays*homeCost;
+    if(weekSave<=0||!machine)return'';
+    let cum=0;const points=[{x:0,y:0}];
+    const totalWeeks=Math.min(104,Math.ceil(machine/weekSave*2)+10);
+    for(let wk=1;wk<=totalWeeks;wk++){cum+=weekSave;points.push({x:wk,y:cum});}
+    return svgLineChart(points,{xFormat:x=>x+'wk',yFormat:y=>'$'+Math.round(y),targetY:machine,targetLabel:'Machine Cost'});
+  },
+  'rent-vs-buy'(v){
+    const home=+v.home,downPct=(+v.down)/100,annRate=(+v.rate)/100,rent=+v.rent,appre=(+v.appre)/100,invest=(+v.invest)/100,targetYrs=+v.years;
+    if(!home||isNaN(downPct)||!annRate||!rent||!targetYrs)return'';
+    const down=home*downPct,loan=home-down;
+    const buyPoints=[],rentPoints=[];
+    for(let y=1;y<=targetYrs;y++){
+      const r=annRate/12,n=y*12;
+      const monthly=r===0?loan/n:loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+      const totalMortgage=monthly*n;
+      const totalInterest=totalMortgage-loan;
+      const propTax=home*0.012*y,maintenance=home*0.01*y,insurance=home*0.005*y;
+      const totalBuyCost=down+totalInterest+propTax+maintenance+insurance;
+      const futureHomeValue=home*Math.pow(1+appre,y);
+      const equity=futureHomeValue-loan*(1-y/30);
+      const netBuyCost=totalBuyCost-equity+home;
+      const totalRent=rent*12*y*(1+0.03*y/2);
+      const oppCost=down*(Math.pow(1+invest,y)-1);
+      const netRentCost=totalRent+oppCost;
+      buyPoints.push({x:y,y:netBuyCost});
+      rentPoints.push({x:y,y:netRentCost});
+    }
+    return svgLineChart(buyPoints,{xFormat:x=>x+'y',yFormat:y=>'$'+Math.round(y/1000)+'k',secondSeries:rentPoints,secondColor:'#5b9fff',extraY:rentPoints.map(p=>p.y)});
+  },
+  'lease-vs-buy-car'(v){
+    const price=+v.price,down=+v.down,annRate=(+v.rate)/100,loanYrs=+v.loanYrs,leaseMonth=+v.leaseMonth,leaseDown=+v.leaseDown,targetYrs=+v.leaseYrs,depr=(+v.depr)/100;
+    if(!price||isNaN(down)||!loanYrs||!leaseMonth||!targetYrs)return'';
+    const loan=price-down,r=annRate/12,n=loanYrs*12;
+    const monthly=r===0?loan/n:loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+    const totalLoan=monthly*n+down;
+    const buyPoints=[],leasePoints=[];
+    for(let y=1;y<=targetYrs;y++){
+      const residualValue=price*Math.pow(1-depr,y);
+      const netBuyCost=totalLoan-residualValue;
+      const totalLease=leaseMonth*12*y+leaseDown;
+      buyPoints.push({x:y,y:netBuyCost});
+      leasePoints.push({x:y,y:totalLease});
+    }
+    return svgLineChart(buyPoints,{xFormat:x=>x+'y',yFormat:y=>'$'+Math.round(y).toLocaleString(),secondSeries:leasePoints,secondColor:'#5b9fff',extraY:leasePoints.map(p=>p.y)});
+  },
+  'dividend-calc'(v){
+    const shares=+v.shares,price=+v.price,dpShare=+v.divPerShare,yrs=+v.yrs||10;
+    if(!shares||!price||!dpShare)return'';
+    let sDrip=shares,cashTotal=0;
+    const dripPoints=[{x:0,y:shares*price}],cashPoints=[{x:0,y:shares*price}];
+    for(let y=1;y<=yrs;y++){
+      const divDrip=sDrip*dpShare;sDrip+=divDrip/price;
+      cashTotal+=shares*dpShare;
+      dripPoints.push({x:y,y:sDrip*price});
+      cashPoints.push({x:y,y:shares*price+cashTotal});
+    }
+    return svgLineChart(dripPoints,{xFormat:x=>'Y'+x,yFormat:y=>'$'+Math.round(y).toLocaleString(),secondSeries:cashPoints,secondColor:'#5b9fff',extraY:cashPoints.map(p=>p.y)});
+  },
+  'break-even'(v){
+    const fixed=+v.fixed,price=+v.price,variable=+v.var;
+    if(!fixed||!price||isNaN(variable)||price<=variable)return'';
+    const contrib=price-variable;
+    const breakEvenUnits=fixed/contrib;
+    const maxUnits=Math.ceil(breakEvenUnits*2);
+    const revenuePoints=[],costPoints=[];
+    const step=Math.max(1,Math.round(maxUnits/20));
+    for(let u=0;u<=maxUnits;u+=step){
+      revenuePoints.push({x:u,y:u*price});
+      costPoints.push({x:u,y:fixed+u*variable});
+    }
+    return svgLineChart(revenuePoints,{xFormat:x=>Math.round(x),yFormat:y=>'$'+Math.round(y/1000)+'k',secondSeries:costPoints,secondColor:'#ff9f5b',extraY:costPoints.map(p=>p.y),markerX:breakEvenUnits});
+  },
+  'macro-calc'(v){
+    const w=+v.weight,h=+v.height,age=+v.age;
+    if(!w||!h||!age)return'';
+    const bmr=v.gender==='Male'?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
+    const mults=[1.2,1.375,1.55,1.725,1.9];
+    const idx=['Sedentary','Light (1-3 days/wk)','Moderate (3-5 days/wk)','Active (6-7 days/wk)','Very Active'].indexOf(v.activity);
+    const tdee=bmr*(mults[idx]||1.55);
+    const goalAdj={'Lose weight':-500,'Maintain weight':0,'Build muscle':250,'Aggressive bulk':500};
+    const cal=tdee+(goalAdj[v.goal]||0);
+    const proteinG=w*2.0,fatG=cal*0.25/9,carbG=(cal-proteinG*4-fatG*9)/4;
+    if(carbG<=0)return'';
+    const segments=[
+      {label:`Protein ${Math.round(proteinG)}g`,min:0,max:1,width:proteinG*4,color:'#5b9fff'},
+      {label:`Carbs ${Math.round(carbG)}g`,min:0,max:1,width:carbG*4,color:'var(--accent)'},
+      {label:`Fat ${Math.round(fatG)}g`,min:0,max:1,width:fatG*9,color:'#ff9f5b'}
+    ];
+    return svgGaugeChart(segments,0,{noMarker:true});
+  },
+  'keto-calc'(v){
+    const w=+v.weight,h=+v.height,age=+v.age;
+    if(!w||!h||!age)return'';
+    const bmr=v.gender==='Male'?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
+    const tdee=bmr*1.4;
+    let cal=tdee;
+    if(v.goal==='Lose Weight')cal=tdee-500;
+    if(v.goal==='Gain Weight')cal=tdee+300;
+    const fatG=Math.round(cal*0.70/9),proteinG=Math.round(cal*0.25/4),carbG=Math.round(cal*0.05/4);
+    const segments=[
+      {label:`Fat ${fatG}g`,min:0,max:1,width:fatG*9,color:'#ff9f5b'},
+      {label:`Protein ${proteinG}g`,min:0,max:1,width:proteinG*4,color:'#5b9fff'},
+      {label:`Carbs ${carbG}g`,min:0,max:1,width:carbG*4,color:'var(--accent)'}
+    ];
+    return svgGaugeChart(segments,0,{noMarker:true});
+  },
+  'net-worth'(v){
+    const assets=(+v.cash||0)+(+v.investments||0)+(+v.property||0)+(+v.vehicles||0)+(+v.other_assets||0);
+    const liabilities=(+v.mortgage_bal||0)+(+v.car_loans||0)+(+v.credit_cards||0)+(+v.student_loans||0)+(+v.other_debt||0);
+    if(!assets&&!liabilities)return'';
+    const items=[
+      {label:'Assets',value:assets,color:'var(--accent)',formatted:'$'+Math.round(assets).toLocaleString()},
+      {label:'Liabilities',value:liabilities,color:'#ff6b6b',formatted:'$'+Math.round(liabilities).toLocaleString()}
+    ];
+    return svgCompareBars(items);
+  },
+  'cable-vs-streaming'(v){
+    const cable=+v.cableCost||0,internet=+v.internet||0;
+    const streams=(+v.streaming1||0)+(+v.streaming2||0)+(+v.streaming3||0)+(+v.streaming4||0);
+    const device=+v.device||0;
+    const cableTotal=cable+internet,streamTotal=streams+internet+device/12;
+    if(!cableTotal&&!streamTotal)return'';
+    const items=[
+      {label:'Cable + Internet',value:cableTotal,color:'#ff9f5b',formatted:'$'+cableTotal.toFixed(2)},
+      {label:'Streaming + Internet',value:streamTotal,color:'var(--accent)',formatted:'$'+streamTotal.toFixed(2)}
+    ];
+    return svgCompareBars(items);
+  },
+  'wfh-savings'(v){
+    const km=+v.commuteKm||0,L100=+v.fuelL100||8,fuelP=+v.fuelPrice||0;
+    const parking=+v.parking||0,officeLunch=+v.lunch||0,homeLunch=+v.homeLunch||5,elec=+v.electricity||2;
+    if(!km||!fuelP)return'';
+    const dailyFuel=km*2*L100/100*fuelP;
+    const dailyOffice=dailyFuel+parking+officeLunch;
+    const dailyHome=homeLunch+elec;
+    const items=[
+      {label:'Office Day',value:dailyOffice,color:'#ff9f5b',formatted:'$'+dailyOffice.toFixed(2)},
+      {label:'WFH Day',value:dailyHome,color:'var(--accent)',formatted:'$'+dailyHome.toFixed(2)}
+    ];
+    return svgCompareBars(items);
+  },
+  'budget-503020'(v){
+    const needs=+v.needs||0,wants=+v.wants||0,savings=+v.savings||0;
+    if(!needs&&!wants&&!savings)return'';
+    const segments=[
+      {label:`Needs $${Math.round(needs)}`,min:0,max:1,width:needs||1,color:'#5b9fff'},
+      {label:`Wants $${Math.round(wants)}`,min:0,max:1,width:wants||1,color:'#ff9f5b'},
+      {label:`Savings $${Math.round(savings)}`,min:0,max:1,width:savings||1,color:'var(--accent)'}
+    ];
+    return svgGaugeChart(segments,0,{noMarker:true});
+  },
+  'pregnancy-weight'(v){
+    const w=+v.preWeight,h=(+v.height)/100,week=+v.week;
+    if(!w||!h||!week||week<1||week>42)return'';
+    const bmi=w/(h*h);
+    const twins=v.twins==='Twins';
+    let minGain,maxGain;
+    if(bmi<18.5){minGain=twins?16.8:12.5;maxGain=twins?24.5:18;}
+    else if(bmi<25){minGain=twins?16.8:11.5;maxGain=twins?24.5:16;}
+    else if(bmi<30){minGain=twins?14.1:7;maxGain=twins?22.7:11.5;}
+    else{minGain=twins?11.3:5;maxGain=twins?19.1:9;}
+    const weeklyMin=week>12?(minGain-1.5)/(40-12):0;
+    const weeklyMax=week>12?(maxGain-2.5)/(40-12):0;
+    const currMin=week<=12?1.5:1.5+(week-12)*weeklyMin;
+    const currMax=week<=12?2.5:2.5+(week-12)*weeklyMax;
+    const expected=(currMin+currMax)/2;
+    const scaleMax=maxGain*1.3;
+    const segments=[
+      {label:'Low',min:0,max:minGain,width:minGain,color:'#ff9f5b'},
+      {label:'Recommended',min:minGain,max:maxGain,width:maxGain-minGain,color:'var(--accent)'},
+      {label:'High',min:maxGain,max:scaleMax,width:scaleMax-maxGain,color:'#ff6b6b'}
+    ];
+    return svgGaugeChart(segments,expected,{valueLabel:expected.toFixed(1)+'kg'});
+  },
+  'home-energy-audit'(v){
+    const elec=+v.elecRate,gas=+v.gasRate;
+    if(!elec||!gas)return'';
+    const upgrades=[
+      {name:'Wall Insulation',cost:+v.wallIns,savingKwh:+v.wallSave,fuel:'gas'},
+      {name:'Loft Insulation',cost:+v.loftIns,savingKwh:+v.loftSave,fuel:'gas'},
+      {name:'Double Glazing',cost:+v.winCost,savingKwh:+v.winSave,fuel:'mixed'},
+      {name:'LED Lighting',cost:+v.ledCost,savingKwh:+v.ledSave,fuel:'electricity'},
+      {name:'Smart Thermostat',cost:+v.smartCost,savingKwh:+v.smartSave,fuel:'gas'},
+    ].filter(u=>u.cost>0&&u.savingKwh>0);
+    if(!upgrades.length)return'';
+    const items=upgrades.map(u=>{
+      const rate=u.fuel==='electricity'?elec:u.fuel==='gas'?gas:(elec+gas)/2;
+      const annualSaving=u.savingKwh*rate;
+      const payback=annualSaving>0?u.cost/annualSaving:0;
+      return{label:u.name,value:payback,formatted:payback.toFixed(1)+' yrs'};
+    }).filter(it=>it.value>0);
+    if(!items.length)return'';
+    return svgCompareBars(items,{max:Math.max(...items.map(it=>it.value))*1.15});
+  },
+  'roi'(v){
+    const cost=+v.cost,ret=+v.ret;
+    if(!cost||!ret||cost<=0)return'';
+    const items=[
+      {label:'Initial Investment',value:cost,color:'#5b9fff',formatted:'$'+Math.round(cost).toLocaleString()},
+      {label:'Final Value',value:ret,color:ret>=cost?'var(--accent)':'#ff6b6b',formatted:'$'+Math.round(ret).toLocaleString()}
+    ];
+    return svgCompareBars(items);
+  },
+  'ideal-weight'(v){
+    const h=+v.height;
+    if(!h||h<100)return'';
+    const m=v.gender==='Male';
+    const hIn=h/2.54,dev=hIn-60;
+    const devine=m?(50+2.3*dev):(45.5+2.3*dev);
+    const hamwi=m?(48+2.7*dev):(45.4+2.24*dev);
+    const bmi22=22*Math.pow(h/100,2);
+    const items=[
+      {label:'Devine Formula',value:devine,color:'#5b9fff',formatted:devine.toFixed(1)+' kg'},
+      {label:'Hamwi Formula',value:hamwi,color:'#ff9f5b',formatted:hamwi.toFixed(1)+' kg'},
+      {label:'Healthy BMI (22)',value:bmi22,color:'var(--accent)',formatted:bmi22.toFixed(1)+' kg'}
+    ];
+    return svgCompareBars(items);
+  },
+  'water-intake'(v){
+    const w=+v.weight;
+    if(!w||w<=0)return'';
+    const base=w*0.033;
+    const idx=['Sedentary','Lightly Active','Moderately Active','Very Active'].indexOf(v.activity);
+    const extra=[0,0.35,0.59,0.95][idx]||0;
+    const segments=extra>0?[
+      {label:`Baseline ${base.toFixed(1)}L`,min:0,max:1,width:base,color:'#5b9fff'},
+      {label:`Activity +${extra.toFixed(2)}L`,min:0,max:1,width:extra,color:'var(--accent)'}
+    ]:[
+      {label:`Baseline ${base.toFixed(1)}L`,min:0,max:1,width:base,color:'#5b9fff'}
+    ];
+    return svgGaugeChart(segments,0,{noMarker:true});
+  },
+  'markup-calc'(v){
+    const cost=+v.cost,markup=+v.markup;
+    if(!cost||isNaN(markup)||cost<=0)return'';
+    const price=cost*(1+markup/100);
+    const items=[
+      {label:'Cost',value:cost,color:'#5b9fff',formatted:'$'+cost.toFixed(2)},
+      {label:'Selling Price',value:price,color:'var(--accent)',formatted:'$'+price.toFixed(2)}
+    ];
+    return svgCompareBars(items);
+  },
+  'commission-calc'(v){
+    const sales=+v.sales,rate=+v.rate,base=+v.base||0;
+    if(!sales||isNaN(rate)||base<=0)return'';
+    const comm=sales*rate/100;
+    const items=[
+      {label:'Base Salary',value:base,color:'#5b9fff',formatted:'$'+base.toLocaleString()},
+      {label:'Commission',value:comm,color:'var(--accent)',formatted:'$'+comm.toFixed(2)}
+    ];
+    return svgCompareBars(items);
+  },
+  'relative-risk'(v){
+    const a=+v.a,b=+v.b,c=+v.c,d=+v.d;
+    if([a,b,c,d].some(isNaN)||[a,b,c,d].some(n=>n<0)||a+b===0||c+d===0)return'';
+    const riskExposed=a/(a+b)*100,riskUnexposed=c/(c+d)*100;
+    const items=[
+      {label:'Risk in Exposed',value:riskExposed,color:'#ff6b6b',formatted:riskExposed.toFixed(1)+'%'},
+      {label:'Risk in Unexposed',value:riskUnexposed,color:'#5b9fff',formatted:riskUnexposed.toFixed(1)+'%'}
+    ];
+    return svgCompareBars(items);
+  },
+  'probability'(v){
+    const f=+v.fav,t=+v.total;
+    if(isNaN(f)||isNaN(t)||t<=0||f<0||f>t)return'';
+    const p=f/t*100,comp=100-p;
+    const segments=[
+      {label:`Probability ${p.toFixed(1)}%`,min:0,max:1,width:p||0.01,color:'var(--accent)'},
+      {label:`Complement ${comp.toFixed(1)}%`,min:0,max:1,width:comp||0.01,color:'#5b9fff'}
+    ];
+    return svgGaugeChart(segments,0,{noMarker:true});
+  },
+  'z-score'(v){
+    const x=+v.x,mean=+v.mean,std=+v.std;
+    if([x,mean,std].some(isNaN)||std<=0)return'';
+    const items=[
+      {label:'Your Value',value:Math.abs(x),color:x>=mean?'var(--accent)':'#ff6b6b',formatted:x.toFixed(1)},
+      {label:'Mean',value:Math.abs(mean),color:'#5b9fff',formatted:mean.toFixed(1)}
+    ];
+    return svgCompareBars(items,{max:Math.max(Math.abs(x),Math.abs(mean))*1.15});
+  },
+  'weighted-avg'(v){
+    if(!v.vals||!v.wts)return'';
+    const vals=v.vals.split(/[,\s]+/).map(Number).filter(n=>!isNaN(n));
+    const wts=v.wts.split(/[,\s]+/).map(Number).filter(n=>!isNaN(n));
+    if(vals.length<2||vals.length!==wts.length)return'';
+    const sumW=wts.reduce((a,b)=>a+b,0);
+    if(sumW<=0)return'';
+    const wa=vals.reduce((s,val,i)=>s+val*wts[i],0)/sumW;
+    const sa=vals.reduce((a,b)=>a+b,0)/vals.length;
+    const items=[
+      {label:'Weighted Average',value:wa,color:'var(--accent)',formatted:wa.toFixed(2)},
+      {label:'Simple Average',value:sa,color:'#5b9fff',formatted:sa.toFixed(2)}
+    ];
+    return svgCompareBars(items);
   },
 };
 
