@@ -1,0 +1,57 @@
+{
+  "name": "CalcHub — Free Online Calculators",
+  "short_name": "CalcHub",
+  "description": "150+ free online calculators for math, finance, health, physics, conversions and more. Instant results, no signup required.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0c10",
+  "theme_color": "#b8ff57",
+  "lang": "en",
+  "scope": "/",
+  "orientation": "any",
+  "categories": ["utilities", "education", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "BMI Calculator",
+      "short_name": "BMI",
+      "description": "Calculate your Body Mass Index",
+      "url": "/#/calc/bmi",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Percentage Calculator",
+      "short_name": "Percentage",
+      "description": "Calculate percentages instantly",
+      "url": "/#/calc/percentage",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mortgage Calculator",
+      "short_name": "Mortgage",
+      "description": "Calculate monthly mortgage payments",
+      "url": "/#/calc/mortgage",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "All Calculators",
+      "short_name": "All",
+      "description": "Browse all 150+ free calculators",
+      "url": "/#/all",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
