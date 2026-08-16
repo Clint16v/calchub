@@ -2,6 +2,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/calc/:path*", "destination": "/calc/:path.html" },
+    { "source": "/article/:path*", "destination": "/article/:path.html" },
+    { "source": "/cat/:path*", "destination": "/cat/:path.html" },
     { "source": "/", "destination": "/index.html" },
     { "source": "/all", "destination": "/index.html" },
     { "source": "/about", "destination": "/index.html" },
