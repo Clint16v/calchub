@@ -3,19 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/calc/:path*",
-      "destination": "/calc/:path*.html"
-    },
-    {
-      "source": "/article/:path*",
-      "destination": "/article/:path*.html"
-    },
-    {
-      "source": "/cat/:path*",
-      "destination": "/cat/:path*.html"
-    },
-    {
-      "source": "/((?!robots\\.txt|sitemap\\.xml|manifest\\.json|icons/|images/|app\\.js|calc/|article/|cat/).*)",
+      "source": "/((?!calc/|article/|cat/|icons/|images/|robots\\.txt|sitemap\\.xml|manifest\\.json|app\\.js|llms\\.txt).*)",
       "destination": "/index.html"
     }
   ],
